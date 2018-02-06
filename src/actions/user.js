@@ -11,14 +11,15 @@ function createUserRequest(data) {
     dispatch(actionsLoader.startLoading());
     const url = `http://${appConfig.host}:${appConfig.port}/users`;
     const req = new Request(url, {
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
       method: 'POST',
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
 
-    
     return fetch(req).then(res => {
-    
-      
       dispatch(createUserSuccess(res));
     });
   };

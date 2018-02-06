@@ -28,13 +28,14 @@ const sharedOptions = {
 
 const serverConfig = {
   entry: {
-    app: './src/app.js'
+    app: './src/app.js',
+    // babelPolyfill: 'babel-polyfill'
   },
   target: 'node',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].node.js'
-  },
+  }
 };
 Object.assign(serverConfig, sharedOptions);
 
