@@ -1,12 +1,8 @@
 import Base from './base';
 
-// async function createUser(data) {
-//   console.log('inside create user')
-// }
-
-export default class User extends Base {
+class User extends Base {
   static get tableName() {
-    return 'User';
+    return 'users';
   }
 
   static get jsonSchema() {
@@ -17,8 +13,6 @@ export default class User extends Base {
       }
     };
   }
-
-  static createUser(data) {
-    // return createUser(data);
-  }
 }
+
+export default User;

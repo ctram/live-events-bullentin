@@ -20,6 +20,7 @@ function createUserRequest(data) {
     });
 
     return fetch(req).then(res => {
+      
       dispatch(createUserSuccess(res));
     });
   };

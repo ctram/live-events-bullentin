@@ -1,5 +1,4 @@
-// Update with your config settings. 
- 
+// Used to create migrations in CLI. Does not affect live server.
 module.exports = { 
   development: { 
     client: 'pg', 
@@ -7,6 +6,7 @@ module.exports = {
       host: 'localhost', 
       port: 5432, 
       user: 'chris', 
+      password: '',
       database: 'live_events_bulletin' 
     } 
   } 
