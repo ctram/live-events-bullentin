@@ -13,13 +13,18 @@ function load(app) {
   });
 
   app.post('/users', (req, res) => {
-    User.query(knex)
-      .then(users => {
-        console.log('users: ', users);
-      })
-      .catch(e => {
-        console.error(e);
-      });
+    console.log(req.body);
+    const { email, password } = req.body;
+
+    throw 'this is an error';
+    
+    // User.query(knex)
+    //   .then(users => {
+    //     console.log('users: ', users);
+    //   })
+    //   .catch(e => {
+    //     console.error(e);
+    //   });
   });
 }
 

@@ -1,10 +1,12 @@
 import actionTypes from '../actions/action-types';
 
 function createUser(state = {}, action) {
-  if (action.type === actionTypes.CREATE_USER_SUCCESS) {
-    return state;
+  switch (action.type) {
+    case actionTypes.CREATE_USER_SUCCESS:
+    case actionTypes.CREATE_USER_FAILURE:
+    default:
+      return state;
   }
-  return state;
 }
 
 export default {
