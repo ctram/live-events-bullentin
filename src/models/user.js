@@ -1,4 +1,4 @@
-import Base from './base';
+const Base = require('./base');
 
 class User extends Base {
   static get tableName() {
@@ -15,4 +15,4 @@ class User extends Base {
   }
 }
 
-export default User;
+module.exports = User; 

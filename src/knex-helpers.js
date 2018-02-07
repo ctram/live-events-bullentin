@@ -1,6 +1,7 @@
-import knex from 'knex';
+const knex = require('knex');
+// TODO: rename file
 
-export default knex({
+module.exports = knex({
   client: 'pg',
   useNullAsDefault: true,
   connection: {

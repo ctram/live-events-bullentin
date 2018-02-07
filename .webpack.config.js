@@ -22,7 +22,7 @@ const sharedOptions = {
       }
     ]
   },
-  watch: true,
+  // watch: true,
   devtool: 'source-map'
 };
 

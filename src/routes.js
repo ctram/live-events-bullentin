@@ -1,4 +1,3 @@
-// import User from './models/user';
 import loadApi from './api/index';
 
 export default {

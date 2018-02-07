@@ -1,5 +1,7 @@
-import knex from '../knex-helpers';
-import { Model } from 'objection';
+const knex = require('../knex-helpers');
+const { Model } = require('objection');
 Model.knex(knex);
 
-export default class Base extends Model {}
+class Base extends Model {}
+
+module.exports = Base;
