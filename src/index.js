@@ -7,6 +7,8 @@ import ContainerRoot from './containers/root';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import _toastr from '../node_modules/toastr/build/toastr.css';
+import toastr from 'toastr';
 
 const loggerMiddleware = createLogger();
 const store = createStore(reducers, applyMiddleware(thunkMiddleware, loggerMiddleware));

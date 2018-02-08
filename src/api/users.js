@@ -16,7 +16,7 @@ function load(app) {
     console.log(req.body);
     const { email, password } = req.body;
 
-    throw 'this is an error';
+    throw { msg: 'this is an error'};
     
     // User.query(knex)
     //   .then(users => {

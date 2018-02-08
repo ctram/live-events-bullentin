@@ -1,6 +1,7 @@
 import actionsLoader from './loader';
 import actionTypes from './action-types';
 import appConfig from '../app-config';
+import fetchWithToastr from '../helpers/fetch-wrapper';
 
 function createUserSuccess(data) {
   return { type: actionTypes.CREATE_USER_SUCCESS, data };
@@ -23,9 +24,8 @@ function createUserRequest(data) {
       body: JSON.stringify(data)
     });
 
-    return fetch(req)
+    return fetchWithToastr(req)
       .then(res => {
-
         if (res.ok) {
           dispatch(createUserSuccess(res));
         } else {
