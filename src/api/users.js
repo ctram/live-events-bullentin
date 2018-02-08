@@ -13,7 +13,7 @@ function load(app) {
   });
 
   app.post('/users', (req, res) => {
-    console.log('users   ', users)
+    console.log('users   ', users);
     const { email, password } = req.body;
 
     if (!email || !password) {
