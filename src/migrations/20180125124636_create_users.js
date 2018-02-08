@@ -1,22 +1,18 @@
-exports.up = function(knex, Promise) {
-  async function main() {
-    await knex.schema.createTableIfNotExists('users', table => {
-      console.log(table)
+exports.up = function(knex) {
+  return knex.schema
+    .createTableIfNotExists('users', table => {
       table.increments('id').primary();
       table.string('username');
       table.string('password');
-    });
-  }
-
-  return main().catch(console.error);
+    })
+    .catch(console.error);
 };
 
-exports.down = function(knex, Promise) {
-  async function main() {
-    await knex.schema.hasTable('users').then(function(exists) {
+exports.down = function(knex) {
+  return knex.schema
+    .hasTable('users')
+    .then(() =>  {
       return knex.schema.dropTable('users');
-    });
-  }
-
-  return main().catch(console.error);
+    })
+    .catch(console.error);
 };

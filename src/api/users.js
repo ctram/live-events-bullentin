@@ -16,6 +16,8 @@ function load(app) {
     console.log(req.body);
     const { email, password } = req.body;
 
+    User.query().where('username', em)
+
     throw { msg: 'this is an error'};
     
     // User.query(knex)

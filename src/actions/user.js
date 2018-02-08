@@ -31,7 +31,6 @@ function createUserRequest(data) {
         } else {
           dispatch(createUserFailure(res));
         }
-        
       })
       .then(() => dispatch(actionsLoader.endLoading()));
   };
