@@ -26,11 +26,12 @@ function createUserRequest(data) {
 
     return fetchWithToastr(req)
       .then(res => {
-        if (res.ok) {
-          dispatch(createUserSuccess(res));
-        } else {
-          dispatch(createUserFailure(res));
-        }
+        console.log('res:', res);
+        // if (res.ok) {
+        //   dispatch(createUserSuccess(res));
+        // } else {
+        //   dispatch(createUserFailure(res));
+        // }
       })
       .then(() => dispatch(actionsLoader.endLoading()));
   };

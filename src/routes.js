@@ -11,6 +11,7 @@ export default {
 
     // eslint-disable-next-line no-unused-vars
     app.use((err, req, res, next) => {
+      console.log(err);
       res.status(500).send({ msg: err.msg });
     });
   }

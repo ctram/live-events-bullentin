@@ -16,7 +16,11 @@ const sharedOptions = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['babel-preset-env', 'babel-preset-react', 'babel-preset-stage-1']
+            presets: [
+              ['babel-preset-env', { exclude: ['transform-es2015-classes'] }],
+              ['babel-preset-react'],
+              ['babel-preset-stage-1']
+            ]
           }
         }
       },

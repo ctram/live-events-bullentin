@@ -1,8 +1,6 @@
 import passport from 'passport';
 import User from '../models/user';
 
-const users = User.query();
-
 function load(app) {
   app.post('/login', (req, res) => {
     passport.authenticate('local', {
@@ -13,29 +11,23 @@ function load(app) {
   });
 
   app.post('/users', (req, res) => {
-    console.log('users   ', users);
     const { email, password } = req.body;
 
     if (!email || !password) {
       throw { msg: 'email and password cannot be blank' };
     }
 
-    users.where('email', email).then(rows => {
-      if (rows.length > 1) {
-        throw { msg: 'email already taken' };
+    User.create(req.body).then(data => {
+      const status = data.status || 200;
+      const redirectUrl = data.redirectUrl;
+
+      console.log('redirect  ', redirectUrl);
+      if (redirectUrl) {
+        res.redirect(redirectUrl);
+      } else {
+        res.status(status).json(data);
       }
-      return users.insert(req.body);
     });
-
-    // throw { msg: 'this is an error' };
-
-    // User.query(knex)
-    //   .then(users => {
-    //     console.log('users: ', users);
-    //   })
-    //   .catch(e => {
-    //     console.error(e);
-    //   });
   });
 }
 

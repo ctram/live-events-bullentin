@@ -10,12 +10,16 @@ function fetchWithToastr(req) {
         return res;
       });
     }
-    return res.json().then(json => {
-      const {msg} = json;
-      console.log(msg);
-      toastr.success(msg);
-      return res;
-    });
+    console.log('res:', res);
+
+    return res;
+    
+    // return res.json().then(json => {
+    //   const {msg} = json;
+    //   console.log(msg);
+    //   toastr.success(msg);
+    //   return res;
+    // });
   });
 }
 
