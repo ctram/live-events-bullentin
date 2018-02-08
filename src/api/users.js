@@ -1,7 +1,7 @@
-import knex from '../knex-helpers';
 import passport from 'passport';
 import User from '../models/user';
-// import babelPolyfill from 'babel-polyfill';
+
+const users = User.query();
 
 function load(app) {
   app.post('/login', (req, res) => {
@@ -13,13 +13,22 @@ function load(app) {
   });
 
   app.post('/users', (req, res) => {
-    console.log(req.body);
+    console.log('users   ', users)
     const { email, password } = req.body;
 
-    User.query().where('username', em)
+    if (!email || !password) {
+      throw { msg: 'email and password cannot be blank' };
+    }
 
-    throw { msg: 'this is an error'};
-    
+    users.where('email', email).then(rows => {
+      if (rows.length > 1) {
+        throw { msg: 'email already taken' };
+      }
+      return users.insert(req.body);
+    });
+
+    // throw { msg: 'this is an error' };
+
     // User.query(knex)
     //   .then(users => {
     //     console.log('users: ', users);

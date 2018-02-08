@@ -9,10 +9,11 @@ class User extends Base {
     return {
       properties: {
         id: { type: 'integer' },
-        username: { type: 'string' }
+        username: { type: 'string' },
+        email: { type: 'string' }
       }
     };
   }
 }
 
-module.exports = User; 
+module.exports = User;

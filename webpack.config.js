@@ -13,6 +13,7 @@ const sharedOptions = {
       {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
+        include: [path.resolve(__dirname, 'node_modules/objection')],
         use: {
           loader: 'babel-loader',
           options: {
@@ -32,8 +33,7 @@ const sharedOptions = {
 
 const serverConfig = {
   entry: {
-    app: './src/app.js',
-    // babelPolyfill: 'babel-polyfill'
+    app: './src/app.js'
   },
   target: 'node',
   output: {
