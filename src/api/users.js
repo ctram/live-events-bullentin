@@ -18,11 +18,9 @@ function load(app) {
     }
 
     User.create(req.body).then(data => {
-      const status = data.status || 200;
-      const redirectUrl = data.redirectUrl;
+      let { redirectUrl, status = 200 } = data;
 
-      console.log('redirect  ', redirectUrl);
-      if (redirectUrl) {
+      if (data.redirectUrl) {
         res.redirect(redirectUrl);
       } else {
         res.status(status).json(data);

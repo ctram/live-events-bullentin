@@ -1,26 +1,17 @@
 import toastr from 'toastr';
 
-function fetchWithToastr(req) {
+function betterFetch(req) {
   return fetch(req).then(res => {
-    if (!res.ok) {
-      return res.json().then(json => {
+    return res
+      .json()
+      .then(json => {
         const { msg } = json;
-        console.error(msg);
-        toastr.error(msg);
-        return res;
-      });
-    }
-    console.log('res:', res);
+        res.ok ? toastr.success(msg) : toastr.error(msg);
+      })
+      .catch(e => console.error('response body is not json:', e))
+      .then(() => res);
 
-    return res;
-    
-    // return res.json().then(json => {
-    //   const {msg} = json;
-    //   console.log(msg);
-    //   toastr.success(msg);
-    //   return res;
-    // });
   });
 }
 
-export default fetchWithToastr;
+export default betterFetch;

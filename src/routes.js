@@ -5,8 +5,15 @@ export default {
     loadApi(app);
 
     // index
-    app.get(/.*/, (req, res) => {
+    app.get('/', (req, res) => {
       res.sendFile('./dist/index.html', { root: './' });
+    });
+    app.get('/register', (req, res) => {
+      res.sendFile('./dist/index.html', { root: './' });
+    });
+
+    app.get('/hank', (req, res) => {
+      res.sendFile('./dist/hank.html', { root: './' });
     });
 
     // eslint-disable-next-line no-unused-vars

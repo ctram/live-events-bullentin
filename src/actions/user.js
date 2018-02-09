@@ -1,7 +1,7 @@
 import actionsLoader from './loader';
 import actionTypes from './action-types';
 import appConfig from '../app-config';
-import fetchWithToastr from '../helpers/fetch-wrapper';
+import betterFetch from '../helpers/fetch-wrapper';
 
 function createUserSuccess(data) {
   return { type: actionTypes.CREATE_USER_SUCCESS, data };
@@ -24,14 +24,15 @@ function createUserRequest(data) {
       body: JSON.stringify(data)
     });
 
-    return fetchWithToastr(req)
+    // TODO: tweak to auto redirect in react.
+    return betterFetch(req)
       .then(res => {
-        console.log('res:', res);
-        // if (res.ok) {
-        //   dispatch(createUserSuccess(res));
-        // } else {
-        //   dispatch(createUserFailure(res));
-        // }
+        if (res.ok) {
+          window.reactRouterHistory.push('/hank');
+          dispatch(createUserSuccess(res));
+        } else {
+          dispatch(createUserFailure(res));
+        }
       })
       .then(() => dispatch(actionsLoader.endLoading()));
   };

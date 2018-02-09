@@ -2,21 +2,21 @@ import React from 'react';
 import FormUser from '../containers/form-user';
 import PageWelcome from './page-welcome';
 import Navbar from './navbar';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import $ from 'jQuery';
 import Loader from 'react-loader';
+import Hank from './hank';
 
-export default class Root extends React.Component {
+class Root extends React.Component {
   constructor(props) {
-    
     super(props);
   }
 
   componentDidMount() {
-    const { startLoading, endLoading } = this.props;
-    
+    const { startLoading, endLoading, history } = this.props;
+
     endLoading();
-    
+
     $(document)
       .bind('ajaxSend', () => {
         startLoading();
@@ -24,10 +24,11 @@ export default class Root extends React.Component {
       .bind('ajaxComplete', () => {
         endLoading();
       });
+
+    window.reactRouterHistory = history;
   }
 
   render() {
-    
     return (
       <div className="container">
         <div className="row justify-content-center">
@@ -38,9 +39,12 @@ export default class Root extends React.Component {
             <Route path="/" component={PageWelcome} />
             <Route path="/login" component={FormUser} />
             <Route path="/register" component={FormUser} />
+            <Route path="/hank" component={Hank} />
           </div>
         </Loader>
       </div>
     );
   }
 }
+
+export default withRouter(Root);
