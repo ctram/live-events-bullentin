@@ -1,7 +1,7 @@
 import actionsLoader from './loader';
 import actionTypes from './action-types';
 import appConfig from '../app-config';
-import betterFetch from '../helpers/fetch-wrapper';
+import betterFetch from '../helpers/fetch';
 
 function createUserSuccess(data) {
   return { type: actionTypes.CREATE_USER_SUCCESS, data };
