@@ -2,7 +2,7 @@ import express from 'express';
 import authentication from './authentication';
 import routes from './routes';
 import bodyParser from 'body-parser';
-const  multer = require('multer');
+// const  multer = require('multer');
 
 const app = express();
 app.use(bodyParser.json()); 
