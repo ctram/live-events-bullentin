@@ -4,16 +4,8 @@ export default {
   setRoutes: app => {
     loadApi(app);
 
-    // index
-    app.get('/', (req, res) => {
-      res.sendFile('./dist/index.html', { root: './' });
-    });
-    app.get('/register', (req, res) => {
-      res.sendFile('./dist/index.html', { root: './' });
-    });
-
-    app.get('/hank', (req, res) => {
-      res.sendFile('./dist/hank.html', { root: './' });
+    app.get(/.*/, (req, res) => {
+      res.sendFile('./public/index.html', { root: './' });
     });
 
     // eslint-disable-next-line no-unused-vars
