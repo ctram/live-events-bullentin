@@ -5,10 +5,11 @@ import bodyParser from 'body-parser';
 // const  multer = require('multer');
 
 const app = express();
-app.use(bodyParser.json()); 
-app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('dist'));
 app.use(express.static('node_modules/bootstrap/dist/css'));
+app.use(express.static('public'));
 
 authentication.load();
 routes.setRoutes(app);

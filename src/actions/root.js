@@ -1,7 +1,7 @@
 import actionTypes from './action-types';
 
-function redirect(path) {
-  return { type: actionTypes.REDIRECT, path };
+function redirect(url) {
+  return { type: actionTypes.REDIRECT, redirectUrl: url };
 }
 
 export default {
