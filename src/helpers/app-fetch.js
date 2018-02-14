@@ -1,17 +1,14 @@
 import toastr from 'toastr';
 
-function redirect(url) {
-  debugger
-  // dispatch(actionsRoot.redirect(url));
+function redirect(res) {
   const appHost = 'http://localhost:3000';
-  const path = url.split(appHost)[1];
-  url = path ? path : url;
+  const path = res.url.split(appHost)[1];
+  const url = path ? path : res.url;
 
-  window.reactRouterHistory.push(url);
-  return Promise.resolve();
+  return toastMsg(res).then(() => window.reactRouterHistory.push(url));
 }
 
-function getMsg(res) {
+function toastMsg(res) {
   return res
     .json()
     .then(json => {
@@ -25,24 +22,24 @@ function getMsg(res) {
 }
 
 function ok(res) {
-  return getMsg(res).then(msg => {
+  return toastMsg(res).then(msg => {
     toastr.success(msg);
   });
 }
 
 function error(res) {
-  return getMsg(res).then(msg => {
+  return toastMsg(res).then(msg => {
     toastr.error(msg);
   });
 }
 
-function appFetch(req, dispatch) {
+function appFetch(req) {
   return fetch(req).then(res => {
     // eslint-disable-next-line no-console
     console.log('fetched:', res);
 
     if (res.redirected) {
-      return redirect(res.url, dispatch);
+      return redirect(res);
     } else if (res.ok) {
       return ok(res);
     } else if (res.status >= 500) {

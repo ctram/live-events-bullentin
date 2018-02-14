@@ -28,7 +28,15 @@ class Root extends React.Component {
   }
 
   render() {
-    debugger;
+    function log(history, name) {
+      const { location, match } = history;
+      console.log('--------');
+      console.log('name:', name);
+      console.log('match:', match);
+      console.log('location:', location);
+      return name;
+    }
+
     return (
       <div className="container">
         <div className="row justify-content-center">
@@ -37,14 +45,15 @@ class Root extends React.Component {
         <Loader loaded={this.props.loaded}>
           <div className="row justify-content-center">
             {/*
-                <Route component={PageWelcome} />
-                <Route exact path="/" component={PageWelcome} />
-                <Route exact path="/login" component={FormUser} />
-                <Route exact path="/register" component={FormUser} />
-              */}
-            <Route path="/login" render={() => 'login'} />
-            <Route path="/register" render={() => 'register'} />
-            <Route path="/" render={() => 'welcome'} />
+              <Route exact path="/login" render={history => log(history, 'login')} />
+              <Route exact path="/register" render={history => log(history, 'register')} />
+              <Route exact path="/" render={history => log(history, 'welcome')} />
+            */}
+          
+          
+            <Route exact path="/" component={PageWelcome} />
+            <Route exact path="/register" component={FormUser} />
+            <Route exact path="/login" component={FormUser} />
           </div>
         </Loader>
       </div>
@@ -52,4 +61,4 @@ class Root extends React.Component {
   }
 }
 
-export default withRouter(Root);
+export default Root;

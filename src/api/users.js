@@ -20,11 +20,11 @@ function load(app) {
     User.create(req.body).then(data => {
       let { redirectUrl, status = 200 } = data;
 
-      res.redirect('/');
-      // if (data.redirectUrl) {
-      // } else {
-      //   res.status(status).json(data);
-      // }
+      if (data.redirectUrl) {
+        res.redirect(redirectUrl);
+      } else {
+        res.status(status).json(data);
+      }
     });
   });
 }
