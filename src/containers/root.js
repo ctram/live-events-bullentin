@@ -3,7 +3,7 @@ import Root from '../components/root';
 import actionsLoader from '../actions/loader';
 
 const mapStateToProps = state => {
-  return state.loader;
+  return Object.assign(state.loader, state.root);
 };
 
 const mapDispatchToProps = dispatch => {

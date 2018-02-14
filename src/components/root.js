@@ -14,7 +14,6 @@ class Root extends React.Component {
 
   componentDidMount() {
     const { startLoading, endLoading, history } = this.props;
-
     endLoading();
 
     $(document)
@@ -29,8 +28,7 @@ class Root extends React.Component {
   }
 
   render() {
-    const { redirectUrl } = this.props;
-    
+    debugger;
     return (
       <div className="container">
         <div className="row justify-content-center">
@@ -38,15 +36,15 @@ class Root extends React.Component {
         </div>
         <Loader loaded={this.props.loaded}>
           <div className="row justify-content-center">
-            <Switch>
-              {
-                redirectUrl ? <Redirect to={redirectUrl} /> : null
-              }
-              <Route path="/" component={PageWelcome} />
-              <Route path="/login" component={FormUser} />
-              <Route path="/register" component={FormUser} />
-              <Route path="/hank" component={Hank} />
-            </Switch>
+            {/*
+                <Route component={PageWelcome} />
+                <Route exact path="/" component={PageWelcome} />
+                <Route exact path="/login" component={FormUser} />
+                <Route exact path="/register" component={FormUser} />
+              */}
+            <Route path="/login" render={() => 'login'} />
+            <Route path="/register" render={() => 'register'} />
+            <Route path="/" render={() => 'welcome'} />
           </div>
         </Loader>
       </div>
