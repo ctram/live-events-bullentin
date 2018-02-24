@@ -6,6 +6,7 @@ import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 import $ from 'jQuery';
 import Loader from 'react-loader';
 import Hank from './hank';
+import UserProfile from './user-profile';
 
 class Root extends React.Component {
   constructor(props) {
@@ -16,6 +17,8 @@ class Root extends React.Component {
     const { startLoading, endLoading, history } = this.props;
     endLoading();
 
+    console.log('component mounted')
+    
     $(document)
       .bind('ajaxSend', () => {
         startLoading();
@@ -28,14 +31,14 @@ class Root extends React.Component {
   }
 
   render() {
-    function log(history, name) {
-      const { location, match } = history;
-      console.log('--------');
-      console.log('name:', name);
-      console.log('match:', match);
-      console.log('location:', location);
-      return name;
-    }
+    // function log(history, name) {
+    //   const { location, match } = history;
+    //   console.log('--------');
+    //   console.log('name:', name);
+    //   console.log('match:', match);
+    //   console.log('location:', location);
+    //   return name;
+    // }
 
     return (
       <div className="container">
@@ -49,11 +52,10 @@ class Root extends React.Component {
               <Route exact path="/register" render={history => log(history, 'register')} />
               <Route exact path="/" render={history => log(history, 'welcome')} />
             */}
-          
-          
             <Route exact path="/" component={PageWelcome} />
             <Route exact path="/register" component={FormUser} />
             <Route exact path="/login" component={FormUser} />
+            <Route exact path="/users/:id" users={[1,2,3]} component={UserProfile} />
           </div>
         </Loader>
       </div>

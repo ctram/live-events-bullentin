@@ -51,7 +51,12 @@ class FormUser extends React.Component {
             onChange={e => this.setState({ password: e.target.value })}
           />
         </div>
-        <button type="submit" className="btn btn-primary" onClick={this.handleSubmit} disabled={this.btnSubmitDisabled()}>
+        <button
+          type="submit"
+          className="btn btn-primary"
+          onClick={this.handleSubmit}
+          disabled={this.btnSubmitDisabled()}
+        >
           {labelSubmitBtn}
         </button>
       </form>

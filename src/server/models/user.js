@@ -24,12 +24,19 @@ class User extends Base {
         if (rows.length > 1) {
           return { msg: 'email already taken', status: 400 };
         } else {
-          return users.insert(data).then(() => {
-            return { msg: 'user created', status: 201, redirectUrl: '/' };
+          return users.insert(data).then(user => {
+            return {
+              msg: 'user created, now login',
+              redirectUrl: `/users/${user.id}`,
+              data: { id: user.id, email: user.email }
+            };
           });
         }
       })
-      .catch(e => ({ msg: e, status: 500 }));
+      .catch(e => {
+        console.error(e);
+        return { msg: e, status: 500 };
+      });
   }
 }
 

@@ -1,4 +1,5 @@
 import loadApi from './api/index';
+import passport from 'passport';
 
 export default {
   setRoutes: app => {
