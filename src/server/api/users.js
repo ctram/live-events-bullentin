@@ -49,21 +49,9 @@ function load(app) {
       });
   });
 
-  app.get('/protected', (req, res) => {
-    
-    res.end();
-  });
-
-  app.get('/else', (req, res) => {
-    
-    res.end();
-  });
-
   app.get('/logout', (req, res) => {
-    
     req.logout();
-    
-    res.end();
+    res.json({ redirectUrl: '/' });
   });
 }
 
