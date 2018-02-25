@@ -12,7 +12,7 @@ class UserProfile extends React.Component {
 
   render() {
     const { email } = this.props;
-    console.log('users', this.props.users);
+    
 
     return (
       <div>

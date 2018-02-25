@@ -4,7 +4,7 @@ function getJson(res) {
   return res
     .json()
     .then(json => {
-      console.log('json:', json);
+      
       return json;
     })
     .catch(e => {
@@ -15,11 +15,6 @@ function getJson(res) {
 function ok(res) {
   return getJson(res).then(data => {
     toastr.success(data.msg);
-
-    // if (data.redirectUrl) {
-    //   window.reactRouterHistory.push(data.redirectUrl);
-    // }
-
     return data;
   });
 }
@@ -35,7 +30,7 @@ function appFetch(req) {
   return fetch(req)
     .then(res => {
       // eslint-disable-next-line no-console
-      console.log('fetched:', res);
+      
 
       if (res.ok) {
         return ok(res);

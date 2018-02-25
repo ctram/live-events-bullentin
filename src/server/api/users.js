@@ -3,7 +3,16 @@ import User from '../models/user';
 
 function load(app) {
   app.post('/login', passport.authenticate('local'), (req, res) => {
-    res.end();
+    User.query()
+      .findById(req.user.id)
+      .then(user => {
+        if (user) {
+          delete user.password;
+          return res.json({ user, msg: 'logged in' });
+        }
+
+        return res.status(404).json({ msg: 'user not found' });
+      });
   });
 
   app.post('/users', (req, res) => {
@@ -24,23 +33,38 @@ function load(app) {
       });
   });
 
+  app.get('/users/:id', (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(500);
+    }
+
+    User.query()
+      .findById(req.params.id)
+      .then(user => {
+        if (user) {
+          return res.json({ user });
+        }
+
+        return res.status(404).json({ msg: 'user not found' });
+      });
+  });
+
   app.get('/protected', (req, res) => {
-    console.log('protected authenticated:', req.isAuthenticated());
+    
     res.end();
   });
-  
+
   app.get('/else', (req, res) => {
-    console.log('else authenticated:', req.isAuthenticated());
+    
     res.end();
   });
 
   app.get('/logout', (req, res) => {
-    console.log('before logout', req.session);
+    
     req.logout();
-    console.log('after logout', req.session);
+    
     res.end();
   });
-  
 }
 
 export default {

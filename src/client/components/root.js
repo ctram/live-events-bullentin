@@ -17,7 +17,7 @@ class Root extends React.Component {
     const { startLoading, endLoading, history } = this.props;
     endLoading();
 
-    console.log('component mounted');
+    
 
     $(document)
       .bind('ajaxSend', () => {
@@ -34,10 +34,10 @@ class Root extends React.Component {
     const { loggedIn } = this.props;
     // function log(history, name) {
     //   const { location, match } = history;
-    //   console.log('--------');
-    //   console.log('name:', name);
-    //   console.log('match:', match);
-    //   console.log('location:', location);
+    //   
+    //   
+    //   
+    //   
     //   return name;
     // }
     const NavbarWrapper = withRouter(Navbar);

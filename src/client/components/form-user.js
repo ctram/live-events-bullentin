@@ -26,7 +26,6 @@ class FormUser extends React.Component {
     const labelSubmitBtn = this.pathname === 'register' ? 'Register' : 'Submit';
     return (
       <form>
-        {this.pathname}
         <div className="form-group">
           <label htmlFor="email">Email address</label>
           <input

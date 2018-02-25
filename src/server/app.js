@@ -26,14 +26,14 @@ passport.use(
     User.query()
       .findOne({ email })
       .then(user => {
-        console.log('user', user);
+        
         if (!user) {
           return done(null, false, { message: 'Incorrect email.' });
         }
         if (user.password !== password) {
           return done(null, false, { message: 'Incorrect password.' });
         }
-        console.log('user found');
+        
         return done(null, user);
       })
       .catch(e => {
@@ -55,7 +55,7 @@ passport.deserializeUser((id, done) => {
         return done('user not found', false);
       }
 
-      console.log('user found', user);
+      
       return done(null, user);
     })
     .catch(e => {
