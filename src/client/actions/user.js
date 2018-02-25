@@ -6,8 +6,6 @@ import Users from '../collections/users';
 
 window.ClientStore = window.ClientStore || {};
 window.ClientStore.users = window.ClientStore.users || new Users();
-const users = window.ClientStore.users;
-
 const urlDomain = `http://${appConfig.host}:${appConfig.port}`;
 
 const headers = {
@@ -32,7 +30,7 @@ function createUserRequest(data) {
     const req = new Request(url, {
       headers,
       method: 'POST',
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
 
     return appFetch(req, dispatch)
@@ -51,16 +49,15 @@ function loginUserRequest(data) {
     const req = new Request(url, {
       headers,
       method: 'POST',
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
+      credentials: 'include'
     });
 
-    return appFetch(req, dispatch)
+    return appFetch(req)
       .then(data => {
         console.log('login response:', data);
-        users.add(data.user);
         if (data.redirectUrl) {
           window.reactRouterHistory.push(data.redirectUrl);
-          console.log('users:', users);
         }
       })
       .catch(e => console.error('appFetch error:', e))
