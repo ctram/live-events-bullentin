@@ -28,6 +28,7 @@ function load(app) {
     console.log('protected authenticated:', req.isAuthenticated());
     res.end();
   });
+  
   app.get('/else', (req, res) => {
     console.log('else authenticated:', req.isAuthenticated());
     res.end();

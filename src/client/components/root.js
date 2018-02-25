@@ -17,8 +17,8 @@ class Root extends React.Component {
     const { startLoading, endLoading, history } = this.props;
     endLoading();
 
-    console.log('component mounted')
-    
+    console.log('component mounted');
+
     $(document)
       .bind('ajaxSend', () => {
         startLoading();
@@ -31,6 +31,7 @@ class Root extends React.Component {
   }
 
   render() {
+    const { loggedIn } = this.props;
     // function log(history, name) {
     //   const { location, match } = history;
     //   console.log('--------');
@@ -39,11 +40,12 @@ class Root extends React.Component {
     //   console.log('location:', location);
     //   return name;
     // }
-
+    const NavbarWrapper = withRouter(Navbar);
+    
     return (
       <div className="container">
         <div className="row justify-content-center">
-          <Navbar />
+          <NavbarWrapper loggedIn={loggedIn} />
         </div>
         <Loader loaded={this.props.loaded}>
           <div className="row justify-content-center">
@@ -55,7 +57,7 @@ class Root extends React.Component {
             <Route exact path="/" component={PageWelcome} />
             <Route exact path="/register" component={FormUser} />
             <Route exact path="/login" component={FormUser} />
-            <Route exact path="/users/:id" users={[1,2,3]} component={UserProfile} />
+            <Route exact path="/users/:id" users={[1, 2, 3]} component={UserProfile} />
           </div>
         </Loader>
       </div>

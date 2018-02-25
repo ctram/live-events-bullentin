@@ -41,6 +41,10 @@ function createUserRequest(data) {
   };
 }
 
+function loginUserSuccess(user) {
+  return { type: actionTypes.LOGIN_USER_SUCCESS, user };
+}
+
 function loginUserRequest(data) {
   return dispatch => {
     dispatch(actionsLoader.startLoading());
@@ -56,6 +60,7 @@ function loginUserRequest(data) {
     return appFetch(req)
       .then(data => {
         console.log('login response:', data);
+        dispatch(loginUserSuccess(data.user));
         if (data.redirectUrl) {
           window.reactRouterHistory.push(data.redirectUrl);
         }
