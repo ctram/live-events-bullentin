@@ -13,7 +13,6 @@ class FormUser extends React.Component {
     e.preventDefault();
     const { createUser, loginUser } = this.props;
     const { email, password } = this.state;
-    // const { email, password } = this.refs;
     const data = { email, password };
     this.pathname === 'register' ? createUser(data) : loginUser(data);
   }

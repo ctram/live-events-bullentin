@@ -2,15 +2,8 @@ import passport from 'passport';
 import User from '../models/user';
 
 function load(app) {
-  app.post('/login', passport.authenticate('local'), (req, res, next) => {
-    const redirectUrl = `/users/${req.user.id}`;
-    const user = User.query()
-      .findById(req.user.id)
-      .then(user => {
-        console.log('user:', user);
-        delete user.passport;
-        res.json({ msg: 'Successfully logged in!', redirectUrl, user });
-      });
+  app.post('/login', passport.authenticate('local'), (req, res) => {
+    res.end();
   });
 
   app.post('/users', (req, res) => {
@@ -30,6 +23,23 @@ function load(app) {
         res.status(500).json({ msg: e });
       });
   });
+
+  app.get('/protected', (req, res) => {
+    console.log('protected authenticated:', req.isAuthenticated());
+    res.end();
+  });
+  app.get('/else', (req, res) => {
+    console.log('else authenticated:', req.isAuthenticated());
+    res.end();
+  });
+
+  app.get('/logout', (req, res) => {
+    console.log('before logout', req.session);
+    req.logout();
+    console.log('after logout', req.session);
+    res.end();
+  });
+  
 }
 
 export default {
