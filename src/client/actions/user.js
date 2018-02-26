@@ -5,8 +5,7 @@ import appFetch from '../helpers/app-fetch';
 import Users from '../collections/users';
 import requestParams from '../helpers/request-params';
 
-window.ClientStore = window.ClientStore || {};
-window.ClientStore.users = window.ClientStore.users || new Users();
+const users = new Users();
 
 function createUserSuccess(data) {
   data = Object.assign(data, { redirectUrl: '/login' });

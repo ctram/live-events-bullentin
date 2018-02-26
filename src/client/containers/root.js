@@ -2,10 +2,12 @@ import { connect } from 'react-redux';
 import Root from '../components/root';
 import actionsLoader from '../actions/loader';
 import actionsUser from '../actions/user';
+import actionsUsers from '../actions/users';
 import { withRouter } from 'react-router-dom';
 
 const mapStateToProps = state => {
-  return Object.assign(state.loader, state.root, state.user);
+  
+  return Object.assign(state.loader, state.root, state.user, state.users);
 };
 
 const mapDispatchToProps = dispatch => {
@@ -20,10 +22,10 @@ const mapDispatchToProps = dispatch => {
       dispatch(actionsUser.fetchUserRequest());
     },
     fetchUsersRequest: () => {
-      dispatch(actionsUser.fetchUsersRequest());
+      dispatch(actionsUsers.fetchUsersRequest());
     },
     fetchUsersSuccess: users => {
-      dispatch(actionsUser.fetchUsersSuccess(users));
+      dispatch(actionsUsers.fetchUsersSuccess(users));
     }
   };
 };

@@ -29,9 +29,8 @@ class Root extends React.Component {
   }
 
   render() {
-    const { location, fetchUserRequest, fetchUsersRequest, fetchUsersSuccess } = this.props;
+    const { location, fetchUserRequest, fetchUsersRequest, fetchUsersSuccess, loggedIn, users } = this.props;
 
-    const { loggedIn } = this.props;
     return (
       <div className="container">
         <div className="row justify-content-center">
@@ -51,6 +50,7 @@ class Root extends React.Component {
                     fetchUsersRequest={fetchUsersRequest}
                     fetchUsersSuccess={fetchUsersSuccess}
                     location={location}
+                    users={users}
                   />
                 );
               }}
