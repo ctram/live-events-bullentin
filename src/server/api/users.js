@@ -2,20 +2,20 @@ import passport from 'passport';
 import User from '../models/user';
 
 function load(app) {
-  app.post('/login', passport.authenticate('local'), (req, res) => {
+  app.post('/api/login', passport.authenticate('local'), (req, res) => {
     User.query()
       .findById(req.user.id)
       .then(user => {
         if (user) {
           delete user.password;
-          return res.json({ user, msg: 'logged in' });
+          return res.json({ user, msg: 'logged in', redirectUrl: '/' });
         }
 
         return res.status(404).json({ msg: 'user not found' });
       });
   });
 
-  app.post('/users', (req, res) => {
+  app.post('/api/users', (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -33,7 +33,17 @@ function load(app) {
       });
   });
 
-  app.get('/users/:id', (req, res) => {
+  app.get('/api/users', (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ msg: 'not authorized' });
+    }
+
+    User.query().then(users => {
+      res.json(users);
+    });
+  });
+
+  app.get('/api/users/:id', (req, res) => {
     if (!req.isAuthenticated()) {
       return res.status(500);
     }
@@ -49,7 +59,7 @@ function load(app) {
       });
   });
 
-  app.get('/logout', (req, res) => {
+  app.get('/api/logout', (req, res) => {
     req.logout();
     res.json({ redirectUrl: '/' });
   });

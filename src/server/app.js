@@ -9,14 +9,13 @@ import User from './models/user';
 
 const app = express();
 app.use(express.static('dist'));
-app.use(express.static('node_modules/bootstrap/dist/css'));
 app.use(express.static('public'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use(session({ secret: 'cat' }));
+app.use(session({ secret: 'cat', maxAge: 12000000000  }));
 
 app.use(passport.initialize());
 app.use(passport.session());

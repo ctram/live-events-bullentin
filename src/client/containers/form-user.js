@@ -2,11 +2,11 @@ import { connect } from 'react-redux';
 import FormUser from '../components/form-user';
 import actionUser from '../actions/user';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return state;
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     createUser: data => {
       dispatch(actionUser.createUserRequest(data));

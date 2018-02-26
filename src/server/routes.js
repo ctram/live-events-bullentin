@@ -5,7 +5,8 @@ export default {
     loadApi(app);
 
     app.get(/.*/, (req, res) => {
-      res.sendFile('./public/index.html', { root: './' });
+      console.log('path', req.path);
+      res.sendFile('index.html', { root: './public' });
     });
 
     // eslint-disable-next-line no-unused-vars

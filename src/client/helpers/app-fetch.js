@@ -4,7 +4,6 @@ function getJson(res) {
   return res
     .json()
     .then(json => {
-      
       return json;
     })
     .catch(e => {
@@ -12,38 +11,28 @@ function getJson(res) {
     });
 }
 
-function ok(res) {
-  return getJson(res).then(data => {
-    toastr.success(data.msg);
-    return data;
-  });
-}
-
-function error(res) {
-  return getJson(res).then(data => {
-    toastr.error(data.msg || 'unknown error');
-    return data;
-  });
-}
-
 function appFetch(req) {
+  let status;
+
   return fetch(req)
     .then(res => {
-      // eslint-disable-next-line no-console
-      
-
-      if (res.ok) {
-        return ok(res);
-      } else if (res.status >= 400) {
-        return error(res);
+      status = res.status;
+      return getJson(res);
+    })
+    .then(json => {
+      if (json.redirectUrl) {
+        window.reactRouterHistory.push(json.redirectUrl);
       }
 
-      return Promise.resolve();
-    })
-    .catch(e => {
-      // eslint-disable-next-line no-console
-      console.error('appFetch error:', e);
+      if (json.msg) {
+        if (status >= 200 && status < 400) {
+          toastr.success(json.msg);
+        } else if (status >= 400) {
+          toastr.error(json.msg || 'unknown error');
+        }
+      }
+
+      return json;
     });
 }
-
 export default appFetch;

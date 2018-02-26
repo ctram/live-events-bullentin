@@ -1,18 +1,21 @@
 import React from 'react';
-import appFetch from '../helpers/app-fetch';
-
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
   }
 
   componentDidMount() {
-    // appFetch
+    const {location } = this.props;
+    const userId = location.pathname.split('/')[2];
+    const { fetchUserRequest } = this.props;
+
+    fetchUserRequest(userId).then(() => {
+      ;
+    });
   }
 
   render() {
     const { email } = this.props;
-    
 
     return (
       <div>

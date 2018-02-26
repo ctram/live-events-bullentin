@@ -1,4 +1,8 @@
+const port = 3000;
+const host = 'localhost'; 
+
 export default {
-  port: 3000,
-  host: 'localhost'
+  port,
+  host,
+  urlDomain: `http://${host}:${port}`
 };

@@ -17,6 +17,7 @@ function LinkWrapper({ active, to, children }) {
 export default class Navbar extends React.Component {
   render() {
     const { location: { pathname }, loggedIn } = this.props;
+
     return (
       <nav className="navbar navbar-expand-sm navbar-light">
         <ul className="navbar-nav">
@@ -28,12 +29,21 @@ export default class Navbar extends React.Component {
               Login
             </LinkWrapper>
           )}
-          <LinkWrapper to="/register" active={pathname === '/register'}>
-            Register
-          </LinkWrapper>
+          {!loggedIn && (
+            <LinkWrapper to="/register" active={pathname === '/register'}>
+              Register
+            </LinkWrapper>
+          )}
+          {loggedIn && (
+            <LinkWrapper to="/users" active={pathname === '/users'}>
+              Users
+            </LinkWrapper>
+          )}
           {loggedIn && (
             <li className="nav-item">
-              <a href="/logout" className="nav-link">Log Out</a>
+              <a href="/logout" className="nav-link">
+                Log Out
+              </a>
             </li>
           )}
         </ul>
