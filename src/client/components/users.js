@@ -11,7 +11,7 @@ export default class Users extends React.Component {
   }
 
   componentDidMount() {
-    const { fetchUsersRequest, fetchUsersSuccess } = this.props;
+    const { fetchUsersRequest } = this.props;
     fetchUsersRequest();
   }
 
@@ -23,8 +23,8 @@ export default class Users extends React.Component {
       <div>
         <h1>Users</h1>
         <ul>
-          {users.map(user => {
-            return <UserItem user={user} />;
+          {users.map((user, idx) => {
+            return <UserItem user={user} key={idx} />;
           })}
         </ul>
       </div>

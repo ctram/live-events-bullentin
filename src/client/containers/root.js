@@ -23,9 +23,6 @@ const mapDispatchToProps = dispatch => {
     },
     fetchUsersRequest: () => {
       dispatch(actionsUsers.fetchUsersRequest());
-    },
-    fetchUsersSuccess: users => {
-      dispatch(actionsUsers.fetchUsersSuccess(users));
     }
   };
 };
