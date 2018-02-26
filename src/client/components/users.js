@@ -1,7 +1,6 @@
 import React from 'react';
 
-function UserItem({ user: email }) {
-  
+function UserItem({ user: { email } }) {
   return <li>{email}</li>;
 }
 
@@ -17,8 +16,6 @@ export default class Users extends React.Component {
 
   render() {
     let { users } = this.props;
-    users = users || [];
-
     return (
       <div>
         <h1>Users</h1>

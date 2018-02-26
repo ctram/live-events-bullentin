@@ -6,7 +6,6 @@ import actionsUsers from '../actions/users';
 import { withRouter } from 'react-router-dom';
 
 const mapStateToProps = state => {
-  
   return Object.assign(state.loader, state.root, state.user, state.users);
 };
 
