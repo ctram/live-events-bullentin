@@ -3,7 +3,7 @@ import { createLogger } from 'redux-logger';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import reducers from './reducers/index';
-import ContainerRoot from './containers/root';
+import Root from './components/root';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
@@ -18,7 +18,7 @@ const store = createStore(reducers, applyMiddleware(thunkMiddleware, loggerMiddl
 const app = (
   <Provider store={store}>
     <BrowserRouter>
-      <ContainerRoot />
+      <Root />
     </BrowserRouter>
   </Provider>
 );

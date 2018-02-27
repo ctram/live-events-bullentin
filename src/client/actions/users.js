@@ -1,10 +1,7 @@
 import actionTypes from './action-types';
 import appConfig from '../app-config';
 import appFetch from '../helpers/app-fetch';
-import Users from '../collections/users';
 import requestParams from '../helpers/request-params';
-
-const users = new Users();
 
 function fetchUsersRequest() {
   return dispatch => {
@@ -15,7 +12,6 @@ function fetchUsersRequest() {
 
     return appFetch(req)
       .then(data => {
-        
         if (data.users) {
           return dispatch(fetchUsersSuccess(data.users));
         }

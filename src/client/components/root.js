@@ -8,8 +8,13 @@ import Loader from 'react-loader';
 import UserProfile from './user-profile';
 import actionsUser from '../actions/user';
 import Users from './users';
+import { connect } from 'react-redux';
+import actionsLoader from '../actions/loader';
+import actionsUsers from '../actions/users';
+import { withRouter } from 'react-router-dom';
 
-class Root extends React.Component {
+
+export class Root extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -29,7 +34,7 @@ class Root extends React.Component {
   }
 
   render() {
-    const { location, fetchUserRequest, fetchUsersRequest, loggedIn, users } = this.props;
+    const { location, fetchUserRequest, loggedIn } = this.props;
 
     return (
       <div className="container">
@@ -45,13 +50,7 @@ class Root extends React.Component {
               exact
               path="/users"
               render={() => {
-                return (
-                  <Users
-                    fetchUsersRequest={fetchUsersRequest}
-                    location={location}
-                    users={users}
-                  />
-                );
+                return <Users location={location} />;
               }}
             />
             <Route
@@ -68,4 +67,25 @@ class Root extends React.Component {
   }
 }
 
-export default Root;
+const mapStateToProps = state => {
+  return Object.assign(state.loader, state.root, state.user, state.users);
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    startLoading: () => {
+      dispatch(actionsLoader.startLoading());
+    },
+    endLoading: () => {
+      dispatch(actionsLoader.endLoading());
+    },
+    fetchUserRequest: () => {
+      dispatch(actionsUser.fetchUserRequest());
+    },
+    fetchUsersRequest: () => {
+      dispatch(actionsUsers.fetchUsersRequest());
+    }
+  };
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Root));

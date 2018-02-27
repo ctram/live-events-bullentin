@@ -1,10 +1,12 @@
+import { connect } from 'react-redux';
 import React from 'react';
+import actionsUsers from '../actions/users';
 
 function UserItem({ user: { email } }) {
   return <li>{email}</li>;
 }
 
-export default class Users extends React.Component {
+export class Users extends React.Component {
   constructor() {
     super();
   }
@@ -28,3 +30,17 @@ export default class Users extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return Object.assign(state.users);
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchUsersRequest: () => {
+      dispatch(actionsUsers.fetchUsersRequest());
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Users);

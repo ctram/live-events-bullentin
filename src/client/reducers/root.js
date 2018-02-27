@@ -13,7 +13,7 @@ function root(state = initialState, action) {
     case actionTypes.REDIRECT:
       [host, path] = action.redirectUrl.split(appHost);
       url = path ? path : action.redirectUrl;
-      return Object.assign(state, { redirectUrl: url });
+      return Object.assign({}, state, { redirectUrl: url });
     default:
       return state;
   }
