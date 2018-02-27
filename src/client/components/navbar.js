@@ -40,6 +40,11 @@ export default class Navbar extends React.Component {
             </LinkWrapper>
           )}
           {loggedIn && (
+            <LinkWrapper to="/profile" active={pathname === '/profile'}>
+              Profile
+            </LinkWrapper>
+          )}
+          {loggedIn && (
             <li className="nav-item">
               <a href="/logout" className="nav-link">
                 Log Out

@@ -1,28 +1,32 @@
+import actionsUsers from '../actions/users';
 import React from 'react';
+import { connect } from 'react-redux';
+
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
   }
 
   componentDidMount() {
-    const {location } = this.props;
-    const userId = location.pathname.split('/')[2];
-    const { fetchUserRequest } = this.props;
-
-    fetchUserRequest(userId).then(() => {
-      ;
-    });
+    this.props.getOrFetchCurrentUser();
   }
 
   render() {
-    const { email } = this.props;
-
+    const { currentUser } = this.props;
     return (
       <div>
-        <span>Email:</span> {email}
+        <span>Email:</span> {currentUser.email}
       </div>
     );
   }
 }
 
-export default UserProfile;
+const mapStateToProps = state => {
+  return Object.assign(state.storeUsers);
+};
+
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

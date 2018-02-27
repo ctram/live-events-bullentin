@@ -32,7 +32,7 @@ export class Users extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return Object.assign(state.users);
+  return Object.assign(state.storeUsers);
 };
 
 const mapDispatchToProps = dispatch => {

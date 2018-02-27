@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import FormUser from '../components/form-user';
-import actionUser from '../actions/user';
+import actionUsers from '../actions/users';
 
 const mapStateToProps = state => {
   return state;
@@ -9,10 +9,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     createUser: data => {
-      dispatch(actionUser.createUserRequest(data));
+      dispatch(actionUsers.createUserRequest(data));
     },
     loginUser: data => {
-      dispatch(actionUser.loginUserRequest(data));
+      dispatch(actionUsers.loginUserRequest(data));
     }
   };
 };

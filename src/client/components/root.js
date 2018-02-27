@@ -6,13 +6,11 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import $ from 'jQuery';
 import Loader from 'react-loader';
 import UserProfile from './user-profile';
-import actionsUser from '../actions/user';
 import Users from './users';
 import { connect } from 'react-redux';
 import actionsLoader from '../actions/loader';
 import actionsUsers from '../actions/users';
 import { withRouter } from 'react-router-dom';
-
 
 export class Root extends React.Component {
   constructor(props) {
@@ -55,9 +53,9 @@ export class Root extends React.Component {
             />
             <Route
               exact
-              path="/users/:id"
+              path="/profile"
               render={() => {
-                return <UserProfile fetchUserRequest={fetchUserRequest} location={location} />;
+                return <UserProfile location={location} />;
               }}
             />
           </div>
@@ -68,7 +66,7 @@ export class Root extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return Object.assign(state.loader, state.root, state.user, state.users);
+  return Object.assign(state.loader, state.root, state.storeUsers);
 };
 
 const mapDispatchToProps = dispatch => {
@@ -78,9 +76,6 @@ const mapDispatchToProps = dispatch => {
     },
     endLoading: () => {
       dispatch(actionsLoader.endLoading());
-    },
-    fetchUserRequest: () => {
-      dispatch(actionsUser.fetchUserRequest());
     },
     fetchUsersRequest: () => {
       dispatch(actionsUsers.fetchUsersRequest());
