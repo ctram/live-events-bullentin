@@ -66,8 +66,6 @@ function loginUserRequest(data) {
 
     return appFetch(req)
       .then(data => {
-        console.log('login response:', data);
-
         dispatch(loginUserSuccess(data.user));
         if (data.redirectUrl) {
           window.reactRouterHistory.push(data.redirectUrl);

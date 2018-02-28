@@ -1,4 +1,4 @@
-exports.up = function(knex) {
+exports.up = knex => {
   return knex.schema
     .createTableIfNotExists('users', table => {
       table.increments('id').primary();
@@ -8,7 +8,7 @@ exports.up = function(knex) {
     .catch(console.error);
 };
 
-exports.down = function(knex) {
+exports.down = knex => {
   return knex.schema
     .hasTable('users')
     .then(() =>  {
