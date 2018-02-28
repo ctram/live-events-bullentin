@@ -13,6 +13,7 @@ import actionsUsers from '../actions/users';
 import { withRouter } from 'react-router-dom';
 import Templates from './templates';
 import ErrorBoundary from './error-boundary';
+import FormTemplate from './form-template';
 
 export class Root extends React.Component {
   constructor(props) {
@@ -62,6 +63,7 @@ export class Root extends React.Component {
                 }}
               />
               <Route exact path="/templates" component={Templates} />
+              <Route exact path="/templates/new" component={FormTemplate} />
             </div>
           </ErrorBoundary>
         </Loader>

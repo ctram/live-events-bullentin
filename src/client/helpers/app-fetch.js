@@ -17,6 +17,12 @@ function appFetch(req) {
   return fetch(req)
     .then(res => {
       status = res.status;
+
+      if (status === 401) {
+        toastr.error('Not Authorized');
+        return {};
+      }
+      
       return getJson(res);
     })
     .then(json => {
