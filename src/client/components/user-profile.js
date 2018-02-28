@@ -8,7 +8,6 @@ class UserProfile extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getOrFetchCurrentUser();
   }
 
   render() {
