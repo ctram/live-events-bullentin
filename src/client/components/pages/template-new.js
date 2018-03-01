@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'underscore';
 import FormTemplate from '../form-template';
+import Template from '../../models/template';
 
 export class PageTemplateNew extends React.Component {
   constructor(props) {
@@ -8,11 +9,10 @@ export class PageTemplateNew extends React.Component {
   }
 
   render() {
-    const { template } = this.props;
     return (
       <section>
         <h1>Add New Template</h1>
-        <FormTemplate template={template} />
+        <FormTemplate template={new Template()} />
       </section>
     );
   }

@@ -7,9 +7,13 @@ import actionsTemplates from '../actions/templates';
 export class FormTemplate extends React.Component {
   constructor(props) {
     super(props);
+    const { template } = props;
+    const templateName = template.get('name') || '';
+    const templateSelector = template.get('selector') || '';
+
     this.state = {
-      templateName: '',
-      templateSelector: ''
+      templateName,
+      templateSelector
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -37,6 +41,7 @@ export class FormTemplate extends React.Component {
 
   render() {
     const { templateName, templateSelector } = this.state;
+    const { disabled } = this.props;
 
     return (
       <form>
@@ -49,6 +54,7 @@ export class FormTemplate extends React.Component {
             value={templateName}
             onChange={this.handleChange}
             ref="inputTemplateName"
+            disabled={disabled}
           />
         </fieldset>
         <fieldset className="form-group">
@@ -60,9 +66,10 @@ export class FormTemplate extends React.Component {
             value={templateSelector}
             onChange={this.handleChange}
             ref="inputTemplateSelector"
+            disabled={disabled}
           />
         </fieldset>
-        <button className="btn btn-primary" onClick={this.handleSubmit}>
+        <button className="btn btn-primary" onClick={this.handleSubmit} disabled={disabled}>
           Add Template
         </button>
       </form>

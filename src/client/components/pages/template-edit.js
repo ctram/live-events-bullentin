@@ -23,14 +23,13 @@ export class TemplateEdit extends React.Component {
 
   render() {
     const { template } = this.props;
-
     const mock = [];
 
     return (
       <div>
         <section>
-          <h1>{template.name}</h1>
-          <FormTemplate template={template} />
+          <h1>{template.get('name')}</h1>
+          <FormTemplate template={template} disabled={true} />
         </section>
         <hr />
         <section>
