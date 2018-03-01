@@ -1,18 +1,24 @@
 import loadApi from './api/index';
+import ejs from 'ejs';
 
 export default {
   setRoutes: app => {
     loadApi(app);
 
     app.get(/.*/, (req, res) => {
-      console.log('path', req.path);
-      res.sendFile('index.html', { root: './public' });
+      // Dynamically set the path to the main script
+      const src = '../' + 'index.bundle.js';
+      const data = {
+        script: `<script src="${src}"></script>`
+      };
+      const content = ejs.renderFile('./src/server/views/index.ejs', data, null, (err, str) => str);
+      res.send(content);
     });
 
     // eslint-disable-next-line no-unused-vars
     app.use((err, req, res, next) => {
       console.log(err);
-      res.status(500).send({ msg: err.msg });
+      res.status(500).json({ msg: err.msg });
     });
   }
 };
