@@ -26,8 +26,6 @@ class User extends Base {
         } else {
           return users.insert(data).then(user => {
             return {
-              msg: 'user created, now login',
-              redirectUrl: `/users/${user.id}`,
               data: { id: user.id, email: user.email }
             };
           });

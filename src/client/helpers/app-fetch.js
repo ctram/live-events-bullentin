@@ -13,11 +13,12 @@ function getJson(res) {
 
 function appFetch(req) {
   let status;
-
+  let response;
+  
   return fetch(req)
     .then(res => {
       status = res.status;
-
+      response = res;
       if (status === 401) {
         toastr.error('Not Authorized');
         return {};
@@ -26,10 +27,9 @@ function appFetch(req) {
       return getJson(res);
     })
     .then(json => {
-      if (json.redirectUrl) {
-        window.reactRouterHistory.push(json.redirectUrl);
-      }
-
+      response;
+      
+      
       if (json.msg) {
         if (status >= 200 && status < 400) {
           toastr.success(json.msg);

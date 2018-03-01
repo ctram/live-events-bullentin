@@ -36,7 +36,6 @@ function createUserSuccess(data) {
 
 function createUserRequest(data) {
   return function(dispatch) {
-    dispatch(actionsLoader.startLoading());
     const req = new Request(
       // eslint-disable-next-line quotes
       appConfig.urlDomain + `/api/users`,
@@ -47,7 +46,6 @@ function createUserRequest(data) {
       .then(data => {
         dispatch(createUserSuccess(data));
       })
-      .then(() => dispatch(actionsLoader.endLoading()));
   };
 }
 

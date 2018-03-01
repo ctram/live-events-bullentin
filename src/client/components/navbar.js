@@ -25,13 +25,13 @@ export default class Navbar extends React.Component {
             Home
           </LinkWrapper>
           {!loggedIn && (
-            <LinkWrapper to="/login" active={pathname === '/login'}>
-              Login
+            <LinkWrapper to="/register" active={pathname === '/register'}>
+              Register
             </LinkWrapper>
           )}
           {!loggedIn && (
-            <LinkWrapper to="/register" active={pathname === '/register'}>
-              Register
+            <LinkWrapper to="/login" active={pathname === '/login'}>
+              Login
             </LinkWrapper>
           )}
           {loggedIn && (

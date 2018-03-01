@@ -36,7 +36,7 @@ function load(app) {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      res.status(500).json({ msg: 'email and password cannot be blank' });
+      res.status(400).json({ msg: 'email and password cannot be blank' });
       return;
     }
 
@@ -52,7 +52,7 @@ function load(app) {
 
   app.get('/api/users/:id', (req, res) => {
     if (!req.isAuthenticated()) {
-      return res.status(500);
+      return res.status(401);
     }
 
     User.query()
