@@ -46,38 +46,40 @@ export class Root extends React.Component {
         <Loader loaded={this.props.loaded}>
           <ErrorBoundary>
             <div className="row justify-content-center">
-              <Route exact path="/" component={PageWelcome} />
-              <Route exact path="/register" component={FormUser} />
-              <Route exact path="/login" component={FormUser} />
-              <Route
-                exact
-                path="/users"
-                render={() => {
-                  return <Users location={location} />;
-                }}
-              />
-              <Route
-                exact
-                path="/profile"
-                render={() => {
-                  return <UserProfile location={location} />;
-                }}
-              />
-              <Route exact path="/templates" component={PageTemplates} />
-              <Route
-                exact
-                path="/templates/new"
-                render={() => {
-                  return <PageTemplateNew location={location} />;
-                }}
-              />
-              <Route
-                exact
-                path="/templates/:id"
-                render={() => {
-                  return <PageTemplateEdit location={location} />;
-                }}
-              />
+              <Switch>
+                <Route exact path="/" component={PageWelcome} />
+                <Route exact path="/register" component={FormUser} />
+                <Route exact path="/login" component={FormUser} />
+                <Route
+                  exact
+                  path="/users"
+                  render={() => {
+                    return <Users location={location} />;
+                  }}
+                />
+                <Route
+                  exact
+                  path="/profile"
+                  render={() => {
+                    return <UserProfile location={location} />;
+                  }}
+                />
+                <Route exact path="/templates" component={PageTemplates} />
+                <Route
+                  exact
+                  path="/templates/new"
+                  render={() => {
+                    return <PageTemplateNew location={location} />;
+                  }}
+                />
+                <Route
+                  exact
+                  path="/templates/:id"
+                  render={() => {
+                    return <PageTemplateEdit location={location} />;
+                  }}
+                />
+              </Switch>
             </div>
           </ErrorBoundary>
         </Loader>
