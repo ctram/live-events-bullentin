@@ -24,6 +24,8 @@ export class TemplateEdit extends React.Component {
   render() {
     const { template } = this.props;
 
+    const mock = [];
+
     return (
       <div>
         <section>
@@ -34,7 +36,7 @@ export class TemplateEdit extends React.Component {
         <section>
           <h1>Events</h1>
           <ul>
-            {template.events.map((event, idx) => {
+            {mock.map((event, idx) => {
               return (
                 <li key={idx}>
                   <Event event={event} />

@@ -18,7 +18,7 @@ function load(app) {
 
   app.get('/api/logout', (req, res) => {
     req.logout();
-    res.json({ redirectUrl: '/' });
+    res.end();
   });
 
   //////// USERS ////////
