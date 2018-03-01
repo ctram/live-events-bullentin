@@ -40,7 +40,6 @@ export class FormTemplate extends React.Component {
 
     return (
       <form>
-        <h1>Template</h1>
         <fieldset className="form-group">
           <label htmlFor="name">Name</label>
           <input

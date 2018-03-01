@@ -11,9 +11,10 @@ import { connect } from 'react-redux';
 import actionsLoader from '../actions/loader';
 import actionsUsers from '../actions/users';
 import { withRouter } from 'react-router-dom';
-import Templates from './templates';
+import PageTemplates from './pages/templates';
 import ErrorBoundary from './error-boundary';
-import FormTemplate from './form-template';
+import PageTemplateNew from './pages/template-new';
+import PageTemplateEdit from './pages/template-edit';
 
 export class Root extends React.Component {
   constructor(props) {
@@ -62,8 +63,21 @@ export class Root extends React.Component {
                   return <UserProfile location={location} />;
                 }}
               />
-              <Route exact path="/templates" component={Templates} />
-              <Route exact path="/templates/new" component={FormTemplate} />
+              <Route exact path="/templates" component={PageTemplates} />
+              <Route
+                exact
+                path="/templates/new"
+                render={() => {
+                  return <PageTemplateNew location={location} />;
+                }}
+              />
+              <Route
+                exact
+                path="/templates/:id"
+                render={() => {
+                  return <PageTemplateEdit location={location} />;
+                }}
+              />
             </div>
           </ErrorBoundary>
         </Loader>

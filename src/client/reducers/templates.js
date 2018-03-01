@@ -1,14 +1,21 @@
 import actionTypes from '../actions/action-types';
+import Templates from '../collections/templates';
 
 const intialState = {
-  templates: []
+  templates: new Templates()
 };
 
 function storeTemplates(state = intialState, action) {
-  
+  const { templates } = state;
+
   switch (action.type) {
     case actionTypes.FETCH_TEMPLATES_SUCCESS:
-      return Object.assign({}, state, { templates: action.templates });
+      return Object.assign({}, state, {
+        templates: new Templates(action.templates)
+      });
+    case actionTypes.FETCH_TEMPLATE_SUCCESS:
+      templates.add(action.template);
+      return Object.assign({}, state, { templates });
     default:
       return state;
   }

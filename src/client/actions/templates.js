@@ -27,15 +27,31 @@ function fetchTemplatesRequest() {
 
     return appFetch(req).then(res => {
       console.log('templates fetched');
-      
+
       dispatch(fetchTemplatesSuccess(res.templates));
     });
   };
 }
 
 function fetchTemplatesSuccess(templates) {
-  
   return { type: actionTypes.FETCH_TEMPLATES_SUCCESS, templates };
+}
+
+function fetchTemplateRequest(id) {
+  return dispatch => {
+    const req = new Request(
+      appConfig.urlDomain + `/api/templates/${id}`,
+      Object.assign(requestParams, { method: 'GET', body: null })
+    );
+
+    return appFetch(req).then(res => {
+      dispatch(fetchTemplateSuccess(res.template));
+    });
+  };
+}
+
+function fetchTemplateSuccess(template) {
+  return { type: actionTypes.FETCH_TEMPLATE_SUCCESS, template };
 }
 
 export default {

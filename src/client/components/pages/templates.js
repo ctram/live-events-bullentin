@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import actionsTemplates from '../actions/templates';
+import actionsTemplates from '../../actions/templates';
 
 function TemplatesList({templates}) {
   return (
@@ -11,7 +11,7 @@ function TemplatesList({templates}) {
         {templates.map((template, idx) => {
           return (
             <li key={idx}>
-              <a href={`/templates/${template.id}`}>{template.get('name')}</a>
+              <Link to={`/templates/${template.id}`}>{template.get('name')}</Link>
             </li>
           );
         })}

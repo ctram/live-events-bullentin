@@ -33,6 +33,19 @@ function load(app) {
       res.json({ templates });
     });
   });
+
+  app.get('/api/templates/:id', (req, res) => {
+    const { id } = req.params.id;
+
+    Template.query().where({ id })
+      .then(template => {
+        if (template) {
+          return res.json({ template });
+        }
+
+        res.status(400).json({ msg: 'template not found'});
+      });
+  });
 }
 
 export default {
