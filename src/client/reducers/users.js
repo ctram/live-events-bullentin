@@ -12,6 +12,8 @@ function storeUsers(state = intialState, action) {
       return Object.assign({}, state, { users: action.users });
     case actionTypes.LOGIN_USER_SUCCESS:
       return Object.assign({}, state, { loggedIn: true, currentUser: action.user });
+    case actionTypes.LOGOUT_USER_SUCCESS:
+      return Object.assign({}, state, { loggedIn: false, currentUser: null });
     default:
       return state;
   }

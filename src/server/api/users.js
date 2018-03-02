@@ -2,6 +2,16 @@ import passport from 'passport';
 import User from '../models/user';
 
 function load(app) {
+  app.get('/api/authentication', (req, res) => {
+    console.log('user', req.user)
+    console.log('authenticated', req.isAuthenticated());
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ msg: 'not authenticated' });
+    }
+
+    return res.json({ user: req.user });
+  });
+
   /////// USER ///////
   app.post('/api/login', passport.authenticate('local'), (req, res) => {
     User.query()
@@ -18,7 +28,7 @@ function load(app) {
 
   app.get('/api/logout', (req, res) => {
     req.logout();
-    res.end();
+    res.json({});
   });
 
   //////// USERS ////////
@@ -61,7 +71,6 @@ function load(app) {
         if (user) {
           return res.json({ user });
         }
-
         return res.status(404).json({ msg: 'user not found' });
       });
   });

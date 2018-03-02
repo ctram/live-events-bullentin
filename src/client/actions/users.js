@@ -2,7 +2,7 @@ import actionTypes from './action-types';
 import appConfig from '../app-config';
 import appFetch from '../helpers/app-fetch';
 import requestParams from '../helpers/request-params';
-import actionsLoader from './loader';
+import toastr from 'toastr';
 
 function fetchUsersRequest() {
   return dispatch => {
@@ -42,10 +42,10 @@ function createUserRequest(data) {
       Object.assign(requestParams, { method: 'POST', body: JSON.stringify(data) })
     );
 
-    return appFetch(req, dispatch)
-      .then(data => {
-        dispatch(createUserSuccess(data));
-      })
+    return appFetch(req, dispatch).then(data => {
+      toastr.success('successfully created user');
+      dispatch(createUserSuccess(data));
+    });
   };
 }
 
@@ -66,6 +66,8 @@ function loginUserRequest(data) {
       .then(data => {
         dispatch(loginUserSuccess(data.user));
         if (data.redirectUrl) {
+          toastr.success('successfully logged in');
+
           window.reactRouterHistory.push(data.redirectUrl);
         }
       })
@@ -90,10 +92,47 @@ function fetchUserRequest(id) {
   };
 }
 
+function checkAuthenticationRequest() {
+  return dispatch => {
+    const req = new Request(
+      appConfig.urlDomain + `/api/authentication`,
+      Object.assign(requestParams, { method: 'GET' })
+    );
+
+    return appFetch(req).then(data => {
+      if (data.user) {
+        toastr.success('authenticated');
+        return dispatch(loginUserSuccess(data.user));
+      }
+    });
+  };
+}
+
+function logoutUserRequest() {
+  return dispatch => {
+    const req = new Request(
+      appConfig.urlDomain + `/api/logout`,
+      Object.assign(requestParams, { method: 'GET' })
+    );
+
+    return appFetch(req).then(data => {
+      dispatch(logoutUserSuccess());
+      toastr.success('successfully logged out');
+      window.reactRouterHistory.push('/');
+    });
+  };
+}
+
+function logoutUserSuccess() {
+  return { type: actionTypes.LOGOUT_USER_SUCCESS };
+}
+
 export default {
   createUserRequest,
   createUserSuccess,
   loginUserRequest,
+  logoutUserRequest,
   fetchUserRequest,
-  fetchUsersRequest
+  fetchUsersRequest,
+  checkAuthenticationRequest
 };

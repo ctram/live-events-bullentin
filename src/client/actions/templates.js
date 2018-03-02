@@ -56,5 +56,6 @@ function fetchTemplateSuccess(template) {
 
 export default {
   createTemplateRequest,
-  fetchTemplatesRequest
+  fetchTemplatesRequest,
+  fetchTemplateRequest
 };

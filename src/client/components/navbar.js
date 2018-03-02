@@ -1,20 +1,37 @@
 import React from 'react';
+// eslint-disable-next-line no-unused-vars
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import actionsUsers from '../actions/users';
 
-function LinkWrapper({ active, to, children }) {
+// eslint-disable-next-line no-unused-vars
+function LinkWrapper({ active, to, children, show = true, onClick }) {
   active = active ? 'active' : '';
   const className = `nav-item ${active}`;
 
-  return (
-    <li className={className}>
-      <Link to={to} className="nav-link">
-        {children}
-      </Link>
-    </li>
-  );
+  if (show) {
+    return (
+      <li className={className}>
+        <Link to={to} className="nav-link" onClick={onClick}>
+          {children}
+        </Link>
+      </li>
+    );
+  }
+  return null;
 }
 
-export default class Navbar extends React.Component {
+export class Navbar extends React.Component {
+  constructor() {
+    super();
+    this.logout = this.logout.bind(this);
+  }
+
+  logout(e) {
+    e.preventDefault();
+    this.props.logoutUserRequest();
+  }
+
   render() {
     const { location: { pathname }, loggedIn } = this.props;
 
@@ -24,40 +41,40 @@ export default class Navbar extends React.Component {
           <LinkWrapper to="/" active={pathname === '/'}>
             Home
           </LinkWrapper>
-          {!loggedIn && (
-            <LinkWrapper to="/register" active={pathname === '/register'}>
-              Register
-            </LinkWrapper>
-          )}
-          {!loggedIn && (
-            <LinkWrapper to="/login" active={pathname === '/login'}>
-              Login
-            </LinkWrapper>
-          )}
-          {loggedIn && (
-            <LinkWrapper to="/users" active={pathname === '/users'}>
-              Users
-            </LinkWrapper>
-          )}
-          {loggedIn && (
-            <LinkWrapper to="/profile" active={pathname === '/profile'}>
-              Profile
-            </LinkWrapper>
-          )}
-          {loggedIn && (
-            <LinkWrapper to="/templates" active={pathname === '/templates'}>
-              Templates
-            </LinkWrapper>
-          )}
-          {loggedIn && (
-            <li className="nav-item">
-              <a href="/logout" className="nav-link">
-                Log Out
-              </a>
-            </li>
-          )}
+          <LinkWrapper to="/register" active={pathname === '/register'} show={!loggedIn}>
+            Register
+          </LinkWrapper>
+          <LinkWrapper to="/login" active={pathname === '/login'} show={!loggedIn}>
+            Login
+          </LinkWrapper>
+          <LinkWrapper to="/users" active={pathname === '/users'} show={loggedIn}>
+            Users
+          </LinkWrapper>
+          <LinkWrapper to="/profile" active={pathname === '/profile'} show={loggedIn}>
+            Profile
+          </LinkWrapper>
+          <LinkWrapper to="/templates" active={pathname === '/templates'} show={loggedIn}>
+            Templates
+          </LinkWrapper>
+          <LinkWrapper to="/" show={loggedIn} onClick={this.logout}>
+            Log Out
+          </LinkWrapper>
         </ul>
       </nav>
     );
   }
 }
+
+function mapToProps(state) {
+  return Object.assign({}, state.storeUsers);
+}
+
+function dispatchToProps(dispatch) {
+  return {
+    logoutUserRequest: () => {
+      dispatch(actionsUsers.logoutUserRequest());
+    }
+  };
+}
+
+export default connect(mapToProps, dispatchToProps)(Navbar);
