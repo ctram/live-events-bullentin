@@ -7,7 +7,7 @@ import Root from './components/root';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import _toastr from '../../node_modules/toastr/build/toastr.css';
+import _toastr from '../node_modules/toastr/build/toastr.css';
 import toastr from 'toastr';
 
 window.ClientStore = {};

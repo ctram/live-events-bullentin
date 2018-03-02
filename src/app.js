@@ -5,7 +5,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
-import User from './models/user';
+import User from './db/models/user';
 
 const app = express();
 app.use(express.static('dist'));

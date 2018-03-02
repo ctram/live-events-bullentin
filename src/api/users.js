@@ -1,5 +1,5 @@
 import passport from 'passport';
-import User from '../models/user';
+import User from '../db/models/user';
 
 function load(app) {
   app.get('/api/authentication', (req, res) => {
@@ -14,6 +14,10 @@ function load(app) {
 
   /////// USER ///////
   app.post('/api/login', passport.authenticate('local'), (req, res) => {
+
+    console.log('req', req)
+    console.log('user', User)
+    
     User.query()
       .findById(req.user.id)
       .then(user => {

@@ -36,7 +36,7 @@ const sharedOptions = {
 
 const serverConfig = {
   entry: {
-    app: './src/server/app.js'
+    app: './src/app.js'
   },
   target: 'node',
   output: {
@@ -48,7 +48,7 @@ Object.assign(serverConfig, sharedOptions);
 
 const clientConfig = {
   entry: {
-    index: './src/client/index.js'
+    index: './src/index.js'
   },
   target: 'web',
   output: {

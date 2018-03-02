@@ -1,4 +1,4 @@
-import Template from '../models/template';
+import Template from '../db/models/template';
 
 function load(app) {
   app.post('/api/templates', (req, res) => {
