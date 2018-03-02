@@ -16,9 +16,9 @@ export class TemplateEdit extends React.Component {
   componentDidMount() {
     const { template, location } = this.props;
     const templateId = location.pathname.split('/')[2];
-    if (!template) {
-      this.fetchTemplateRequest(templateId);
-    }
+    this.props.fetchTemplateRequest(templateId);
+    // if (!template) {
+    // }
   }
 
   render() {
@@ -59,8 +59,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchTemplateRequest: () => {
-      dispatch(actionsTemplates.fetchTemplateRequest());
+    fetchTemplateRequest: id => {
+      dispatch(actionsTemplates.fetchTemplateRequest(id));
     }
   };
 };

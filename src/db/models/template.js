@@ -35,6 +35,9 @@ class Template extends Base {
         return { msg: e, status: 500 };
       });
   }
+
+  getEvents() {
+  }
 }
 
 module.exports = Template;

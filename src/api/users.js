@@ -14,16 +14,12 @@ function load(app) {
 
   /////// USER ///////
   app.post('/api/login', passport.authenticate('local'), (req, res) => {
-
-    console.log('req', req)
-    console.log('user', User)
-    
     User.query()
       .findById(req.user.id)
       .then(user => {
         if (user) {
           delete user.password;
-          return res.json({ user, msg: 'logged in', redirectUrl: '/' });
+          return res.json({ user });
         }
 
         return res.status(404).json({ msg: 'user not found' });

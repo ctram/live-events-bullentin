@@ -17,6 +17,7 @@ const sharedOptions = {
           loader: 'babel-loader',
           options: {
             presets: [
+              // need this to use es6 class extends feature
               ['babel-preset-env', { exclude: ['transform-es2015-classes'] }],
               ['babel-preset-react'],
               ['babel-preset-stage-1']
