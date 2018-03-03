@@ -37,8 +37,7 @@
     "serve-favicon": "~2.4.5",
     "style-loader": "^0.20.1",
     "toastr": "^2.1.4",
-    "underscore": "^1.8.3",
-    "x-ray": "^2.3.2"
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
