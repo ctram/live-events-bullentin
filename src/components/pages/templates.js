@@ -2,25 +2,43 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actionsTemplates from '../../actions/templates';
+import actionTypes from '../../actions/action-types';
 
-function TemplatesList({templates}) {
-  return (
-    <section>
-      <h1>Templates</h1>
-      <ul>
-        {templates.map((template, idx) => {
-          return (
-            <li key={idx} className="row">
-              <Link to={`/templates/${template.id}`} className="col-6">{template.get('name')}</Link>
-              <span className="col-1 offset-3">
-                <i className="fas fa-trash" />
-              </span>
-            </li>
-          );
-        })}
-      </ul>
-    </section>
-  );
+export class TemplatesList extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const { templates } = this.props;
+
+    return (
+      <section>
+        <h1>Templates</h1>
+        <ul>
+          {templates.map((template, idx) => {
+            return (
+              <li key={idx} className="row">
+                <Link to={`/templates/${template.id}`} className="col-6">
+                  {template.get('name')}
+                </Link>
+                <div className="col-1 offset-3">
+                  <span
+                    onClick={e => {
+                      e.preventDefault();
+                      this.props.onClickRemove(template.id);
+                    }}
+                  >
+                    <i className="fas fa-trash" />
+                  </span>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    );
+  }
 }
 
 export class Templates extends React.Component {
@@ -47,7 +65,7 @@ export class Templates extends React.Component {
         {templates.length > 0 && (
           <div>
             <hr />
-            <TemplatesList templates={templates} />
+            <TemplatesList templates={templates} onClickRemove={this.props.removeTemplateRequest} />
           </div>
         )}
       </div>
@@ -63,6 +81,9 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchTemplatesRequest: () => {
       dispatch(actionsTemplates.fetchTemplatesRequest());
+    },
+    removeTemplateRequest: id => {
+      dispatch(actionsTemplates.removeTemplateRequest(id));
     }
   };
 };

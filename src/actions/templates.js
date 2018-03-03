@@ -26,8 +26,6 @@ function fetchTemplatesRequest() {
     );
 
     return appFetch(req).then(res => {
-      console.log('templates fetched');
-
       dispatch(fetchTemplatesSuccess(res.templates));
     });
   };
@@ -54,8 +52,29 @@ function fetchTemplateSuccess(template) {
   return { type: actionTypes.FETCH_TEMPLATE_SUCCESS, template };
 }
 
+function removeTemplateRequest(id) {
+  return dispatch => {
+    const req = new Request(
+      appConfig.urlDomain + `/api/templates/${id}`,
+      Object.assign(requestParams, { method: 'DELETE', body: null })
+    );
+
+    return appFetch(req).then(() => {
+      dispatch(removeTemplateSuccess());
+    });
+  };
+}
+
+function removeTemplateSuccess() {
+  return dispatch => {
+    toastr.success('template deleted');
+    dispatch(fetchTemplatesRequest());
+  };
+}
+
 export default {
   createTemplateRequest,
   fetchTemplatesRequest,
-  fetchTemplateRequest
+  fetchTemplateRequest,
+  removeTemplateRequest
 };

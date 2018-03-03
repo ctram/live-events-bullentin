@@ -38,6 +38,10 @@ function load(app) {
     const { id } = req.params;
     let template;
 
+    if (!req.isAuthenticated()) {
+      res.status(401).end();
+    }
+
     Template.query()
       .findById(id)
       .then(_template => {
@@ -54,7 +58,23 @@ function load(app) {
         }
       })
       .catch(e => {
-        console.error('error in catch', e)
+        console.error('error in catch', e);
+        res.status(400).json({ msg: e });
+      });
+  });
+
+  app.delete('/api/templates/:id', (req, res) => {
+    const { id } = req.params;
+
+    if (!req.isAuthenticated()) {
+      res.status(401).end();
+    }
+
+    Template.query()
+      .findById(id)
+      .del()
+      .catch(e => {
+        console.error('error in catch', e);
         res.status(400).json({ msg: e });
       });
   });
