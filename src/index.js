@@ -1,14 +1,21 @@
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { createStore, applyMiddleware } from 'redux';
+// eslint-disable-next-line no-unused-vars
 import { Provider } from 'react-redux';
 import reducers from './reducers/index';
+// eslint-disable-next-line no-unused-vars
 import Root from './components/root';
 import ReactDOM from 'react-dom';
+// eslint-disable-next-line no-unused-vars
 import React from 'react';
+// eslint-disable-next-line no-unused-vars
 import { BrowserRouter } from 'react-router-dom';
+// eslint-disable-next-line no-unused-vars
 import _toastr from '../node_modules/toastr/build/toastr.css';
+// eslint-disable-next-line no-unused-vars
 import toastr from 'toastr';
+import './styles/application.scss';
 
 window.ClientStore = {};
 

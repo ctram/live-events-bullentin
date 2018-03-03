@@ -9,7 +9,7 @@ import User from './db/models/user';
 
 const app = express();
 app.use(express.static('dist'));
-app.use(express.static('public'));
+app.use(express.static('styles'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -45,7 +45,6 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  console.log('id to deserializing', id);
   User.query()
     .findById(id)
     .then(user => {
