@@ -58,7 +58,7 @@ export class FormTemplate extends React.Component {
           />
         </fieldset>
         <fieldset className="form-group">
-          <label htmlFor="url">Url</label>
+          <label htmlFor="url">URL</label>
           <input
             name="url"
             className="form-control"

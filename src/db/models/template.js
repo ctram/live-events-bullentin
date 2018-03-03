@@ -38,12 +38,20 @@ class Template extends Base {
   }
 
   getEvents() {
-    const { url, selector } = this.url;
+    const { url, selector } = this;
 
-    scrapeIt(url, { event: selector }).then((data, res) => {
+    console.log('this', this)
+    console.log('url', this.url)
+
+    return scrapeIt(url, { event: selector }).then((events, res) => {
+      console.log('scrapeit finished');
+      console.log('events', events);
       if (res.status >= 200 && res.status < 400) {
-        console.log(data);
+        console.log(events);
+        return events;
       }
+      console.error('error response')
+      throw 'error scraping site at url ${url} with selector ${selector}';
     });
   }
 }

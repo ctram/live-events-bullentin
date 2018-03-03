@@ -36,24 +36,26 @@ function load(app) {
 
   app.get('/api/templates/:id', (req, res) => {
     const { id } = req.params;
+    let template;
 
-    console.log('id', id)
-    console.log('params', req.params)
-
-    Template.query().findById(id)
-      .then(template => {
+    Template.query()
+      .findById(id)
+      .then(_template => {
+        template = _template;
         if (template) {
           return template.getEvents();
         }
 
-        return null;
+        throw 'template not found';
       })
-      .then(template => {
-        if (template) {
-          return res.json({ template });
+      .then(events => {
+        if (events) {
+          return res.json({ template, events });
         }
-        
-        return res.status(400).json({ msg: 'template not found'});
+      })
+      .catch(e => {
+        console.error('error in catch', e)
+        res.status(400).json({ msg: e });
       });
   });
 }

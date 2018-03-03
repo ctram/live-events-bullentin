@@ -10,8 +10,11 @@ function TemplatesList({templates}) {
       <ul>
         {templates.map((template, idx) => {
           return (
-            <li key={idx}>
-              <Link to={`/templates/${template.id}`}>{template.get('name')}</Link>
+            <li key={idx} className="row">
+              <Link to={`/templates/${template.id}`} className="col-6">{template.get('name')}</Link>
+              <span className="col-1 offset-3">
+                <i className="fas fa-trash" />
+              </span>
             </li>
           );
         })}

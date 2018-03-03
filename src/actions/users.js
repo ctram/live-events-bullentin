@@ -50,6 +50,8 @@ function createUserRequest(data) {
 }
 
 function loginUserSuccess(user) {
+  toastr.success('successfully logged in');
+  window.reactRouterHistory.push('/templates');
   return { type: actionTypes.LOGIN_USER_SUCCESS, user };
 }
 
@@ -65,11 +67,6 @@ function loginUserRequest(data) {
     return appFetch(req)
       .then(data => {
         dispatch(loginUserSuccess(data.user));
-        if (data.redirectUrl) {
-          toastr.success('successfully logged in');
-
-          window.reactRouterHistory.push(data.redirectUrl);
-        }
       })
       .catch(e => console.error('appFetch error:', e));
   };
