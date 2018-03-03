@@ -11,7 +11,7 @@ export default {
       const data = {
         script: `<script src="${src}"></script>`
       };
-      const content = ejs.renderFile('./src/server/views/index.ejs', data, null, (err, str) => str);
+      const content = ejs.renderFile('./src/views/index.ejs', data, null, (err, str) => str);
       res.send(content);
     });
 

@@ -8,12 +8,11 @@ export class FormTemplate extends React.Component {
   constructor(props) {
     super(props);
     const { template } = props;
-    const templateName = template.get('name') || '';
-    const templateSelector = template.get('selector') || '';
 
     this.state = {
-      templateName,
-      templateSelector
+      templateName: template.get('name') || '',
+      templateSelector: template.get('selector') || '',
+      templateUrl: template.get('url') || ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -21,26 +20,27 @@ export class FormTemplate extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const { templateName, templateSelector } = this.state;
+    const { templateName, templateSelector, templateUrl } = this.state;
 
-    if (_.isEmpty(templateName) || _.isEmpty(templateSelector)) {
-      toastr.error('Name and Selector required');
+    if (_.isEmpty(templateName) || _.isEmpty(templateUrl) || _.isEmpty(templateSelector)) {
+      toastr.error('Name, URL and Selector required');
       return;
     }
 
-    this.props.createTemplateRequest({ templateName, templateSelector });
+    this.props.createTemplateRequest({ templateName, templateUrl, templateSelector });
   }
 
   handleChange(e) {
     e.preventDefault();
     this.setState({
       templateName: this.refs.inputTemplateName.value,
+      templateUrl: this.refs.inputTemplateUrl.value,
       templateSelector: this.refs.inputTemplateSelector.value
     });
   }
 
   render() {
-    const { templateName, templateSelector } = this.state;
+    const { templateName, templateSelector, templateUrl } = this.state;
     const { disabled } = this.props;
 
     return (
@@ -54,6 +54,18 @@ export class FormTemplate extends React.Component {
             value={templateName}
             onChange={this.handleChange}
             ref="inputTemplateName"
+            disabled={disabled}
+          />
+        </fieldset>
+        <fieldset className="form-group">
+          <label htmlFor="url">Url</label>
+          <input
+            name="url"
+            className="form-control"
+            id="url"
+            value={templateUrl}
+            onChange={this.handleChange}
+            ref="inputTemplateUrl"
             disabled={disabled}
           />
         </fieldset>

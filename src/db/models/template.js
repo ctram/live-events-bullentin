@@ -1,4 +1,5 @@
 const Base = require('./base');
+const scrapeIt = require('scrape-it');
 
 class Template extends Base {
   static get tableName() {
@@ -37,6 +38,13 @@ class Template extends Base {
   }
 
   getEvents() {
+    const { url, selector } = this.url;
+
+    scrapeIt(url, { event: selector }).then((data, res) => {
+      if (res.status >= 200 && res.status < 400) {
+        console.log(data);
+      }
+    });
   }
 }
 

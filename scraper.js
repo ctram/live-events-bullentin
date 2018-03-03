@@ -5,7 +5,6 @@ let url = 'http://www.hotclubsf.com/';
 scrapeIt(url, {
   events: 'div'
 }).then(({ data, response }) => {
-    console.log('response', response)
   console.log(`Status Code: ${response.statusCode}`);
   console.log(data);
 });
