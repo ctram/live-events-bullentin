@@ -9,6 +9,10 @@ class FormUser extends React.Component {
     this.state = { email: '', password: '' };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.pathname = nextProps.location.pathname.substring(1);
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     const { createUser, loginUser } = this.props;

@@ -111,10 +111,10 @@ function logoutUserRequest() {
   return dispatch => {
     const req = new Request(
       appConfig.urlDomain + `/api/logout`,
-      Object.assign(requestParams, { method: 'GET' })
+      Object.assign(requestParams, { method: 'GET', body: null })
     );
 
-    return appFetch(req).then(data => {
+    return appFetch(req).then(() => {
       dispatch(logoutUserSuccess());
       toastr.success('successfully logged out');
       window.reactRouterHistory.push('/');

@@ -67,6 +67,7 @@ function SwitchLoggedIn() {
 function SwitchLoggedOut() {
   return (
     <Switch>
+      <Route exact path="/" component={PageWelcome} />
       <Route exact path="/register" component={FormUser} />
       <Route exact path="/login" component={FormUser} />
     </Switch>
@@ -79,7 +80,7 @@ export class Root extends React.Component {
   }
 
   componentDidMount() {
-    const { startLoading, endLoading, history } = this.props;
+    const { startLoading, endLoading, history, location } = this.props;
     endLoading();
     $(document)
       .bind('ajaxSend', () => {
@@ -93,6 +94,7 @@ export class Root extends React.Component {
     this.props.checkAuthenticationRequest();
 
     window.reactRouterHistory = history;
+    window.reactLocation = location;
   }
 
   render() {

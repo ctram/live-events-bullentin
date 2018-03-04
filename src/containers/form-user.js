@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import FormUser from '../components/form-user';
 import actionUsers from '../actions/users';
 
-const mapStateToProps = state => {
-  return state;
+const mapStateToProps = (state, ownProps) => {
+  return Object.assign({}, state, ownProps);
 };
 
 const mapDispatchToProps = dispatch => {
