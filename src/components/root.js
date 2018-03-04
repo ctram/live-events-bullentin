@@ -1,5 +1,5 @@
 // FIXME: eslint triggering react element rendering as UNUSED
-// var error 
+// var error
 
 import React from 'react';
 import FormUser from '../containers/form-user';
@@ -27,6 +27,52 @@ import PageTemplateNew from './pages/template-new';
 // eslint-disable-next-line no-unused-vars
 import PageTemplateShow from './pages/template-show';
 
+function SwitchLoggedIn() {
+  return (
+    <Switch>
+      <Route exact path="/" component={PageWelcome} />
+      <Route
+        exact
+        path="/users"
+        render={() => {
+          return <Users location={location} />;
+        }}
+      />
+      <Route
+        exact
+        path="/profile"
+        render={() => {
+          return <UserProfile location={location} />;
+        }}
+      />
+      <Route exact path="/templates" component={PageTemplates} />
+      <Route
+        exact
+        path="/templates/new"
+        render={() => {
+          return <PageTemplateNew location={location} />;
+        }}
+      />
+      <Route
+        exact
+        path="/templates/:id"
+        render={() => {
+          return <PageTemplateShow location={location} />;
+        }}
+      />
+    </Switch>
+  );
+}
+
+function SwitchLoggedOut() {
+  return (
+    <Switch>
+      <Route exact path="/register" component={FormUser} />
+      <Route exact path="/login" component={FormUser} />
+    </Switch>
+  );
+}
+
 export class Root extends React.Component {
   constructor(props) {
     super(props);
@@ -43,7 +89,6 @@ export class Root extends React.Component {
         endLoading();
       });
 
-      
     // When app is refreshed, we need to check whether user is already authenticated
     this.props.checkAuthenticationRequest();
 
@@ -51,50 +96,15 @@ export class Root extends React.Component {
   }
 
   render() {
-    const { location } = this.props;
+    const { location, loggedIn } = this.props;
+    const Routes = loggedIn ? <SwitchLoggedIn /> : <SwitchLoggedOut />;
+
     return (
       <div className="container">
-        <div className="row justify-content-center">
-          <Navbar location={location} />
-        </div>
+        <Navbar location={location} />
         <Loader loaded={this.props.loaded}>
           <ErrorBoundary>
-            <div className="row justify-content-center">
-              <Switch>
-                <Route exact path="/" component={PageWelcome} />
-                <Route exact path="/register" component={FormUser} />
-                <Route exact path="/login" component={FormUser} />
-                <Route
-                  exact
-                  path="/users"
-                  render={() => {
-                    return <Users location={location} />;
-                  }}
-                />
-                <Route
-                  exact
-                  path="/profile"
-                  render={() => {
-                    return <UserProfile location={location} />;
-                  }}
-                />
-                <Route exact path="/templates" component={PageTemplates} />
-                <Route
-                  exact
-                  path="/templates/new"
-                  render={() => {
-                    return <PageTemplateNew location={location} />;
-                  }}
-                />
-                <Route
-                  exact
-                  path="/templates/:id"
-                  render={() => {
-                    return <PageTemplateShow location={location} />;
-                  }}
-                />
-              </Switch>
-            </div>
+            <div className="row justify-content-center">{Routes}</div>
           </ErrorBoundary>
         </Loader>
       </div>
