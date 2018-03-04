@@ -115,7 +115,7 @@ export class Root extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return Object.assign(state.loader, state.root, state.storeUsers);
+  return Object.assign({}, state.loader, state.root, state.storeUsers);
 };
 
 const mapDispatchToProps = dispatch => {

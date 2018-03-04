@@ -51,15 +51,17 @@ export class Templates extends React.Component {
   }
 
   render() {
-    const { templates = [], loggedIn } = this.props;
+    const { templates = [] } = this.props;
 
     return (
       <div>
         <section>
           <Link to="/templates/new">
-            <button className="btn btn-primary" disabled={!loggedIn}>
-              Add Template
-            </button>
+            <div className="row justify-content-center">
+              <button className="btn btn-primary">
+                Add Template
+              </button>
+            </div>
           </Link>
         </section>
         {templates.length > 0 && (
