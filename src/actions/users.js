@@ -49,12 +49,6 @@ function createUserRequest(data) {
   };
 }
 
-function loginUserSuccess(user) {
-  toastr.success('successfully logged in');
-  window.reactRouterHistory.push('/templates');
-  return { type: actionTypes.LOGIN_USER_SUCCESS, user };
-}
-
 function loginUserRequest(data) {
   return dispatch => {
     requestParams;
@@ -64,12 +58,16 @@ function loginUserRequest(data) {
       Object.assign(requestParams, { method: 'POST', body: JSON.stringify(data) })
     );
 
-    return appFetch(req)
-      .then(data => {
-        dispatch(loginUserSuccess(data.user));
-      })
-      .catch(e => console.error('appFetch error:', e));
+    return appFetch(req).then(data => {
+      dispatch(loginUserSuccess(data.user));
+    });
   };
+}
+
+function loginUserSuccess(user) {
+  toastr.success('successfully logged in');
+  window.reactRouterHistory.push('/templates');
+  return { type: actionTypes.LOGIN_USER_SUCCESS, user };
 }
 
 function fetchUserRequest(id) {
