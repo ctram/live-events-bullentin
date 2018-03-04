@@ -52,7 +52,7 @@ function fetchTemplateSuccess(template) {
   return { type: actionTypes.FETCH_TEMPLATE_SUCCESS, template };
 }
 
-function removeTemplateRequest(id) {
+function deleteTemplateRequest(id) {
   return dispatch => {
     const req = new Request(
       appConfig.urlDomain + `/api/templates/${id}`,
@@ -60,14 +60,15 @@ function removeTemplateRequest(id) {
     );
 
     return appFetch(req).then(() => {
-      dispatch(removeTemplateSuccess());
+      dispatch(deleteTemplateSuccess());
     });
   };
 }
 
-function removeTemplateSuccess() {
+function deleteTemplateSuccess() {
   return dispatch => {
-      toastr.success('template deleted');
+    toastr.success('template deleted');
+    console.log('history', window.reactRouterHistory);
     dispatch(fetchTemplatesRequest());
   };
 }
@@ -76,5 +77,5 @@ export default {
   createTemplateRequest,
   fetchTemplatesRequest,
   fetchTemplateRequest,
-  removeTemplateRequest
+  deleteTemplateRequest
 };

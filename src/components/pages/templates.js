@@ -65,7 +65,7 @@ export class Templates extends React.Component {
         {templates.length > 0 && (
           <div>
             <hr />
-            <TemplatesList templates={templates} onClickRemove={this.props.removeTemplateRequest} />
+            <TemplatesList templates={templates} onClickRemove={this.props.deleteTemplateRequest} />
           </div>
         )}
       </div>
@@ -82,8 +82,8 @@ const mapDispatchToProps = dispatch => {
     fetchTemplatesRequest: () => {
       dispatch(actionsTemplates.fetchTemplatesRequest());
     },
-    removeTemplateRequest: id => {
-      dispatch(actionsTemplates.removeTemplateRequest(id));
+    deleteTemplateRequest: id => {
+      dispatch(actionsTemplates.deleteTemplateRequest(id));
     }
   };
 };

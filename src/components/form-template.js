@@ -14,11 +14,11 @@ export class FormTemplate extends React.Component {
       templateSelector: template.get('selector') || '',
       templateUrl: template.get('url') || ''
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.submit = this.submit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleSubmit(e) {
+  submit(e) {
     e.preventDefault();
     const { templateName, templateSelector, templateUrl } = this.state;
 
@@ -28,6 +28,12 @@ export class FormTemplate extends React.Component {
     }
 
     this.props.createTemplateRequest({ templateName, templateUrl, templateSelector });
+  }
+
+  delete(e) {
+    e.preventDefault();
+    const { deleteTemplateRequest, template } = this.props;
+    deleteTemplateRequest(template.id);
   }
 
   handleChange(e) {
@@ -41,7 +47,9 @@ export class FormTemplate extends React.Component {
 
   render() {
     const { templateName, templateSelector, templateUrl } = this.state;
-    const { disabled } = this.props;
+    const { disabled, deletable } = this.props;
+
+    ;
 
     return (
       <form>
@@ -81,9 +89,18 @@ export class FormTemplate extends React.Component {
             disabled={disabled}
           />
         </fieldset>
-        <button className="btn btn-primary" onClick={this.handleSubmit} disabled={disabled}>
-          Add Template
-        </button>
+
+        {!deletable &&
+          <button className="btn btn-primary" onClick={this.submit} disabled={disabled}>
+            Add Template
+          </button>
+        }
+        
+        {deletable && (
+          <button className="btn btn-danger" onClick={this.delete}>
+            Delete
+          </button>
+        )}
       </form>
     );
   }
@@ -97,6 +114,9 @@ const mapDispatchToProps = dispatch => {
   return {
     createTemplateRequest: data => {
       dispatch(actionsTemplates.createTemplateRequest(data));
+    },
+    deleteTemplateRequest: id => {
+      dispatch(actionsTemplates.deleteTemplateRequest(id));
     }
   };
 };
