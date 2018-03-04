@@ -67,7 +67,7 @@ function removeTemplateRequest(id) {
 
 function removeTemplateSuccess() {
   return dispatch => {
-    toastr.success('template deleted');
+      toastr.success('template deleted');
     dispatch(fetchTemplatesRequest());
   };
 }
