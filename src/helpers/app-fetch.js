@@ -29,8 +29,7 @@ function appFetch(req) {
     .then(json => {
       response;
       
-      
-      if (json.msg) {
+      if (json && json.msg) {
         if (status >= 200 && status < 400) {
           toastr.success(json.msg);
         } else if (status >= 400) {

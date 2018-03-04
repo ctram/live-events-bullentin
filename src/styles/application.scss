@@ -2,6 +2,8 @@ ul {
   padding: 0;
 }
 
-svg:hover {
-  cursor: pointer;
+svg {
+  &.fa-trash:hover {
+    cursor: pointer;
+  }
 }
