@@ -36,7 +36,7 @@ export class Navbar extends React.Component {
     const { location: { pathname }, loggedIn } = this.props;
 
     return (
-      <nav className="navbar navbar-expand-sm navbar-light">
+      <nav className="navbar navbar-expand-sm navbar-light row justify-content-center">
         <ul className="navbar-nav">
           <LinkWrapper to="/" active={pathname === '/'}>
             Home
