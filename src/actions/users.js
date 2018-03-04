@@ -97,10 +97,14 @@ function checkAuthenticationRequest() {
     return appFetch(req).then(data => {
       if (data.user) {
         toastr.success('authenticated');
-        return dispatch(loginUserSuccess(data.user));
+        return dispatch(checkAuthenticationSuccess(data.user));
       }
     });
   };
+}
+
+function checkAuthenticationSuccess(user) {
+  return { type: actionTypes.CHECK_AUTHENTICATION_SUCCESS, user };
 }
 
 function logoutUserRequest() {

@@ -17,7 +17,7 @@ class Template extends Base {
   }
 
   static create(data) {
-    const { templateName: name, templateSelector: selector } = data;
+    const { templateName: name, templateSelector: selector, templateUrl : url } = data;
     const templates = Template.query();
 
     return templates
@@ -26,8 +26,8 @@ class Template extends Base {
         if (rows.length > 1) {
           return { msg: 'template of name already exists', status: 400 };
         } else {
-          return templates.insert({ name, selector }).then(template => {
-            return { id: template.id, name: template.name, selector: template.selector };
+          return templates.insert({ name, selector, url }).then(template => {
+            return { id: template.id, name: template.name, selector: template.selector, url: template.url };
           });
         }
       })

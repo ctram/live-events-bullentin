@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actionsTemplates from '../../actions/templates';
 import FormTemplate from '../form-template';
+import Template from '../../models/template'
 
 function Event({ event }) {
   return <div>{event}</div>;
@@ -16,9 +17,9 @@ export class TemplateEdit extends React.Component {
   componentDidMount() {
     const { template, location } = this.props;
     const templateId = location.pathname.split('/')[2];
-    this.props.fetchTemplateRequest(templateId);
-    // if (!template) {
-    // }
+    if (!template.id) {
+      this.props.fetchTemplateRequest(templateId);
+    }
   }
 
   render() {
@@ -29,7 +30,7 @@ export class TemplateEdit extends React.Component {
       <div>
         <section>
           <h1>{template.get('name')}</h1>
-          <FormTemplate template={template} disabled={true} />
+          <FormTemplate template={template} disabled={true} deletable={!!template.id} />
         </section>
         <hr />
         <section>
@@ -53,7 +54,7 @@ const mapStateToProps = (state, ownProps) => {
   const { location } = ownProps;
   const { templates } = state.storeTemplates;
   const templateId = location.pathname.split('/')[2];
-  const template = templates.get(templateId);
+  const template = templates.get(templateId) || new Template();
   return Object.assign({}, { template });
 };
 

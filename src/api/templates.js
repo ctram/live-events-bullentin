@@ -6,14 +6,14 @@ function load(app) {
       return res.status(401).end();
     }
 
-    const { templateName, templateSelector } = req.body;
+    const { templateName, templateSelector, templateUrl } = req.body;
     console.log('body', req.body);
 
-    if (!templateName || !templateSelector) {
-      res.status(400).json({ msg: 'name and selector cannot be blank' });
-      return;
+    if (!templateName || !templateSelector || !templateUrl) {
+      return res.status(400).json({ msg: 'name, URL and selector cannot be blank' });
     }
 
+    console.log('body',req.body)
     Template.create(req.body)
       .then(data => {
         let { status = 200 } = data;
@@ -35,12 +35,12 @@ function load(app) {
   });
 
   app.get('/api/templates/:id', (req, res) => {
-    const { id } = req.params;
-    let template;
-
     if (!req.isAuthenticated()) {
       res.status(401).end();
     }
+
+    const { id } = req.params;
+    let template;
 
     Template.query()
       .findById(id)
