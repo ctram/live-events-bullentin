@@ -73,6 +73,9 @@ function load(app) {
     Template.query()
       .findById(id)
       .del()
+      .then(() => {
+        res.end();
+      })
       .catch(e => {
         console.error('error in catch', e);
         res.status(400).json({ msg: e });
