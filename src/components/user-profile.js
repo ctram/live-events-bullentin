@@ -1,4 +1,3 @@
-import actionsUsers from '../actions/users';
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -24,7 +23,7 @@ const mapStateToProps = state => {
   return Object.assign(state.storeUsers);
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = () => {
   return {};
 };
 

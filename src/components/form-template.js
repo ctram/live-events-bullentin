@@ -16,6 +16,7 @@ export class FormTemplate extends React.Component {
     };
     this.submit = this.submit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   submit(e) {
@@ -48,8 +49,6 @@ export class FormTemplate extends React.Component {
   render() {
     const { templateName, templateSelector, templateUrl } = this.state;
     const { disabled, deletable } = this.props;
-
-    ;
 
     return (
       <form>

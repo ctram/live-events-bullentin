@@ -31,35 +31,11 @@ function SwitchLoggedIn() {
   return (
     <Switch>
       <Route exact path="/" component={PageWelcome} />
-      <Route
-        exact
-        path="/users"
-        render={() => {
-          return <Users location={location} />;
-        }}
-      />
-      <Route
-        exact
-        path="/profile"
-        render={() => {
-          return <UserProfile location={location} />;
-        }}
-      />
+      <Route exact path="/users" component={Users} />
+      <Route exact path="/profile" component={UserProfile} />
       <Route exact path="/templates" component={PageTemplates} />
-      <Route
-        exact
-        path="/templates/new"
-        render={() => {
-          return <PageTemplateNew location={location} />;
-        }}
-      />
-      <Route
-        exact
-        path="/templates/:id"
-        render={() => {
-          return <PageTemplateShow location={location} />;
-        }}
-      />
+      <Route exact path="/templates/new" component={PageTemplateNew} />
+      <Route exact path="/templates/:id" component={PageTemplateShow} />
     </Switch>
   );
 }
@@ -79,8 +55,14 @@ export class Root extends React.Component {
     super(props);
   }
 
+  componentWillMount() {
+    const { history, location } = this.props;
+    window.reactRouterHistory = history;
+    window.reactRouterLocation = location;
+  }
+
   componentDidMount() {
-    const { startLoading, endLoading, history, location } = this.props;
+    const { startLoading, endLoading } = this.props;
     endLoading();
     $(document)
       .bind('ajaxSend', () => {
@@ -92,18 +74,15 @@ export class Root extends React.Component {
 
     // When app is refreshed, we need to check whether user is already authenticated
     this.props.checkAuthenticationRequest();
-
-    window.reactRouterHistory = history;
-    window.reactLocation = location;
   }
 
   render() {
-    const { location, loggedIn } = this.props;
+    const { loggedIn } = this.props;
     const Routes = loggedIn ? <SwitchLoggedIn /> : <SwitchLoggedOut />;
 
     return (
       <div className="container">
-        <Navbar location={location} />
+        <Navbar />
         <Loader loaded={this.props.loaded}>
           <ErrorBoundary>
             <div className="row justify-content-center">{Routes}</div>

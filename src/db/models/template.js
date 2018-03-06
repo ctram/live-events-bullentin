@@ -17,7 +17,7 @@ class Template extends Base {
   }
 
   static create(data) {
-    const { templateName: name, templateSelector: selector, templateUrl : url } = data;
+    const { templateName: name, templateSelector: selector, templateUrl: url } = data;
     const templates = Template.query();
 
     return templates
@@ -27,7 +27,12 @@ class Template extends Base {
           return { msg: 'template of name already exists', status: 400 };
         } else {
           return templates.insert({ name, selector, url }).then(template => {
-            return { id: template.id, name: template.name, selector: template.selector, url: template.url };
+            return {
+              id: template.id,
+              name: template.name,
+              selector: template.selector,
+              url: template.url
+            };
           });
         }
       })
@@ -38,20 +43,24 @@ class Template extends Base {
   }
 
   getEvents() {
-    const { url, selector } = this;
+    let { url, selector } = this;
+    // url = 'https://news.ycombinator.com/';
+    // selector = '.title a';
 
-    console.log('this', this)
-    console.log('url', this.url)
-
-    return scrapeIt(url, { event: selector }).then((events, res) => {
-      console.log('scrapeit finished');
-      console.log('events', events);
-      if (res.status >= 200 && res.status < 400) {
-        console.log(events);
-        return events;
+    const opts = {
+      events: {
+        listItem: selector
       }
-      console.error('error response')
-      throw 'error scraping site at url ${url} with selector ${selector}';
+    };
+
+    return scrapeIt(url, opts).then(({ data, response: { statusCode } }) => {
+      if (data && data.events) {
+        return data.events;
+      }
+      if (statusCode && statusCode >= 400) {
+        throw `error scraping events, status code: ${statusCode}`;
+      }
+      throw `unknown error scrapping events`;
     });
   }
 }

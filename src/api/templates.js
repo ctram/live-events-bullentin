@@ -49,16 +49,13 @@ function load(app) {
         if (template) {
           return template.getEvents();
         }
-
         throw 'template not found';
       })
       .then(events => {
-        if (events) {
-          return res.json({ template, events });
-        }
+        return res.json({ template, events });
       })
       .catch(e => {
-        console.error('error in catch', e);
+        console.error(e);
         res.status(400).json({ msg: e });
       });
   });

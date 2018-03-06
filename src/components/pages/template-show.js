@@ -3,19 +3,21 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actionsTemplates from '../../actions/templates';
 import FormTemplate from '../form-template';
-import Template from '../../models/template'
+import Template from '../../models/template';
 
 function Event({ event }) {
   return <div>{event}</div>;
 }
 
-export class TemplateEdit extends React.Component {
+export class PageTemplateShow
+ extends React.Component {
   constructor() {
     super();
   }
 
   componentDidMount() {
-    const { template, location } = this.props;
+    const { template } = this.props;
+    const location = window.reactRouterLocation;
     const templateId = location.pathname.split('/')[2];
     if (!template.id) {
       this.props.fetchTemplateRequest(templateId);
@@ -50,10 +52,9 @@ export class TemplateEdit extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const { location } = ownProps;
+const mapStateToProps = (state) => {
   const { templates } = state.storeTemplates;
-  const templateId = location.pathname.split('/')[2];
+  const templateId = window.reactRouterLocation.pathname.split('/')[2];
   const template = templates.get(templateId) || new Template();
   return Object.assign({}, { template });
 };
@@ -66,4 +67,5 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TemplateEdit);
+export default connect(mapStateToProps, mapDispatchToProps)(PageTemplateShow
+);

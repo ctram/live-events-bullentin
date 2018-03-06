@@ -3,7 +3,7 @@ import _ from 'underscore';
 import FormTemplate from '../form-template';
 import Template from '../../models/template';
 
-export class PageTemplateNew extends React.Component {
+export default class PageTemplateNew extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -17,5 +17,3 @@ export class PageTemplateNew extends React.Component {
     );
   }
 }
-
-export default PageTemplateNew;

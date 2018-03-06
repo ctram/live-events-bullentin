@@ -33,7 +33,8 @@ export class Navbar extends React.Component {
   }
 
   render() {
-    const { location: { pathname }, loggedIn } = this.props;
+    const { loggedIn } = this.props;
+    const { pathname } = window.reactRouterLocation;
 
     return (
       <nav className="navbar navbar-expand-sm navbar-light row justify-content-center">
