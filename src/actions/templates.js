@@ -68,7 +68,7 @@ function deleteTemplateRequest(id) {
 function deleteTemplateSuccess() {
   return dispatch => {
     toastr.success('template deleted');
-    console.log('history', window.reactRouterHistory);
+    window.reactRouterHistory.push('/templates');
     dispatch(fetchTemplatesRequest());
   };
 }
