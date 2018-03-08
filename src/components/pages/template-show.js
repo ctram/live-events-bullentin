@@ -9,8 +9,7 @@ function Event({ event }) {
   return <div>{event}</div>;
 }
 
-export class PageTemplateShow
- extends React.Component {
+export class PageTemplateShow extends React.Component {
   constructor() {
     super();
   }
@@ -26,7 +25,7 @@ export class PageTemplateShow
 
   render() {
     const { template } = this.props;
-    const mock = [];
+    let events = template.get('events') || [];
 
     return (
       <div>
@@ -38,7 +37,7 @@ export class PageTemplateShow
         <section>
           <h1>Events</h1>
           <ul>
-            {mock.map((event, idx) => {
+            {events.map((event, idx) => {
               return (
                 <li key={idx}>
                   <Event event={event} />
@@ -52,7 +51,7 @@ export class PageTemplateShow
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { templates } = state.storeTemplates;
   const templateId = window.reactRouterLocation.pathname.split('/')[2];
   const template = templates.get(templateId) || new Template();
@@ -67,5 +66,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PageTemplateShow
-);
+export default connect(mapStateToProps, mapDispatchToProps)(PageTemplateShow);

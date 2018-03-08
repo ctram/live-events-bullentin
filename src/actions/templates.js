@@ -43,13 +43,13 @@ function fetchTemplateRequest(id) {
     );
 
     return appFetch(req).then(res => {
-      dispatch(fetchTemplateSuccess(res.template));
+      dispatch(fetchTemplateSuccess(res.template, res.events));
     });
   };
 }
 
-function fetchTemplateSuccess(template) {
-  return { type: actionTypes.FETCH_TEMPLATE_SUCCESS, template };
+function fetchTemplateSuccess(template, events) {
+  return { type: actionTypes.FETCH_TEMPLATE_SUCCESS, template, events };
 }
 
 function deleteTemplateRequest(id) {

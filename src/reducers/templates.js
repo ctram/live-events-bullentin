@@ -14,6 +14,9 @@ function storeTemplates(state = intialState, action) {
         templates: new Templates(action.templates)
       });
     case actionTypes.FETCH_TEMPLATE_SUCCESS:
+      if (action.events) {
+        action.template.events = action.events;
+      }
       templates.add(action.template);
       return Object.assign({}, state, { templates });
     default:

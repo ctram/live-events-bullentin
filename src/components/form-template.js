@@ -19,6 +19,11 @@ export class FormTemplate extends React.Component {
     this.delete = this.delete.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { templateSelector, templateName, templateUrl } = nextProps;
+    this.setState({ templateSelector, templateName, templateUrl });
+  }
+
   submit(e) {
     e.preventDefault();
     const { templateName, templateSelector, templateUrl } = this.state;
@@ -49,7 +54,7 @@ export class FormTemplate extends React.Component {
   render() {
     const { templateName, templateSelector, templateUrl } = this.state;
     const { disabled, deletable } = this.props;
-
+    
     return (
       <form>
         <fieldset className="form-group">
@@ -89,12 +94,12 @@ export class FormTemplate extends React.Component {
           />
         </fieldset>
 
-        {!deletable &&
+        {!deletable && (
           <button className="btn btn-primary" onClick={this.submit} disabled={disabled}>
             Add Template
           </button>
-        }
-        
+        )}
+
         {deletable && (
           <button className="btn btn-danger" onClick={this.delete}>
             Delete
@@ -105,8 +110,17 @@ export class FormTemplate extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return Object.assign(state.loader, state.root, state.storeUsers);
+const mapStateToProps = (state, ownProps) => {
+  const { template } = ownProps;
+
+  const templateName = template.get('name');
+  const templateUrl = template.get('url');
+  const templateSelector = template.get('selector');
+  return Object.assign(state.loader, state.root, state.storeUsers, {
+    templateName,
+    templateUrl,
+    templateSelector
+  });
 };
 
 const mapDispatchToProps = dispatch => {
