@@ -1,26 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import User from '../models/user';
 
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  componentDidMount() {
-  }
-
   render() {
     const { currentUser } = this.props;
     return (
       <div>
-        <span>Email:</span> {currentUser.email}
+        <span>Email:</span> {currentUser.get('email')}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
-  return Object.assign(state.storeUsers);
+  let currentUser = new User(state.storeUsers.currentUser);
+  return { currentUser };
 };
 
 const mapDispatchToProps = () => {
