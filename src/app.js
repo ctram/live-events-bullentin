@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use(session({ secret: 'cat', maxAge: 604800000 }));
+app.use(session({ secret: 'cat' }));
 
 app.use(passport.initialize());
 app.use(passport.session());
