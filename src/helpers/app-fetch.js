@@ -1,6 +1,6 @@
 import toastr from 'toastr';
 
-function getJson(res) {
+function parseResponse(res) {
   return res
     .json()
     .then(json => {
@@ -8,36 +8,34 @@ function getJson(res) {
     })
     .catch(e => {
       console.error('json parsing error:', e);
+      
+      return res.text();
     });
 }
 
 function appFetch(req) {
   let status;
-  let response;
-  
+
   return fetch(req)
     .then(res => {
       status = res.status;
-      response = res;
       if (status === 401) {
         toastr.error('Not Authorized');
         return {};
       }
-      
-      return getJson(res);
+
+      return parseResponse(res);
     })
-    .then(json => {
-      response;
-      
-      if (json && json.msg) {
+    .then(res => {
+      if (res && res.msg) {
         if (status >= 200 && status < 400) {
-          toastr.success(json.msg);
+          toastr.success(res.msg);
         } else if (status >= 400) {
-          toastr.error(json.msg || 'unknown error');
+          toastr.error(res.msg || 'unknown error');
         }
       }
 
-      return json;
+      return res;
     });
 }
 export default appFetch;

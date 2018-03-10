@@ -53,13 +53,15 @@ function loginUserRequest(data) {
   return dispatch => {
     requestParams;
     const req = new Request(
-      // eslint-disable-next-line quotes
       appConfig.urlDomain + `/api/login`,
       Object.assign(requestParams, { method: 'POST', body: JSON.stringify(data) })
     );
 
     return appFetch(req).then(data => {
-      dispatch(loginUserSuccess(data.user));
+      if (data.user) {
+        return dispatch(loginUserSuccess(data.user));
+      }
+      toastr.error('login failed');
     });
   };
 }
