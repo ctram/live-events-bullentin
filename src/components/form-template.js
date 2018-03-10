@@ -44,17 +44,17 @@ export class FormTemplate extends React.Component {
 
   handleChange(e) {
     e.preventDefault();
-    this.setState({
-      templateName: this.refs.inputTemplateName.value,
-      templateUrl: this.refs.inputTemplateUrl.value,
-      templateSelector: this.refs.inputTemplateSelector.value
-    });
+    const {value, name} = e.target;
+    const element = `template${name.charAt(0).toUpperCase() + name.slice(1)}`;
+    const state = {};
+    state[element] = value;
+    this.setState(state);
   }
 
   render() {
     const { templateName, templateSelector, templateUrl } = this.state;
     const { disabled, deletable } = this.props;
-    
+
     return (
       <form>
         <fieldset className="form-group">
