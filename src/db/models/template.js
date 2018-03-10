@@ -44,8 +44,6 @@ class Template extends Base {
 
   getEvents() {
     let { url, selector } = this;
-    // url = 'https://news.ycombinator.com/';
-    // selector = '.title a';
 
     const opts = {
       events: {
@@ -53,15 +51,17 @@ class Template extends Base {
       }
     };
 
-    return scrapeIt(url, opts).then(({ data, response: { statusCode } }) => {
-      if (data && data.events) {
-        return data.events;
-      }
-      if (statusCode && statusCode >= 400) {
-        throw `error scraping events, status code: ${statusCode}`;
-      }
-      throw `unknown error scrapping events`;
-    });
+    return scrapeIt(url, opts)
+      .then(({ data, response: { statusCode } }) => {
+        console.log('statuscode', statusCode);
+        if (statusCode && statusCode >= 400) {
+          throw { msg: `error scraping events`, statusCode };
+        }
+        if (data && data.events) {
+          return data.events;
+        }
+        throw `unknown error scrapping events`;
+      });
   }
 }
 
