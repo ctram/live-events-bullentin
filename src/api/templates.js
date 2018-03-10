@@ -56,7 +56,7 @@ function load(app) {
       })
       .catch(e => {
         console.error(e);
-        res.status(400).json({ msg: e });
+        res.status(500).json({ msg: e.msg });
       });
   });
 
