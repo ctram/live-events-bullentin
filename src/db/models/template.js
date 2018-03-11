@@ -51,17 +51,16 @@ class Template extends Base {
       }
     };
 
-    return scrapeIt(url, opts)
-      .then(({ data, response: { statusCode } }) => {
-        console.log('statuscode', statusCode);
-        if (statusCode && statusCode >= 400) {
-          throw { msg: `error scraping events`, statusCode };
-        }
-        if (data && data.events) {
-          return data.events;
-        }
-        throw `unknown error scrapping events`;
-      });
+    return scrapeIt(url, opts).then(({ data, response: { statusCode } }) => {
+      console.log('statuscode', statusCode);
+      if (statusCode && statusCode >= 400) {
+        throw { msg: `error scraping events`, statusCode };
+      }
+      if (data && data.events) {
+        return data.events;
+      }
+      throw `unknown error scrapping events`;
+    });
   }
 }
 

@@ -35,17 +35,38 @@ function fetchTemplatesSuccess(templates) {
   return { type: actionTypes.FETCH_TEMPLATES_SUCCESS, templates };
 }
 
-function fetchTemplateRequest(id) {
+function fetchTemplateRequest(id, opts = {}) {
   return dispatch => {
+    const { include } = opts;
+    let query = '';
+
+    // build query
+    if (include && include.length) {
+      query += '?';
+      include.forEach((element, idx) => {
+        if (idx > 0) {
+          query += `&`;
+        }
+        query += `include[]=${element}`;
+      });
+    }
+    
     const req = new Request(
-      appConfig.urlDomain + `/api/templates/${id}`,
+      appConfig.urlDomain + `/api/templates/${id}${query}`,
       Object.assign(requestParams, { method: 'GET', body: null })
     );
 
     return appFetch(req).then(res => {
       dispatch(fetchTemplateSuccess(res.template, res.events));
+    })
+    .catch(e => {
+      dispatch(fetchTemplateFailure(id, e));
     });
   };
+}
+
+function fetchTemplateFailure(id, msg) {
+  return { type: actionTypes.FETCH_TEMPLATE_FAILURE, id, msg };
 }
 
 function fetchTemplateSuccess(template, events) {

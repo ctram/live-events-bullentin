@@ -32,6 +32,7 @@ function appFetch(req) {
           toastr.success(res.msg);
         } else if (status >= 400) {
           toastr.error(res.msg || 'unknown error');
+          throw res.msg;
         }
       }
 

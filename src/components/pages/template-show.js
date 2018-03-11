@@ -18,14 +18,37 @@ export class PageTemplateShow extends React.Component {
     const { template } = this.props;
     const location = window.reactRouterLocation;
     const templateId = location.pathname.split('/')[2];
-    if (!template.id) {
-      this.props.fetchTemplateRequest(templateId);
+    let opts = {};
+
+    if (!template.get('events')) {
+      opts.include = ['events'];
+    }
+    if (!template.id || opts.include) {
+      this.props.fetchTemplateRequest(templateId, opts);
     }
   }
 
   render() {
     const { template } = this.props;
-    let events = template.get('events') || [];
+    const events = template.get('events') || [];
+    const error = template.get('error');
+    let domError;
+
+    if (error) {
+      domError = <h2>{error.msg}</h2>;
+    }
+    
+    const domList = (
+      <ul>
+        {events.map((event, idx) => {
+          return (
+            <li key={idx}>
+              <Event event={event} />
+            </li>
+          );
+        })}
+      </ul>
+    );
 
     return (
       <div>
@@ -36,15 +59,7 @@ export class PageTemplateShow extends React.Component {
         <hr />
         <section>
           <h1>Events</h1>
-          <ul>
-            {events.map((event, idx) => {
-              return (
-                <li key={idx}>
-                  <Event event={event} />
-                </li>
-              );
-            })}
-          </ul>
+          {domError || domList}
         </section>
       </div>
     );
@@ -60,8 +75,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchTemplateRequest: id => {
-      dispatch(actionsTemplates.fetchTemplateRequest(id));
+    fetchTemplateRequest: (id, opts) => {
+      dispatch(actionsTemplates.fetchTemplateRequest(id, opts));
+    },
+    fetchTemplateEventsRequest: id => {
+      dispatch(actionsTemplates.fetchTemplateEventsRequest(id));
     }
   };
 };

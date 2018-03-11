@@ -6,12 +6,20 @@ const intialState = {
 };
 
 function storeTemplates(state = intialState, action) {
-  const { templates } = state;
+  let { templates } = state;
+  let template;
+
+  if (action.templates) {
+    templates = new Templates(action.templates);
+  }
+  if (action.id) {
+    template = templates.get(action.id);
+  }
 
   switch (action.type) {
     case actionTypes.FETCH_TEMPLATES_SUCCESS:
       return Object.assign({}, state, {
-        templates: new Templates(action.templates)
+        templates
       });
     case actionTypes.FETCH_TEMPLATE_SUCCESS:
       if (action.events) {
@@ -19,6 +27,13 @@ function storeTemplates(state = intialState, action) {
       }
       templates.add(action.template);
       return Object.assign({}, state, { templates });
+    case actionTypes.FETCH_TEMPLATE_FAILURE:
+      if (template) {
+        template.set('error', action.msg);
+      } else {
+        templates.add({ id: action.id, error: action.msg });
+      }
+      return Object.assign({}, state, templates);
     default:
       return state;
   }
