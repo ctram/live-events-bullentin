@@ -30,7 +30,7 @@ export class PageTemplateShow extends React.Component {
 
   render() {
     const { template } = this.props;
-    const events = template.get('events') || [];
+    const events = template.get('events');
     const error = template.get('error');
     let domError;
 
@@ -40,7 +40,7 @@ export class PageTemplateShow extends React.Component {
     
     const domList = (
       <ul>
-        {events.map((event, idx) => {
+        {events && events.map((event, idx) => {
           return (
             <li key={idx}>
               <Event event={event} />

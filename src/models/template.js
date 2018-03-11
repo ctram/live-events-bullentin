@@ -7,7 +7,7 @@ export default class Template extends Backbone.Model {
 
   defaults() {
     return {
-      events: []
+      events: null
     };
   }
 }

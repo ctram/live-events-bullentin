@@ -57,7 +57,7 @@ function load(app) {
         if (decorators && decorators.includes('events')) {
           return template.getEvents();
         }
-        return [];
+        return null;
       })
       .then(events => {
         console.log('template', template, 'events', events);
