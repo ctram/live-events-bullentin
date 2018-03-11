@@ -16,7 +16,7 @@ export class PageTemplateShow extends React.Component {
 
   componentDidMount() {
     const { template } = this.props;
-    const location = window.reactRouterLocation;
+    const { location } = window.reactRouterHistory;
     const templateId = location.pathname.split('/')[2];
     let opts = {};
 
@@ -37,16 +37,17 @@ export class PageTemplateShow extends React.Component {
     if (error) {
       domError = <h2>{error.msg}</h2>;
     }
-    
+
     const domList = (
       <ul>
-        {events && events.map((event, idx) => {
-          return (
-            <li key={idx}>
-              <Event event={event} />
-            </li>
-          );
-        })}
+        {events &&
+          events.map((event, idx) => {
+            return (
+              <li key={idx}>
+                <Event event={event} />
+              </li>
+            );
+          })}
       </ul>
     );
 
@@ -68,7 +69,7 @@ export class PageTemplateShow extends React.Component {
 
 const mapStateToProps = state => {
   const { templates } = state.storeTemplates;
-  const templateId = window.reactRouterLocation.pathname.split('/')[2];
+  const templateId = window.reactRouterHistory.location.pathname.split('/')[2];
   const template = templates.get(templateId) || new Template();
   return Object.assign({}, { template });
 };
