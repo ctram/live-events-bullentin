@@ -21,7 +21,7 @@ function createTemplateRequest(data) {
 function saveTemplateRequest(data) {
   return () => {
     const req = new Request(
-      appConfig.urlDomain + `/api/templates/${data.templateId}`,
+      appConfig.urlDomain + `/api/templates/${data.id}`,
       Object.assign(requestParams, { method: 'PATCH', body: JSON.stringify(data) })
     );
     delete data.templateId;

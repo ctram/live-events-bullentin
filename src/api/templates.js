@@ -78,26 +78,13 @@ function load(app) {
     const { include: decorators } = req.query;
     let template; 
 
-    Template.query()
-      .findById(id)
-      .update({
-        name,
-        selector,
-        url
-      })
-      .then(_template => {
-        console.log('updated template', _template);
-        template = _template;
-        if (!template) {
-          throw 'template not found';
-        }
+    console.log('params', id)
+    
+    console.log('saving template');
 
-        console.log('decorators', decorators);
-        if (decorators && decorators.includes('events')) {
-          return template.getEvents();
-        }
-        return null;
-      })
+    Template.query()
+      .where({ id })
+      .update({ name, url, selector})
       .then(events => {
         console.log('template', template, 'events', events);
         return res.json({ template, events });
