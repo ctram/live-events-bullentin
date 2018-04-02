@@ -44,7 +44,7 @@ export class FormTemplate extends React.Component {
 
   handleChange(e) {
     e.preventDefault();
-    const {value, name} = e.target;
+    const { value, name } = e.target;
     const element = `template${name.charAt(0).toUpperCase() + name.slice(1)}`;
     const state = {};
     state[element] = value;
@@ -56,56 +56,60 @@ export class FormTemplate extends React.Component {
     const { disabled, deletable } = this.props;
 
     return (
-      <form>
-        <fieldset className="form-group">
-          <label htmlFor="name">Name</label>
-          <input
-            name="name"
-            className="form-control"
-            id="name"
-            value={templateName}
-            onChange={this.handleChange}
-            ref="inputTemplateName"
-            disabled={disabled}
-          />
-        </fieldset>
-        <fieldset className="form-group">
-          <label htmlFor="url">URL</label>
-          <input
-            name="url"
-            className="form-control"
-            id="url"
-            value={templateUrl}
-            onChange={this.handleChange}
-            ref="inputTemplateUrl"
-            disabled={disabled}
-          />
-        </fieldset>
-        <fieldset className="form-group">
-          <label htmlFor="selector">Selector</label>
-          <input
-            name="selector"
-            className="form-control"
-            id="selector"
-            value={templateSelector}
-            onChange={this.handleChange}
-            ref="inputTemplateSelector"
-            disabled={disabled}
-          />
-        </fieldset>
+      <div className="row justify-content-center">
+        <div className="col-4">
+          <form>
+            <fieldset className="form-group">
+              <label htmlFor="name">Name</label>
+              <input
+                name="name"
+                className="form-control"
+                id="name"
+                value={templateName}
+                onChange={this.handleChange}
+                ref="inputTemplateName"
+                disabled={disabled}
+              />
+            </fieldset>
+            <fieldset className="form-group">
+              <label htmlFor="url">URL</label>
+              <input
+                name="url"
+                className="form-control"
+                id="url"
+                value={templateUrl}
+                onChange={this.handleChange}
+                ref="inputTemplateUrl"
+                disabled={disabled}
+              />
+            </fieldset>
+            <fieldset className="form-group">
+              <label htmlFor="selector">Selector</label>
+              <input
+                name="selector"
+                className="form-control"
+                id="selector"
+                value={templateSelector}
+                onChange={this.handleChange}
+                ref="inputTemplateSelector"
+                disabled={disabled}
+              />
+            </fieldset>
 
-        {!deletable && (
-          <button className="btn btn-primary" onClick={this.submit} disabled={disabled}>
-            Add Template
-          </button>
-        )}
+            {!deletable && (
+              <button className="btn btn-primary" onClick={this.submit} disabled={disabled}>
+                Add Template
+              </button>
+            )}
 
-        {deletable && (
-          <button className="btn btn-danger" onClick={this.delete}>
-            Delete
-          </button>
-        )}
-      </form>
+            {deletable && (
+              <button className="btn btn-danger" onClick={this.delete}>
+                Delete
+              </button>
+            )}
+          </form>
+        </div>
+      </div>
     );
   }
 }
