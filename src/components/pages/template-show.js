@@ -55,7 +55,7 @@ export class PageTemplateShow extends React.Component {
       <div>
         <section>
           <h1>{template.get('name')}</h1>
-          <FormTemplate template={template} disabled={true} deletable={!!template.id} />
+          <FormTemplate template={template} isNew={!template.id} />
         </section>
         <hr />
         <section className="text-center">

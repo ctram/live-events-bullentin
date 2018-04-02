@@ -12,11 +12,14 @@ export class FormTemplate extends React.Component {
     this.state = {
       templateName: template.get('name') || '',
       templateSelector: template.get('selector') || '',
-      templateUrl: template.get('url') || ''
+      templateUrl: template.get('url') || '',
+      editMode: false
     };
-    this.submit = this.submit.bind(this);
+    this.addTemplate = this.addTemplate.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.delete = this.delete.bind(this);
+    this.edit = this.edit.bind(this);
+    this.save = this.save.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,22 +27,62 @@ export class FormTemplate extends React.Component {
     this.setState({ templateSelector, templateName, templateUrl });
   }
 
-  submit(e) {
+  addTemplate(e) {
     e.preventDefault();
+    const { templateName, templateSelector, templateUrl } = this.state;
+
+    if (!this.validateForm()) {
+      return;
+    }
+
+    this.props.createTemplateRequest({
+      name: templateName,
+      url: templateUrl,
+      selector: templateSelector
+    });
+  }
+
+  save(e) {
+    e.preventDefault();
+    const { templateName, templateSelector, templateUrl } = this.state;
+    const { template } = this.props;
+
+    if (!this.validateForm()) {
+      return;
+    }
+
+    this.props.saveTemplateRequest({
+      name: templateName,
+      url: templateUrl,
+      selector: templateSelector,
+      id: template.id
+    });
+  }
+
+  validateForm() {
     const { templateName, templateSelector, templateUrl } = this.state;
 
     if (_.isEmpty(templateName) || _.isEmpty(templateUrl) || _.isEmpty(templateSelector)) {
       toastr.error('Name, URL and Selector required');
-      return;
+      return false;
     }
-
-    this.props.createTemplateRequest({ templateName, templateUrl, templateSelector });
+    return true;
   }
 
   delete(e) {
     e.preventDefault();
     const { deleteTemplateRequest, template } = this.props;
     deleteTemplateRequest(template.id);
+  }
+
+  edit(e) {
+    e.preventDefault();
+    this.setState({ editMode: true });
+  }
+
+  cancel(e) {
+    e.preventDefault();
+    this.setState({ editMode: false });
   }
 
   handleChange(e) {
@@ -53,7 +96,8 @@ export class FormTemplate extends React.Component {
 
   render() {
     const { templateName, templateSelector, templateUrl } = this.state;
-    const { disabled, deletable } = this.props;
+    const { isNew } = this.props;
+    const { editMode } = this.state;
 
     return (
       <div className="row justify-content-center">
@@ -68,7 +112,7 @@ export class FormTemplate extends React.Component {
                 value={templateName}
                 onChange={this.handleChange}
                 ref="inputTemplateName"
-                disabled={disabled}
+                disabled={!editMode}
               />
             </fieldset>
             <fieldset className="form-group">
@@ -80,7 +124,7 @@ export class FormTemplate extends React.Component {
                 value={templateUrl}
                 onChange={this.handleChange}
                 ref="inputTemplateUrl"
-                disabled={disabled}
+                disabled={!editMode}
               />
             </fieldset>
             <fieldset className="form-group">
@@ -92,21 +136,39 @@ export class FormTemplate extends React.Component {
                 value={templateSelector}
                 onChange={this.handleChange}
                 ref="inputTemplateSelector"
-                disabled={disabled}
+                disabled={!editMode}
               />
             </fieldset>
-
-            {!deletable && (
-              <button className="btn btn-primary" onClick={this.submit} disabled={disabled}>
-                Add Template
-              </button>
-            )}
-
-            {deletable && (
-              <button className="btn btn-danger" onClick={this.delete}>
-                Delete
-              </button>
-            )}
+            <div className="btn-group">
+              {isNew && (
+                <button className="btn btn-primary" onClick={this.addTemplate}>
+                  Add Template
+                </button>
+              )}
+              {!isNew &&
+                editMode && (
+                  <button className="btn btn-primary" onClick={this.save}>
+                    Save
+                  </button>
+                )}
+              {!isNew &&
+                !editMode && (
+                  <button className="btn btn-secondary" onClick={this.edit}>
+                    Edit
+                  </button>
+                )}
+              {!isNew &&
+                editMode && (
+                  <button className="btn btn-secondary" onClick={this.cancel}>
+                    Cancel
+                  </button>
+                )}
+              {!isNew && (
+                <button className="btn btn-danger" onClick={this.delete} disabled={editMode}>
+                  Delete
+                </button>
+              )}
+            </div>
           </form>
         </div>
       </div>
@@ -134,6 +196,9 @@ const mapDispatchToProps = dispatch => {
     },
     deleteTemplateRequest: id => {
       dispatch(actionsTemplates.deleteTemplateRequest(id));
+    },
+    saveTemplateRequest: data => {
+      dispatch(actionsTemplates.saveTemplateRequest(data));
     }
   };
 };
