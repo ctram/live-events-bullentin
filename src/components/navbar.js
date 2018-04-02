@@ -37,7 +37,7 @@ export class Navbar extends React.Component {
     const { pathname } = window.reactRouterHistory.location;
 
     return (
-      <nav className="navbar navbar-expand-sm navbar-light row justify-content-center">
+      <nav className="navbar navbar-dark bg-primary collapse navbar-collapse navbar-expand-sm row justify-content-center">
         <ul className="navbar-nav">
           <LinkWrapper to="/" active={pathname === '/'}>
             Home

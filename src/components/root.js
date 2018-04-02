@@ -80,13 +80,15 @@ export class Root extends React.Component {
     const Routes = loggedIn ? <SwitchLoggedIn /> : <SwitchLoggedOut />;
 
     return (
-      <div className="container">
+      <div>
         <Navbar />
-        <Loader loaded={this.props.loaded}>
-          <ErrorBoundary>
-            <div className="row justify-content-center">{Routes}</div>
-          </ErrorBoundary>
-        </Loader>
+        <main>
+          <Loader loaded={this.props.loaded}>
+            <ErrorBoundary>
+              <div className="row justify-content-center">{Routes}</div>
+            </ErrorBoundary>
+          </Loader>
+        </main>
       </div>
     );
   }
