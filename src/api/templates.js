@@ -6,10 +6,10 @@ function load(app) {
       return res.status(401).end();
     }
 
-    const { templateName, templateSelector, templateUrl } = req.body;
+    const { name, selector, url } = req.body;
     console.log('body', req.body);
 
-    if (!templateName || !templateSelector || !templateUrl) {
+    if (!name || !selector || !url) {
       return res.status(400).json({ msg: 'name, URL and selector cannot be blank' });
     }
 
@@ -25,20 +25,20 @@ function load(app) {
   });
 
   app.get('/api/templates', (req, res) => {
-    // if (!req.isAuthenticated()) {
-    //   return res.status(401).end();
-    // }
+    if (!req.isAuthenticated()) {
+      return res.status(401).end();
+    }
 
     Template.query().then(templates => {
-      console.log('templates', templates)
+      console.log('templates', templates);
       res.json({ templates });
     });
   });
 
   app.get('/api/templates/:id', (req, res) => {
-    // if (!req.isAuthenticated()) {
-    //   res.status(401).end();
-    // }
+    if (!req.isAuthenticated()) {
+      res.status(401).end();
+    }
 
     console.log('query', req.query);
 
@@ -64,7 +64,46 @@ function load(app) {
         return res.json({ template, events });
       })
       .catch(e => {
-        console.error('scrape error', e); 
+        console.error('scrape error', e);
+        res.status(500).json({ msg: e.msg });
+      });
+  });
+
+  app.patch('/api/templates/:id', (req, res) => {
+    if (!req.isAuthenticated()) {
+      res.status(401).end();
+    }
+    let {body: { name, url, selector}} = req;
+    const { id } = req.params;
+    const { include: decorators } = req.query;
+    let template; 
+
+    Template.query()
+      .findById(id)
+      .update({
+        name,
+        selector,
+        url
+      })
+      .then(_template => {
+        console.log('updated template', _template);
+        template = _template;
+        if (!template) {
+          throw 'template not found';
+        }
+
+        console.log('decorators', decorators);
+        if (decorators && decorators.includes('events')) {
+          return template.getEvents();
+        }
+        return null;
+      })
+      .then(events => {
+        console.log('template', template, 'events', events);
+        return res.json({ template, events });
+      })
+      .catch(e => {
+        console.error('scrape error', e);
         res.status(500).json({ msg: e.msg });
       });
   });

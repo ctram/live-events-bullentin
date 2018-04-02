@@ -12,7 +12,22 @@ function createTemplateRequest(data) {
     );
 
     return appFetch(req).then(() => {
-      toastr.success('template created');
+      toastr.success('Template created');
+      window.reactRouterHistory.push('/templates');
+    });
+  };
+}
+
+function saveTemplateRequest(data) {
+  return () => {
+    const req = new Request(
+      appConfig.urlDomain + `/api/templates/${data.templateId}`,
+      Object.assign(requestParams, { method: 'PATCH', body: JSON.stringify(data) })
+    );
+    delete data.templateId;
+
+    return appFetch(req).then(() => {
+      toastr.success('Template saved');
       window.reactRouterHistory.push('/templates');
     });
   };
@@ -88,7 +103,7 @@ function deleteTemplateRequest(id) {
 
 function deleteTemplateSuccess() {
   return dispatch => {
-    toastr.success('template deleted');
+    toastr.success('Template deleted');
     window.reactRouterHistory.push('/templates');
     dispatch(fetchTemplatesRequest());
   };
@@ -96,6 +111,7 @@ function deleteTemplateSuccess() {
 
 export default {
   createTemplateRequest,
+  saveTemplateRequest,
   fetchTemplatesRequest,
   fetchTemplateRequest,
   deleteTemplateRequest
