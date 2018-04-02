@@ -35,7 +35,7 @@ export class PageTemplateShow extends React.Component {
     let domError;
 
     if (error) {
-      domError = <h2>{error.msg}</h2>;
+      domError = error;
     }
 
     const domList = (
@@ -58,7 +58,7 @@ export class PageTemplateShow extends React.Component {
           <FormTemplate template={template} disabled={true} deletable={!!template.id} />
         </section>
         <hr />
-        <section>
+        <section className="text-center">
           <h1>Events</h1>
           {domError || domList}
         </section>

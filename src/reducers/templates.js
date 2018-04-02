@@ -25,7 +25,7 @@ function storeTemplates(state = intialState, action) {
       if (action.events) {
         action.template.events = action.events;
       }
-      templates.add(action.template);
+      templates.add(action.template, { merge: true });
       return Object.assign({}, state, { templates });
     case actionTypes.FETCH_TEMPLATE_FAILURE:
       if (template) {

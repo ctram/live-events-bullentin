@@ -70,7 +70,7 @@ function fetchTemplateFailure(id, msg) {
 }
 
 function fetchTemplateSuccess(template, events) {
-  return { type: actionTypes.FETCH_TEMPLATE_SUCCESS, template, events };
+  return { type: actionTypes.FETCH_TEMPLATE_SUCCESS, template, events, id: template.id };
 }
 
 function deleteTemplateRequest(id) {
