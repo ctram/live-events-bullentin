@@ -54,22 +54,27 @@ export class Templates extends React.Component {
     const { templates = [] } = this.props;
 
     return (
-      <div>
-        <section>
-          <Link to="/templates/new">
-            <div className="row justify-content-center">
-              <button className="btn btn-primary">
-                Add Template
-              </button>
-            </div>
-          </Link>
-        </section>
-        {templates.length > 0 && (
+      <div className="row justify-content-center">
+        <div className="col-4">
           <div>
-            <hr />
-            <TemplatesList templates={templates} onClickRemove={this.props.deleteTemplateRequest} />
+            <Link to="/templates/new">
+              <div className="row justify-content-center">
+                <button className="btn btn-primary">Add Template</button>
+              </div>
+            </Link>
           </div>
-        )}
+          <div className="templates">
+            {templates.length > 0 && (
+              <div>
+                <hr />
+                <TemplatesList
+                  templates={templates}
+                  onClickRemove={this.props.deleteTemplateRequest}
+                />
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     );
   }

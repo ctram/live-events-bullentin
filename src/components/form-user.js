@@ -29,39 +29,43 @@ class FormUser extends React.Component {
   render() {
     const labelSubmitBtn = this.pathname === 'register' ? 'Register' : 'Submit';
     return (
-      <form>
-        <div className="form-group">
-          <label htmlFor="email">Email address</label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            ref="email"
-            aria-describedby="emailHelp"
-            placeholder="Enter email"
-            onChange={e => this.setState({ email: e.target.value })}
-          />
+      <div className="row justify-content-center">
+        <div className="col-2">
+          <form>
+            <div className="form-group">
+              <label htmlFor="email">Email address</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                ref="email"
+                aria-describedby="emailHelp"
+                placeholder="Enter email"
+                onChange={e => this.setState({ email: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                ref="password"
+                className="form-control"
+                id="password"
+                placeholder="Password"
+                onChange={e => this.setState({ password: e.target.value })}
+              />
+            </div>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              onClick={this.handleSubmit}
+              disabled={this.btnSubmitDisabled()}
+            >
+              {labelSubmitBtn}
+            </button>
+          </form>
         </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            ref="password"
-            className="form-control"
-            id="password"
-            placeholder="Password"
-            onChange={e => this.setState({ password: e.target.value })}
-          />
-        </div>
-        <button
-          type="submit"
-          className="btn btn-primary"
-          onClick={this.handleSubmit}
-          disabled={this.btnSubmitDisabled()}
-        >
-          {labelSubmitBtn}
-        </button>
-      </form>
+      </div>
     );
   }
 }

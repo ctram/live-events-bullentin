@@ -24,7 +24,7 @@ class Template extends Base {
       .where({ name })
       .then(rows => {
         if (rows.length > 1) {
-          return { msg: 'template of name already exists', status: 400 };
+          return { msg: 'Template of name already exists', status: 400 };
         } else {
           return templates.insert({ name, selector, url }).then(template => {
             return {
@@ -54,12 +54,12 @@ class Template extends Base {
     return scrapeIt(url, opts).then(({ data, response: { statusCode } }) => {
       console.log('statuscode', statusCode);
       if (statusCode && statusCode >= 400) {
-        throw { msg: `error scraping events`, statusCode };
+        throw { msg: `Error scraping events`, statusCode };
       }
       if (data && data.events) {
         return data.events;
       }
-      throw `unknown error scrapping events`;
+      throw `Unknown error scrapping events`;
     });
   }
 }

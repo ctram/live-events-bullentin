@@ -10,7 +10,7 @@ export default class PageTemplateNew extends React.Component {
 
   render() {
     return (
-      <section>
+      <section className="row">
         <h1>Add New Template</h1>
         <FormTemplate template={new Template()} />
       </section>

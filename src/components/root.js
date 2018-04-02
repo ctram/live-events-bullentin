@@ -85,7 +85,11 @@ export class Root extends React.Component {
         <main>
           <Loader loaded={this.props.loaded}>
             <ErrorBoundary>
-              <div className="row justify-content-center">{Routes}</div>
+              <div className="row justify-content-center">
+                <div className="col-10">
+                  {Routes}
+                </div>
+              </div>
             </ErrorBoundary>
           </Loader>
         </main>
