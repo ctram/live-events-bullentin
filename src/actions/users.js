@@ -16,7 +16,7 @@ function fetchUsersRequest() {
         if (data.users) {
           return dispatch(fetchUsersSuccess(data.users));
         }
-        console.error('no users received from server');
+        console.error('No Users Received From Server');
       })
       .catch(e => console.error(e));
   };
@@ -43,7 +43,7 @@ function createUserRequest(data) {
     );
 
     return appFetch(req, dispatch).then(data => {
-      toastr.success('successfully created user');
+      toastr.success('Successfully Created User');
       dispatch(createUserSuccess(data));
     });
   };
@@ -61,13 +61,13 @@ function loginUserRequest(data) {
       if (data.user) {
         return dispatch(loginUserSuccess(data.user));
       }
-      toastr.error('login failed');
+      toastr.error('Login Failed');
     });
   };
 }
 
 function loginUserSuccess(user) {
-  toastr.success('successfully logged in');
+  toastr.success('Login Successful');
   window.reactRouterHistory.push('/templates');
   return { type: actionTypes.LOGIN_USER_SUCCESS, user };
 }
@@ -98,7 +98,7 @@ function checkAuthenticationRequest() {
 
     return appFetch(req).then(data => {
       if (data.user) {
-        toastr.success('authenticated');
+        toastr.success('Authenticated');
         return dispatch(checkAuthenticationSuccess(data.user));
       }
     });
@@ -118,7 +118,7 @@ function logoutUserRequest() {
 
     return appFetch(req).then(() => {
       dispatch(logoutUserSuccess());
-      toastr.success('successfully logged out');
+      toastr.success('Logged Out Successfully');
       window.reactRouterHistory.push('/');
     });
   };
