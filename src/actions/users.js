@@ -11,7 +11,7 @@ function fetchUsersRequest() {
       Object.assign(requestParams, { method: 'GET', body: null })
     );
 
-    return appFetch(req)
+    appFetch(req)
       .then(data => {
         if (data.users) {
           return dispatch(fetchUsersSuccess(data.users));
@@ -42,7 +42,7 @@ function createUserRequest(data) {
       Object.assign(requestParams, { method: 'POST', body: JSON.stringify(data) })
     );
 
-    return appFetch(req, dispatch).then(data => {
+    appFetch(req, dispatch).then(data => {
       toastr.success('Successfully Created User');
       dispatch(createUserSuccess(data));
     });
@@ -57,7 +57,7 @@ function loginUserRequest(data) {
       Object.assign(requestParams, { method: 'POST', body: JSON.stringify(data) })
     );
 
-    return appFetch(req).then(data => {
+    appFetch(req).then(data => {
       if (data.user) {
         return dispatch(loginUserSuccess(data.user));
       }
@@ -79,7 +79,7 @@ function fetchUserRequest(id) {
       Object.assign(requestParams, { method: 'GET' })
     );
 
-    return appFetch(req).then(data => {
+    appFetch(req).then(data => {
       const users = window.ClientStore.users;
       let user = users.find(data.user.id);
       if (!user) {
@@ -96,7 +96,7 @@ function checkAuthenticationRequest() {
       Object.assign(requestParams, { method: 'GET' })
     );
 
-    return appFetch(req).then(data => {
+    appFetch(req, dispatch).then(data => {
       if (data.user) {
         toastr.success('Authenticated');
         return dispatch(checkAuthenticationSuccess(data.user));
@@ -116,7 +116,7 @@ function logoutUserRequest() {
       Object.assign(requestParams, { method: 'GET', body: null })
     );
 
-    return appFetch(req).then(() => {
+    appFetch(req).then(() => {
       dispatch(logoutUserSuccess());
       toastr.success('Logged Out Successfully');
       window.reactRouterHistory.push('/');
