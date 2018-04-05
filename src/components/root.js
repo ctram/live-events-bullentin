@@ -61,16 +61,6 @@ export class Root extends React.Component {
   }
 
   componentDidMount() {
-    const { startLoading, endLoading } = this.props;
-    endLoading();
-    $(document)
-      .bind('ajaxSend', () => {
-        startLoading();
-      })
-      .bind('ajaxComplete', () => {
-        endLoading();
-      });
-
     // When app is refreshed, we need to check whether user is already authenticated
     this.props.checkAuthenticationRequest();
   }
@@ -104,15 +94,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    startLoading: () => {
-      dispatch(actionsLoader.startLoading());
-    },
-    endLoading: () => {
-      dispatch(actionsLoader.endLoading());
-    },
-    fetchUsersRequest: () => {
-      dispatch(actionsUsers.fetchUsersRequest());
-    },
     checkAuthenticationRequest: () => {
       dispatch(actionsUsers.checkAuthenticationRequest());
     }
