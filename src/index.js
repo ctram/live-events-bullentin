@@ -17,11 +17,13 @@ import _toastr from '../node_modules/toastr/build/toastr.css';
 import toastr from 'toastr';
 import './styles/slate-theme.scss';
 import './styles/application.scss';
+import { setDispatchForAppFetch } from './helpers/app-fetch';
 
 window.ClientStore = {};
 
 const loggerMiddleware = createLogger();
 const store = createStore(reducers, applyMiddleware(thunkMiddleware, loggerMiddleware));
+setDispatchForAppFetch(store.dispatch);
 
 const app = (
   <Provider store={store}>

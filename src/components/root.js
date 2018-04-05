@@ -71,17 +71,14 @@ export class Root extends React.Component {
 
     return (
       <div>
+        <Loader loaded={this.props.loaded} options={{ color: 'white' }} />
         <Navbar />
         <main>
-          <Loader loaded={this.props.loaded}>
-            <ErrorBoundary>
-              <div className="row justify-content-center">
-                <div className="col-10">
-                  {Routes}
-                </div>
-              </div>
-            </ErrorBoundary>
-          </Loader>
+          <ErrorBoundary>
+            <div className="row justify-content-center">
+              <div className="col-10">{Routes}</div>
+            </div>
+          </ErrorBoundary>
         </main>
       </div>
     );

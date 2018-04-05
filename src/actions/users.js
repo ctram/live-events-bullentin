@@ -96,7 +96,7 @@ function checkAuthenticationRequest() {
       Object.assign(requestParams, { method: 'GET' })
     );
 
-    appFetch(req, dispatch).then(data => {
+    appFetch(req).then(data => {
       if (data.user) {
         toastr.success('Authenticated');
         return dispatch(checkAuthenticationSuccess(data.user));

@@ -1,4 +1,7 @@
 import toastr from 'toastr';
+import loader from '../actions/loader';
+
+let _dispatch = () => {};
 
 function parseResponse(res) {
   return res
@@ -8,14 +11,19 @@ function parseResponse(res) {
     })
     .catch(e => {
       console.error('json parsing error:', e);
-      
+
       return res.text();
     });
 }
 
-function appFetch(req) {
+export function setDispatchForAppFetch(dispatch) {
+  _dispatch = dispatch;
+}
+
+export default function appFetch(req) {
   let status;
 
+  _dispatch(loader.startLoading());
   return fetch(req)
     .then(res => {
       status = res.status;
@@ -43,7 +51,7 @@ function appFetch(req) {
       toastr.error(e);
     })
     .then(res => {
+        _dispatch(loader.endLoading());
       return res;
     });
 }
-export default appFetch;
