@@ -37,6 +37,13 @@ function appFetch(req) {
       }
 
       return res;
+    })
+    .catch(e => {
+      console.error(e);
+      toastr.error(e);
+    })
+    .then(res => {
+      return res;
     });
 }
 export default appFetch;
