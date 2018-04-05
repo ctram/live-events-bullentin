@@ -11,7 +11,7 @@ function createTemplateRequest(data) {
       Object.assign(requestParams, { method: 'POST', body: JSON.stringify(data) })
     );
 
-    return appFetch(req).then(() => {
+    appFetch(req).then(() => {
       toastr.success('Template created');
       window.reactRouterHistory.push('/templates');
     });
@@ -26,7 +26,7 @@ function saveTemplateRequest(data) {
     );
     delete data.templateId;
 
-    return appFetch(req).then(() => {
+    appFetch(req).then(() => {
       toastr.success('Template saved');
       window.reactRouterHistory.push('/templates');
     });
@@ -40,7 +40,7 @@ function fetchTemplatesRequest() {
       Object.assign(requestParams, { method: 'GET', body: null })
     );
 
-    return appFetch(req).then(res => {
+    appFetch(req).then(res => {
       dispatch(fetchTemplatesSuccess(res.templates));
     });
   };
@@ -71,7 +71,7 @@ function fetchTemplateRequest(id, opts = {}) {
       Object.assign(requestParams, { method: 'GET', body: null })
     );
 
-    return appFetch(req).then(res => {
+    appFetch(req).then(res => {
       dispatch(fetchTemplateSuccess(res.template, res.events));
     })
     .catch(e => {
@@ -95,7 +95,7 @@ function deleteTemplateRequest(id) {
       Object.assign(requestParams, { method: 'DELETE', body: null })
     );
 
-    return appFetch(req).then(() => {
+    appFetch(req).then(() => {
       dispatch(deleteTemplateSuccess());
     });
   };
