@@ -65,18 +65,19 @@ function fetchTemplateRequest(id, opts = {}) {
         query += `include[]=${element}`;
       });
     }
-    
+
     const req = new Request(
       appConfig.urlDomain + `/api/templates/${id}${query}`,
       Object.assign(requestParams, { method: 'GET', body: null })
     );
 
-    appFetch(req).then(res => {
-      dispatch(fetchTemplateSuccess(res.template, res.events));
-    })
-    .catch(e => {
-      dispatch(fetchTemplateFailure(id, e));
-    });
+    appFetch(req)
+      .then(res => {
+        dispatch(fetchTemplateSuccess(res.template));
+      })
+      .catch(e => {
+        dispatch(fetchTemplateFailure(id, e));
+      });
   };
 }
 

@@ -60,8 +60,11 @@ function load(app) {
         return null;
       })
       .then(events => {
-        console.log('template', template, 'events', events);
-        return res.json({ template, events });
+        if (events) {
+          console.log('template', template, 'events', events);
+          template.events = events;
+        }
+        return res.json({ template });
       })
       .catch(e => {
         console.error('scrape error', e);
@@ -73,14 +76,14 @@ function load(app) {
     if (!req.isAuthenticated()) {
       res.status(401).end();
     }
-    let {body: { name, url, selector}} = req;
+    let { body: { name, url, selector } } = req;
     const { id } = req.params;
     const { include: decorators } = req.query;
-    let template; 
+    let template;
 
     Template.query()
       .where({ id })
-      .update({ name, url, selector})
+      .update({ name, url, selector })
       .then(events => {
         return res.json({ template, events });
       })
