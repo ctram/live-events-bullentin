@@ -11,7 +11,7 @@ export default class PageTemplateNew extends React.Component {
   render() {
     return (
       <section className="template-new">
-        <h1 className="row">Add New Template</h1>
+        <h1>Add New Template</h1>
         <FormTemplate className="row" template={new Template()} isNew={true} />
       </section>
     );

@@ -7,13 +7,13 @@ import actionsTemplates from '../actions/templates';
 export class FormTemplate extends React.Component {
   constructor(props) {
     super(props);
-    const { template } = props;
+    const { template, isNew } = props;
 
     this.state = {
       templateName: template.get('name') || '',
       templateSelector: template.get('selector') || '',
       templateUrl: template.get('url') || '',
-      editMode: false
+      editMode: isNew || false
     };
     this.addTemplate = this.addTemplate.bind(this);
     this.handleChange = this.handleChange.bind(this);
