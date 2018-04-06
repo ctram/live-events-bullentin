@@ -29,6 +29,7 @@ export class PageTemplateShow extends React.Component {
   }
 
   render() {
+    
     const { template } = this.props;
     const events = template.get('events');
     const error = template.get('error');
@@ -39,16 +40,18 @@ export class PageTemplateShow extends React.Component {
     }
 
     const domList = (
-      <ul>
-        {events &&
-          events.map((event, idx) => {
-            return (
-              <li key={idx}>
-                <Event event={event} />
-              </li>
-            );
-          })}
-      </ul>
+      <div className="row justify-content-center">
+        <ul className="col-6">
+          {events &&
+            events.map((event, idx) => {
+              return (
+                <li key={idx}>
+                  <Event event={event} />
+                </li>
+              );
+            })}
+        </ul>
+      </div>
     );
 
     return (
