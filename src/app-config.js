@@ -4,5 +4,6 @@ const host = 'localhost';
 export default {
   port,
   host,
-  urlDomain: `http://${host}:${port}`
+  urlDomain: `http://${host}:${port}`,
+  authenticate: false
 };

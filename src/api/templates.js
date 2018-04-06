@@ -1,8 +1,9 @@
 import Template from '../db/models/template';
+import config from '../app-config';
 
 function load(app) {
   app.post('/api/templates', (req, res) => {
-    if (!req.isAuthenticated()) {
+    if (config.authenticate && !req.isAuthenticated()) {
       return res.status(401).end();
     }
 
@@ -25,7 +26,7 @@ function load(app) {
   });
 
   app.get('/api/templates', (req, res) => {
-    if (!req.isAuthenticated()) {
+    if (config.authenticate && !req.isAuthenticated()) {
       return res.status(401).end();
     }
 
@@ -36,7 +37,7 @@ function load(app) {
   });
 
   app.get('/api/templates/:id', (req, res) => {
-    if (!req.isAuthenticated()) {
+    if (config.authenticate && !req.isAuthenticated()) {
       res.status(401).end();
     }
 
@@ -73,12 +74,11 @@ function load(app) {
   });
 
   app.patch('/api/templates/:id', (req, res) => {
-    if (!req.isAuthenticated()) {
+    if (config.authenticate && !req.isAuthenticated()) {
       res.status(401).end();
     }
     let { body: { name, url, selector } } = req;
     const { id } = req.params;
-    const { include: decorators } = req.query;
     let template;
 
     Template.query()
@@ -96,7 +96,7 @@ function load(app) {
   app.delete('/api/templates/:id', (req, res) => {
     const { id } = req.params;
 
-    if (!req.isAuthenticated()) {
+    if (config.authenticate && !req.isAuthenticated()) {
       res.status(401).end();
     }
 

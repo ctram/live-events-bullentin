@@ -1,15 +1,21 @@
 import passport from 'passport';
 import User from '../db/models/user';
+import config from '../app-config';
 
 function load(app) {
   app.get('/api/authentication', (req, res) => {
-    console.log('user', req.user)
-    console.log('authenticated', req.isAuthenticated());
-    if (!req.isAuthenticated()) {
+    console.log('user', req.user);
+    if (config.authenticate && !req.isAuthenticated()) {
       return res.status(401).json({ msg: 'not authenticated' });
     }
 
-    return res.json({ user: req.user });
+    if (!config.authenticate) {
+      return User.query().then(users => {
+        res.json({ user: users[0] });
+      });
+    }
+
+    res.json({ user: req.user });
   });
 
   /////// USER ///////
@@ -22,7 +28,7 @@ function load(app) {
           return res.json({ user });
         }
 
-        return res.status(404).json({ msg: 'user not found' });
+        res.status(404).json({ msg: 'user not found' });
       });
   });
 
@@ -33,7 +39,7 @@ function load(app) {
 
   //////// USERS ////////
   app.get('/api/users', (req, res) => {
-    if (!req.isAuthenticated()) {
+    if (config.authenticate && !req.isAuthenticated()) {
       return res.status(401).json({ msg: 'not authorized' });
     }
 
@@ -61,7 +67,7 @@ function load(app) {
   });
 
   app.get('/api/users/:id', (req, res) => {
-    if (!req.isAuthenticated()) {
+    if (config.authenticate && !req.isAuthenticated()) {
       return res.status(401);
     }
 
@@ -71,7 +77,8 @@ function load(app) {
         if (user) {
           return res.json({ user });
         }
-        return res.status(404).json({ msg: 'user not found' });
+
+        res.status(404).json({ msg: 'user not found' });
       });
   });
 }
