@@ -8,19 +8,18 @@ function load(app) {
     }
 
     const { name, selector, url } = req.body;
-    console.log('body', req.body);
 
     if (!name || !selector || !url) {
       return res.status(400).json({ msg: 'name, URL and selector cannot be blank' });
     }
 
-    console.log('body', req.body);
     Template.create(req.body)
       .then(data => {
         let { status = 200 } = data;
         res.status(status).json(data);
       })
       .catch(e => {
+        console.error('error message', e);
         res.status(500).json({ msg: e });
       });
   });

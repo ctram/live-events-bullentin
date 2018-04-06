@@ -17,29 +17,23 @@ class Template extends Base {
   }
 
   static create(data) {
-    const { templateName: name, templateSelector: selector, templateUrl: url } = data;
+    const { name, selector, url } = data;
     const templates = Template.query();
 
-    return templates
-      .where({ name })
-      .then(rows => {
-        if (rows.length > 1) {
-          return { msg: 'Template of name already exists', status: 400 };
-        } else {
-          return templates.insert({ name, selector, url }).then(template => {
-            return {
-              id: template.id,
-              name: template.name,
-              selector: template.selector,
-              url: template.url
-            };
-          });
-        }
-      })
-      .catch(e => {
-        console.error(e);
-        return { msg: e, status: 500 };
-      });
+    return templates.where({ name }).then(rows => {
+      if (rows.length > 1) {
+        return { msg: 'Template of name already exists', status: 400 };
+      } else {
+        return templates.insert({ name, selector, url }).then(template => {
+          return {
+            id: template.id,
+            name: template.name,
+            selector: template.selector,
+            url: template.url
+          };
+        });
+      }
+    });
   }
 
   getEvents() {
