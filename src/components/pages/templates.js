@@ -56,13 +56,11 @@ export class Templates extends React.Component {
     return (
       <div className="row justify-content-center">
         <div className="col-4">
-          <div>
-            <Link to="/templates/new">
-              <div className="row justify-content-center">
-                <button className="btn btn-primary">Add Template</button>
-              </div>
-            </Link>
-          </div>
+          <Link to="/templates/new">
+            <div className="row justify-content-center">
+              <button className="btn btn-primary">Add Template</button>
+            </div>
+          </Link>
           <div className="templates">
             {templates.length > 0 && (
               <div>
