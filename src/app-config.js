@@ -5,5 +5,5 @@ export default {
   port,
   host,
   urlDomain: `http://${host}:${port}`,
-  authenticate: false
+  authenticate: true
 };

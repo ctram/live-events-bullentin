@@ -25,8 +25,10 @@ import ErrorBoundary from './error-boundary';
 import PageTemplateNew from './pages/template-new';
 // eslint-disable-next-line no-unused-vars
 import PageTemplateShow from './pages/template-show';
+import Page404 from './pages/404';
 
-function SwitchLoggedIn() {
+// eslint-disable-next-line no-unused-vars
+function SwitchLoggedIn(props) {
   return (
     <Switch>
       <Route exact path="/" component={PageWelcome} />
@@ -35,17 +37,20 @@ function SwitchLoggedIn() {
       <Route exact path="/templates" component={PageTemplates} />
       <Route exact path="/templates/new" component={PageTemplateNew} />
       <Route exact path="/templates/:id" component={PageTemplateShow} />
+      <Route component={Page404} />
     </Switch>
   );
 }
 
+// eslint-disable-next-line no-unused-vars
 function SwitchLoggedOut() {
   return (
     <Switch>
       <Route exact path="/" component={PageWelcome} />
       <Route exact path="/register" component={FormUser} />
       <Route exact path="/login" component={FormUser} />
-    </Switch>
+      <Route component={Page404} />
+      </Switch>
   );
 }
 
