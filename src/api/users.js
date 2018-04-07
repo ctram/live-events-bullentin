@@ -6,7 +6,8 @@ function load(app) {
   app.get('/api/authentication', (req, res) => {
     console.log('user', req.user);
     if (config.authenticate && !req.isAuthenticated()) {
-      return res.status(401).json({ msg: 'not authenticated' });
+      // FIXME: remove this, let client read the default statusText within the response;
+      return res.status(401).json({ msg: 'Not authenticated' });
     }
 
     if (!config.authenticate) {
@@ -100,7 +101,7 @@ function load(app) {
     const currentUser = req.user;
     const users = User.query().where({ id: req.user.id });
 
-    console.log('params', req.params)
+    console.log('params', req.params);
     users
       .findById(req.params.id)
       .then(user => {
@@ -108,7 +109,9 @@ function load(app) {
           return res.status(400).json({ msg: 'User to delete not found' });
         }
         if (currentUser.role !== 'admin') {
-          return res.status(400).json({ msg: 'Current User must be of type admin to delete users' });
+          return res
+            .status(400)
+            .json({ msg: 'Current User must be of type admin to delete users' });
         }
         if (currentUser.id === user.id) {
           return res.status(400).json({ msg: 'User cannot delete themself' });

@@ -25,9 +25,8 @@ export default function appFetch(req) {
 
   return fetch(req)
     .then(res => {
-      const statusText = res.statusText;
       return parseResponse(res).then(body => {
-        return { data: body, statusText };
+        return { data: body, statusText: res.statusText, status: res.status };
       });
     })
     .catch(e => {
@@ -36,7 +35,7 @@ export default function appFetch(req) {
       _dispatch(loader.endLoading());
       throw e;
     })
-    .then(({data, statusText}) => {
+    .then(({ data, statusText, status }) => {
       _dispatch(loader.endLoading());
 
       if (status >= 100 && status < 200) {
