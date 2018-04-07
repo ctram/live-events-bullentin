@@ -44,7 +44,7 @@ function load(app) {
   //////// USERS ////////
   app.get('/api/users', (req, res) => {
     if (config.authenticate && !req.isAuthenticated()) {
-      return res.status(401).json({ msg: 'not authorized' });
+      return res.status(401).json({ msg: 'Not authorized' });
     }
 
     User.query()
@@ -60,7 +60,7 @@ function load(app) {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      res.status(400).json({ msg: 'email and password cannot be blank' });
+      res.status(400).json({ msg: 'Email and password cannot be blank' });
       return;
     }
 
@@ -86,7 +86,7 @@ function load(app) {
           return res.json({ user });
         }
 
-        res.status(404).json({ msg: 'user not found' });
+        res.status(404).json({ msg: 'User not found' });
       })
       .catch(e => {
         res.status(500).json({ msg: e });
@@ -99,12 +99,13 @@ function load(app) {
     }
     console.log('params', req.params);
     const currentUser = req.user;
-    const users = User.query().where({ id: req.user.id });
+    const usersQuery = User.query().where({ id: req.params.id });
 
-    console.log('params', req.params);
-    users
-      .findById(req.params.id)
-      .then(user => {
+    usersQuery
+      .then(users => {
+        const user = users[0];
+        console.log('found user', user);
+
         if (!user) {
           return res.status(400).json({ msg: 'User to delete not found' });
         }
@@ -117,8 +118,8 @@ function load(app) {
           return res.status(400).json({ msg: 'User cannot delete themself' });
         }
 
-        return users.del().then(() => {
-          res.json({ msg: 'User successfully deleted' });
+        return usersQuery.del().then(() => {
+          res.end();
         });
       })
       .catch(e => {
