@@ -1,18 +1,22 @@
 import actionTypes from '../actions/action-types';
+import User from '../models/user';
 
 const intialState = {
   users: [],
   loggedIn: false,
-  currentUser: { email: '' }
+  currentUser: null
 };
 
 function storeUsers(state = intialState, action) {
+  let currentUser;
+
   switch (action.type) {
     case actionTypes.FETCH_USERS_SUCCESS:
       return Object.assign({}, state, { users: action.users });
     case actionTypes.CHECK_AUTHENTICATION_SUCCESS:
     case actionTypes.LOGIN_USER_SUCCESS:
-      return Object.assign({}, state, { loggedIn: true, currentUser: action.user });
+      currentUser = new User(action.user);
+      return Object.assign({}, state, { loggedIn: true, currentUser });
     case actionTypes.LOGOUT_USER_SUCCESS:
       return Object.assign({}, state, { loggedIn: false, currentUser: null });
     default:

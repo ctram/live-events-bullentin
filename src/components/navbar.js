@@ -5,20 +5,17 @@ import { connect } from 'react-redux';
 import actionsUsers from '../actions/users';
 
 // eslint-disable-next-line no-unused-vars
-function LinkWrapper({ active, to, children, show = true, onClick }) {
+function LinkWrapper({ active, to, children, onClick }) {
   active = active ? 'active' : '';
   const className = `nav-item ${active}`;
 
-  if (show) {
-    return (
-      <li className={className}>
-        <Link to={to} className="nav-link" onClick={onClick}>
-          {children}
-        </Link>
-      </li>
-    );
-  }
-  return null;
+  return (
+    <li className={className}>
+      <Link to={to} className="nav-link" onClick={onClick}>
+        {children}
+      </Link>
+    </li>
+  );
 }
 
 export class Navbar extends React.Component {
@@ -33,7 +30,8 @@ export class Navbar extends React.Component {
   }
 
   render() {
-    const { loggedIn } = this.props;
+    const { loggedIn, currentUser } = this.props;
+    
     const { pathname } = window.reactRouterHistory.location;
 
     return (
@@ -42,24 +40,43 @@ export class Navbar extends React.Component {
           <LinkWrapper to="/" active={pathname === '/'}>
             Home
           </LinkWrapper>
-          <LinkWrapper to="/register" active={pathname === '/register'} show={!loggedIn}>
-            Register
-          </LinkWrapper>
-          <LinkWrapper to="/login" active={pathname === '/login'} show={!loggedIn}>
-            Login
-          </LinkWrapper>
-          <LinkWrapper to="/users" active={pathname === '/users'} show={loggedIn}>
-            Users
-          </LinkWrapper>
-          <LinkWrapper to="/profile" active={pathname === '/profile'} show={loggedIn}>
-            Profile
-          </LinkWrapper>
-          <LinkWrapper to="/templates" active={pathname === '/templates'} show={loggedIn}>
-            Templates
-          </LinkWrapper>
-          <LinkWrapper to="/" show={loggedIn} onClick={this.logout}>
-            Log Out
-          </LinkWrapper>
+
+          {!loggedIn && (
+            <LinkWrapper to="/register" active={pathname === '/register'}>
+              Register
+            </LinkWrapper>
+          )}
+
+          {!loggedIn && (
+            <LinkWrapper to="/login" active={pathname === '/login'}>
+              Login
+            </LinkWrapper>
+          )}
+
+          {loggedIn &&
+            currentUser.isAdmin() && (
+              <LinkWrapper to="/users" active={pathname === '/users'}>
+                Users
+              </LinkWrapper>
+            )}
+
+          {loggedIn && (
+            <LinkWrapper to="/profile" active={pathname === '/profile'}>
+              Profile
+            </LinkWrapper>
+          )}
+
+          {loggedIn && (
+            <LinkWrapper to="/templates" active={pathname === '/templates'}>
+              Templates
+            </LinkWrapper>
+          )}
+
+          {loggedIn && (
+            <LinkWrapper to="/" onClick={this.logout}>
+              Log Out
+            </LinkWrapper>
+          )}
         </ul>
       </nav>
     );

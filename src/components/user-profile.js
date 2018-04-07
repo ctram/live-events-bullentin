@@ -18,8 +18,7 @@ class UserProfile extends React.Component {
 }
 
 const mapStateToProps = state => {
-  let currentUser = new User(state.storeUsers.currentUser);
-  return { currentUser };
+  return { currentUser: state.storeUsers.currentUser };
 };
 
 const mapDispatchToProps = () => {
