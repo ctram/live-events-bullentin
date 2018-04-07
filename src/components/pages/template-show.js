@@ -16,7 +16,7 @@ export class PageTemplateShow extends React.Component {
 
   componentDidMount() {
     const { template } = this.props;
-    const { location } = window.reactRouterHistory;
+    const { location } = window.LEB.reactRouterHistory;
     const templateId = location.pathname.split('/')[2];
     let opts = {};
 
@@ -72,7 +72,7 @@ export class PageTemplateShow extends React.Component {
 
 const mapStateToProps = state => {
   const { templates } = state.storeTemplates;
-  const templateId = window.reactRouterHistory.location.pathname.split('/')[2];
+  const templateId = window.LEB.reactRouterHistory.location.pathname.split('/')[2];
   const template = templates.get(templateId) || new Template();
   return Object.assign({}, { template });
 };

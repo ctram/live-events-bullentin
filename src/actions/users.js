@@ -29,7 +29,7 @@ function fetchUsersSuccess(users) {
 function createUserSuccess(data) {
   data = Object.assign(data, { redirectUrl: '/login' });
   if (data.redirectUrl) {
-    window.reactRouterHistory.push(data.redirectUrl);
+    window.LEB.reactRouterHistory.push(data.redirectUrl);
   }
   return { type: null };
 }
@@ -43,7 +43,8 @@ function createUserRequest(data) {
     );
 
     appFetch(req, dispatch).then(data => {
-      toastr.success('Successfully Created User');
+      toastr.success('Registration complete, please login');
+      window.LEB.reactRouterHistory.push('/login');
       dispatch(createUserSuccess(data));
     });
   };
@@ -68,7 +69,7 @@ function loginUserRequest(data) {
 
 function loginUserSuccess(user) {
   toastr.success('Login Successful');
-  window.reactRouterHistory.push('/templates');
+  window.LEB.reactRouterHistory.push('/templates');
   return { type: actionTypes.LOGIN_USER_SUCCESS, user };
 }
 
@@ -80,7 +81,8 @@ function fetchUserRequest(id) {
     );
 
     appFetch(req).then(data => {
-      const users = window.ClientStore.users;
+      // FIXME: why?
+      const users = window.LEB.ClientStore.users;
       let user = users.find(data.user.id);
       if (!user) {
         users.add(data.user);
@@ -102,6 +104,7 @@ function checkAuthenticationRequest() {
         return dispatch(checkAuthenticationSuccess(data.user));
       }
     });
+        window.LEB.reactRouterHistory.push('/login');
   };
 }
 

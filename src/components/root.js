@@ -61,7 +61,7 @@ export class Root extends React.Component {
 
   componentWillMount() {
     const { history } = this.props;
-    window.reactRouterHistory = history;
+    window.LEB.reactRouterHistory = history;
   }
 
   componentDidMount() {

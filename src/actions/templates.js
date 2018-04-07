@@ -13,7 +13,7 @@ function createTemplateRequest(data) {
 
     appFetch(req).then(() => {
       toastr.success('Template created');
-      window.reactRouterHistory.push('/templates');
+      window.LEB.reactRouterHistory.push('/templates');
     });
   };
 }
@@ -28,7 +28,7 @@ function saveTemplateRequest(data) {
 
     appFetch(req).then(() => {
       toastr.success('Template saved');
-      window.reactRouterHistory.push('/templates');
+      window.LEB.reactRouterHistory.push('/templates');
     });
   };
 }
@@ -105,7 +105,7 @@ function deleteTemplateRequest(id) {
 function deleteTemplateSuccess() {
   return dispatch => {
     toastr.success('Template deleted');
-    window.reactRouterHistory.push('/templates');
+    window.LEB.reactRouterHistory.push('/templates');
     dispatch(fetchTemplatesRequest());
   };
 }

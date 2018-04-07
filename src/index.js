@@ -19,7 +19,8 @@ import './styles/slate-theme.scss';
 import './styles/application.scss';
 import { setDispatchForAppFetch } from './helpers/app-fetch';
 
-window.ClientStore = {};
+window.LEB = {};
+window.LEB.ClientStore = {};
 
 const loggerMiddleware = createLogger();
 const store = createStore(reducers, applyMiddleware(thunkMiddleware, loggerMiddleware));
