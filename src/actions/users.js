@@ -139,9 +139,23 @@ function logoutUserSuccess() {
   return { type: actionTypes.LOGOUT_USER_SUCCESS };
 }
 
+function deleteUserRequest(id) {
+  return () => {
+    const req = new Request(
+      appConfig.urlDomain + `/api/users/${id}`,
+      Object.assign(requestParams, { method: 'DELETE', body: null })
+    );
+
+    appFetch(req).then(() => {
+      toastr.success('User deleted successfully');
+    });
+  };
+}
+
 export default {
   createUserRequest,
   createUserSuccess,
+  deleteUserRequest,
   loginUserRequest,
   logoutUserRequest,
   fetchUserRequest,

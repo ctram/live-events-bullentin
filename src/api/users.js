@@ -29,6 +29,9 @@ function load(app) {
         }
 
         res.status(404).json({ msg: 'user not found' });
+      })
+      .catch(e => {
+        res.status(500).json({ msg: e });
       });
   });
 
@@ -43,9 +46,13 @@ function load(app) {
       return res.status(401).json({ msg: 'not authorized' });
     }
 
-    User.query().then(users => {
-      res.json({ users });
-    });
+    User.query()
+      .then(users => {
+        res.json({ users });
+      })
+      .catch(e => {
+        res.status(500).json({ msg: e });
+      });
   });
 
   app.post('/api/users', (req, res) => {
@@ -79,6 +86,41 @@ function load(app) {
         }
 
         res.status(404).json({ msg: 'user not found' });
+      })
+      .catch(e => {
+        res.status(500).json({ msg: e });
+      });
+  });
+
+  app.delete('/api/users/:id', (req, res) => {
+    if (config.authenticate && !req.isAuthenticated()) {
+      return res.status(401);
+    }
+    console.log('params', req.params);
+    const currentUser = req.user;
+    const users = User.query().where({ id: req.user.id });
+
+    console.log('params', req.params)
+    users
+      .findById(req.params.id)
+      .then(user => {
+        if (!user) {
+          return res.status(400).json({ msg: 'User to delete not found' });
+        }
+        if (currentUser.role !== 'admin') {
+          return res.status(400).json({ msg: 'Current User must be of type admin to delete users' });
+        }
+        if (currentUser.id === user.id) {
+          return res.status(400).json({ msg: 'User cannot delete themself' });
+        }
+
+        return users.del().then(() => {
+          res.json({ msg: 'User successfully deleted' });
+        });
+      })
+      .catch(e => {
+        console.error(e);
+        res.status(500).json({ msg: e });
       });
   });
 }
