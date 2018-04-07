@@ -105,11 +105,16 @@ function checkAuthenticationRequest() {
       }
     });
         window.LEB.reactRouterHistory.push('/login');
+        return dispatch(checkAuthenticationFailure());
   };
 }
 
 function checkAuthenticationSuccess(user) {
   return { type: actionTypes.CHECK_AUTHENTICATION_SUCCESS, user };
+}
+
+function checkAuthenticationFailure() {
+  return { type: actionTypes.CHECK_AUTHENTICATION_FAILURE };
 }
 
 function logoutUserRequest() {

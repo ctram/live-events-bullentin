@@ -17,6 +17,7 @@ function storeUsers(state = intialState, action) {
     case actionTypes.LOGIN_USER_SUCCESS:
       currentUser = new User(action.user);
       return Object.assign({}, state, { loggedIn: true, currentUser });
+    case actionTypes.CHECK_AUTHENTICATION_FAILURE:
     case actionTypes.LOGOUT_USER_SUCCESS:
       return Object.assign({}, state, { loggedIn: false, currentUser: null });
     default:
