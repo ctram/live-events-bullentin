@@ -98,14 +98,17 @@ function checkAuthenticationRequest() {
       Object.assign(requestParams, { method: 'GET' })
     );
 
-    appFetch(req).then(data => {
-      if (data.user) {
-        toastr.success('Authenticated');
-        return dispatch(checkAuthenticationSuccess(data.user));
-      }
-    });
+    appFetch(req)
+      .then(data => {
+        if (data.user) {
+          toastr.success('Authenticated');
+          return dispatch(checkAuthenticationSuccess(data.user));
+        }
+      })
+      .catch(() => {
         window.LEB.reactRouterHistory.push('/login');
         return dispatch(checkAuthenticationFailure());
+      });
   };
 }
 

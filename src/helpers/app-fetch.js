@@ -21,37 +21,38 @@ export function setDispatchForAppFetch(dispatch) {
 }
 
 export default function appFetch(req) {
-  let status;
-
   _dispatch(loader.startLoading());
+
   return fetch(req)
     .then(res => {
-      status = res.status;
-      if (status === 401) {
-        toastr.error('Not Authorized');
-        return {};
-      }
-
-      return parseResponse(res);
-    })
-    .then(res => {
-      if (res && res.msg) {
-        if (status >= 200 && status < 400) {
-          toastr.success(res.msg);
-        } else if (status >= 400) {
-          toastr.error(res.msg || 'unknown error');
-          throw res.msg;
-        }
-      }
-
-      return res;
+      const statusText = res.statusText;
+      return parseResponse(res).then(body => {
+        return { data: body, statusText };
+      });
     })
     .catch(e => {
       console.error(e);
       toastr.error(e);
+      _dispatch(loader.endLoading());
+      throw e;
     })
-    .then(res => {
-        _dispatch(loader.endLoading());
-      return res;
+    .then(({data, statusText}) => {
+      _dispatch(loader.endLoading());
+
+      if (status >= 100 && status < 200) {
+        data.msg ? toastr.info(data.msg) : null;
+        return data;
+      }
+      if (status >= 200 && status < 400) {
+        data.msg ? toastr.success(data.msg) : null;
+        return data;
+      }
+      if (status >= 400) {
+        const msg = data.msg || statusText || 'Unknown error';
+        toastr.error(msg);
+        throw msg;
+      }
+
+      return data;
     });
 }
