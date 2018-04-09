@@ -21,16 +21,29 @@ function createTemplateRequest(data) {
 function saveTemplateRequest(data) {
   return dispatch => {
     const req = new Request(
-      appConfig.urlDomain + `/api/templates/${data.id}?include[]=events`,
+      appConfig.urlDomain + `/api/templates/${data.id}`,
       Object.assign(requestParams, { method: 'PATCH', body: JSON.stringify(data) })
     );
-    delete data.templateId;
+    dispatch(setTemplate(data));
 
-    appFetch(req).then(({ template }) => {
-      toastr.success('Template saved');
-      dispatch(saveTemplateSuccess(template));
-    });
+    appFetch(req)
+      .then(({ template }) => {
+        toastr.success('Template saved');
+        dispatch(saveTemplateSuccess(template));
+      })
+      .catch(() => {
+        toastr.error('Error saving template');
+        // grab the original template on the server.
+        return dispatch(fetchTemplateRequest(data.id));
+      })
+      .then(() => {
+        dispatch(fetchTemplateEventsRequest(data.id));
+      });
   };
+}
+
+function setTemplate(template) {
+  return { type: actionTypes.SET_TEMPLATE, template };
 }
 
 function saveTemplateSuccess(template) {

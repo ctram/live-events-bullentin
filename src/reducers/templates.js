@@ -6,8 +6,8 @@ const intialState = {
 };
 
 function storeTemplates(state = intialState, action) {
-  let template;
   let { templates } = state;
+  let template;
 
   if (action.templates) {
     templates = new Templates(action.templates);
@@ -43,6 +43,11 @@ function storeTemplates(state = intialState, action) {
       template = templates.get(action.id);
       template.set('events', null);
       template.set('error', action.msg);
+      templates = new Templates(templates.toJSON());
+      return Object.assign({}, state, { templates });
+    case actionTypes.SET_TEMPLATE:
+      template = templates.get(action.template.id);
+      template.set(action.template);
       templates = new Templates(templates.toJSON());
       return Object.assign({}, state, { templates });
     default:
