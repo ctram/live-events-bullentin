@@ -16,43 +16,49 @@ export class PageTemplateShow extends React.Component {
   }
 
   componentDidMount() {
-    const { template } = this.props;
+    const { fetchTemplateRequest, fetchTemplateEventsRequest } = this.props;
+    let { template } = this.props;
     const { location } = window.LEB.reactRouterHistory;
     const templateId = location.pathname.split('/')[2];
-    let opts = {};
 
-    if (!template.get('events')) {
-      opts.include = ['events'];
+    // Template is from server, no need to fetch it again.
+    if (template.id) {
+      return;
     }
-    if (!template.id || opts.include) {
-      this.props.fetchTemplateRequest(templateId, opts);
-    }
+
+    // fetch template from server with events.
+    fetchTemplateRequest(templateId).then(() => {
+      if (!template.get('events')) {
+        fetchTemplateEventsRequest(templateId);
+      }
+    });
   }
 
   render() {
     const { template } = this.props;
     const events = template.get('events');
     const error = template.get('error');
-    let domError;
-
+    let domList;
     if (error) {
-      domError = error;
+      domList = error;
+    } else if (!events) {
+      domList = 'No events found';
+    } else {
+      domList = (
+        <div className="row justify-content-center">
+          <ul className="col-6">
+            {events &&
+              events.map((event, idx) => {
+                return (
+                  <li className="event-item" key={idx}>
+                    <Event event={event} />
+                  </li>
+                );
+              })}
+          </ul>
+        </div>
+      );
     }
-
-    const domList = (
-      <div className="row justify-content-center">
-        <ul className="col-6">
-          {events &&
-            events.map((event, idx) => {
-              return (
-                <li className="event-item" key={idx}>
-                  <Event event={event} />
-                </li>
-              );
-            })}
-        </ul>
-      </div>
-    );
 
     return (
       <div>
@@ -63,7 +69,7 @@ export class PageTemplateShow extends React.Component {
         <hr />
         <section className="text-center">
           <h1>Events</h1>
-          {domError || domList}
+          {domList}
         </section>
       </div>
     );
@@ -79,8 +85,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchTemplateRequest: (id, opts) => {
-      dispatch(actionsTemplates.fetchTemplateRequest(id, opts));
+    fetchTemplateRequest: id => {
+      return dispatch(actionsTemplates.fetchTemplateRequest(id));
     },
     fetchTemplateEventsRequest: id => {
       dispatch(actionsTemplates.fetchTemplateEventsRequest(id));
