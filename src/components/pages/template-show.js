@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actionsTemplates from '../../actions/templates';
+// eslint-disable-next-line no-unused-vars
 import FormTemplate from '../form-template';
 import Template from '../../models/template';
 
+// eslint-disable-next-line no-unused-vars
 function Event({ event }) {
   return <div>{event}</div>;
 }
@@ -29,7 +30,6 @@ export class PageTemplateShow extends React.Component {
   }
 
   render() {
-    
     const { template } = this.props;
     const events = template.get('events');
     const error = template.get('error');
@@ -45,7 +45,7 @@ export class PageTemplateShow extends React.Component {
           {events &&
             events.map((event, idx) => {
               return (
-                <li key={idx}>
+                <li className="event-item" key={idx}>
                   <Event event={event} />
                 </li>
               );
