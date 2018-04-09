@@ -4,6 +4,7 @@ import actionsTemplates from '../../actions/templates';
 // eslint-disable-next-line no-unused-vars
 import FormTemplate from '../form-template';
 import Template from '../../models/template';
+import _ from 'underscore';
 
 // eslint-disable-next-line no-unused-vars
 function Event({ event }) {
@@ -41,7 +42,7 @@ export class PageTemplateShow extends React.Component {
     let domList;
     if (error) {
       domList = error;
-    } else if (!events) {
+    } else if (_.isEmpty(events)) {
       domList = 'No events found';
     } else {
       domList = (
