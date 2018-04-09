@@ -11,7 +11,8 @@ class Template extends Base {
       properties: {
         id: { type: 'integer' },
         name: { type: 'string' },
-        selector: { type: 'string' }
+        selector: { type: 'string' },
+        role: { type: 'string' }
       }
     };
   }

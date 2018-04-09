@@ -78,13 +78,25 @@ function load(app) {
     }
     let { body: { name, url, selector } } = req;
     const { id } = req.params;
+    const { include: decorators } = req.query;
     let template;
 
     Template.query()
       .where({ id })
       .update({ name, url, selector })
+      .then(() => {
+        return Template.query().where({ id });
+      })
+      .then(templates => {
+        template = templates[0];
+        if (decorators && decorators.includes('events')) {
+          return template.getEvents();
+        }
+        return null;
+      })
       .then(events => {
-        return res.json({ template, events });
+        events ? (template.events = events) : null;
+        res.json({ template });
       })
       .catch(e => {
         console.error('scrape error', e);

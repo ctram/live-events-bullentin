@@ -19,18 +19,22 @@ function createTemplateRequest(data) {
 }
 
 function saveTemplateRequest(data) {
-  return () => {
+  return dispatch => {
     const req = new Request(
-      appConfig.urlDomain + `/api/templates/${data.id}`,
+      appConfig.urlDomain + `/api/templates/${data.id}?include[]=events`,
       Object.assign(requestParams, { method: 'PATCH', body: JSON.stringify(data) })
     );
     delete data.templateId;
 
-    appFetch(req).then(() => {
+    appFetch(req).then(({ template }) => {
       toastr.success('Template saved');
-      window.LEB.reactRouterHistory.push('/templates');
+      dispatch(saveTemplateSuccess(template));
     });
   };
+}
+
+function saveTemplateSuccess(template) {
+  return { type: actionTypes.SAVE_TEMPLATE_SUCCESS, template };
 }
 
 function fetchTemplatesRequest() {

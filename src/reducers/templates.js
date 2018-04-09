@@ -18,6 +18,7 @@ function storeTemplates(state = intialState, action) {
       return Object.assign({}, state, {
         templates
       });
+    case actionTypes.SAVE_TEMPLATE_SUCCESS:
     case actionTypes.FETCH_TEMPLATE_SUCCESS:
       templates.add(action.template, { merge: true });
       // create new templates collection so that redux re-renders, look into why templates.clone() is not sufficient.
