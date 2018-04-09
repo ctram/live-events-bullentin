@@ -34,6 +34,17 @@ function storeTemplates(state = intialState, action) {
         }
       }
       return Object.assign({}, state, templates);
+    case actionTypes.FETCH_TEMPLATE_EVENTS_SUCCESS:
+      template = templates.get(action.id);
+      template.set('events', action.events);
+      templates = new Templates(templates.toJSON());
+      return Object.assign({}, state, { templates });
+    case actionTypes.FETCH_TEMPLATE_EVENTS_FAILURE:
+      template = templates.get(action.id);
+      template.set('events', null);
+      template.set('error', action.msg);
+      templates = new Templates(templates.toJSON());
+      return Object.assign({}, state, { templates });
     default:
       return state;
   }

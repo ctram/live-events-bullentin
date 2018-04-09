@@ -54,28 +54,14 @@ function fetchTemplatesSuccess(templates) {
   return { type: actionTypes.FETCH_TEMPLATES_SUCCESS, templates };
 }
 
-function fetchTemplateRequest(id, opts = {}) {
+function fetchTemplateRequest(id) {
   return dispatch => {
-    const { include } = opts;
-    let query = '';
-
-    // build query
-    if (include && include.length) {
-      query += '?';
-      include.forEach((element, idx) => {
-        if (idx > 0) {
-          query += `&`;
-        }
-        query += `include[]=${element}`;
-      });
-    }
-
     const req = new Request(
-      appConfig.urlDomain + `/api/templates/${id}${query}`,
+      appConfig.urlDomain + `/api/templates/${id}`,
       Object.assign(requestParams, { method: 'GET', body: null })
     );
 
-    appFetch(req)
+    return appFetch(req)
       .then(res => {
         dispatch(fetchTemplateSuccess(res.template));
       })
@@ -83,6 +69,31 @@ function fetchTemplateRequest(id, opts = {}) {
         dispatch(fetchTemplateFailure(id, e));
       });
   };
+}
+
+function fetchTemplateEventsRequest(id) {
+  return dispatch => {
+    const req = new Request(
+      appConfig.urlDomain + `/api/templates/${id}/events`,
+      Object.assign(requestParams, { method: 'GET', body: null })
+    );
+
+    appFetch(req)
+      .then(({ events, templateId }) => {
+        dispatch(fetchTemplateEventsSuccess(events, templateId));
+      })
+      .catch(e => {
+        dispatch(fetchTemplateEventsFailure(id, e));
+      });
+  };
+}
+
+function fetchTemplateEventsSuccess(events, id) {
+  return { type: actionTypes.FETCH_TEMPLATE_EVENTS_SUCCESS, events, id };
+}
+
+function fetchTemplateEventsFailure(id, msg) {
+  return { type: actionTypes.FETCH_TEMPLATE_EVENTS_FAILURE, id, msg };
 }
 
 function fetchTemplateFailure(id, msg) {
@@ -119,5 +130,6 @@ export default {
   saveTemplateRequest,
   fetchTemplatesRequest,
   fetchTemplateRequest,
+  fetchTemplateEventsRequest,
   deleteTemplateRequest
 };

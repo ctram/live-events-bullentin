@@ -43,7 +43,6 @@ function load(app) {
     console.log('query', req.query);
 
     const { id } = req.params;
-    const { include: decorators } = req.query;
     let template;
 
     Template.query()
@@ -51,24 +50,12 @@ function load(app) {
       .then(_template => {
         template = _template;
         if (!template) {
-          throw 'template not found';
+          throw 'Template not found';
         }
-        console.log('decorators', decorators);
-        if (decorators && decorators.includes('events')) {
-          return template.getEvents();
-        }
-        return null;
-      })
-      .then(events => {
-        if (events) {
-          console.log('template', template, 'events', events);
-          template.events = events;
-        }
-        return res.json({ template });
+        res.json({ template });
       })
       .catch(e => {
-        console.error('scrape error', e);
-        res.status(500).json({ msg: e.msg });
+        res.status(500).json({ msg: e.msg, template });
       });
   });
 
@@ -120,6 +107,31 @@ function load(app) {
       .catch(e => {
         console.error('error in catch', e);
         res.status(400).json({ msg: e });
+      });
+  });
+
+  app.get('/api/templates/:id/events', (req, res) => {
+    if (config.authenticate && !req.isAuthenticated()) {
+      res.status(401).end();
+    }
+    const { id } = req.params;
+    let template;
+
+    Template.query()
+      .findById(id)
+      .then(_template => {
+        template = _template;
+        if (!template) {
+          return res.status(400).json({ msg: 'Template not found' });
+        }
+        return template.getEvents();
+      })
+      .then(events => {
+        res.json({ events, templateId: template.id });
+      })
+      .catch(e => {
+        console.error('scrape error', e);
+        res.status(500).json({ msg: e.msg });
       });
   });
 }
