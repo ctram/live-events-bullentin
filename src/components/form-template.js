@@ -24,7 +24,7 @@ export class FormTemplate extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { templateSelector, templateName, templateUrl } = nextProps;
-    this.setState({ templateSelector, templateName, templateUrl });
+    this.setState({ templateSelector, templateName, templateUrl, editMode: false });
   }
 
   addTemplate(e) {
