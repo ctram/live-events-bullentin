@@ -4,3 +4,9 @@ dist/*json
 dist/index.bundle.js
 **/dist/index.bundle.js.map
 node_modules
+.elasticbeanstalk/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
