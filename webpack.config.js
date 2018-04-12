@@ -45,7 +45,7 @@ const sharedOptions = {
       }
     ]
   },
-  watch: true,
+  watch: false,
   devtool: 'source-map'
 };
 
@@ -55,7 +55,7 @@ const serverConfig = {
   },
   target: 'node',
   output: {
-    path: path.resolve(__dirname),
+    path: path.resolve(__dirname, 'dist'),
     filename: '[name].node.js'
   }
 };
