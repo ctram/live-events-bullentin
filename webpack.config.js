@@ -45,7 +45,7 @@ const sharedOptions = {
       }
     ]
   },
-  watch: false,
+  watch: true,
   devtool: 'source-map'
 };
 
