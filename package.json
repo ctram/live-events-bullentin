@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node test/test.js",
+    "start": "node dist/app.node.js",
     "debug": "DEBUG=express:* nodemon ./dist/app.node.js"
   },
   "dependencies": {
