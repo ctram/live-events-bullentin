@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node dist/app.node.js",
-    "debug": "DEBUG=express:* nodemon ./dist/app.node.js"
+    "debug": "DEBUG=express:* nodemon ./dist/main.node.js"
   },
   "dependencies": {
     "babel": "^6.23.0",

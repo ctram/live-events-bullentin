@@ -60,6 +60,5 @@ passport.deserializeUser((id, done) => {
 });
 
 routes.setRoutes(app);
-console.log('port', process.env.PORT);
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`App listening on port ${port}! hotdog`));
