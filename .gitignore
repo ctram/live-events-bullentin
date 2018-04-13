@@ -2,6 +2,7 @@
 
 dist/*update*
 dist/*map
+dist
 
 node_modules
 .elasticbeanstalk/
