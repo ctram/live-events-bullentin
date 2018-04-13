@@ -9,8 +9,6 @@ import Navbar from './navbar';
 // eslint-disable-next-line no-unused-vars
 import { Route, Switch, Redirect } from 'react-router-dom';
 // eslint-disable-next-line no-unused-vars
-import $ from 'jQuery';
-// eslint-disable-next-line no-unused-vars
 import Loader from 'react-loader';
 // eslint-disable-next-line no-unused-vars
 import UserProfile from './user-profile';

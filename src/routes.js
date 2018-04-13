@@ -1,5 +1,4 @@
 import loadApi from './api/index';
-import ejs from 'ejs';
 
 function generateHTML() {
   return `<!DOCTYPE html>
@@ -14,7 +13,7 @@ function generateHTML() {
   </head>
   <body>
   <div id="root"></div>
-  <script src="../main.bundle.js"></script>
+  <script src="../index.bundle.js"></script>
   </body>
   </html>
   `;
@@ -25,13 +24,6 @@ export default {
     loadApi(app);
 
     app.get(/.*/, (req, res) => {
-      // Dynamically set the path to the main script
-      // const src = '../' + 'main.bundle.js';
-      // const data = {
-      //   script: `<script src="${src}"></script>`
-      // };
-      // const content = ejs.renderFile('./src/views/index.ejs', data, null, (err, str) => str);
-      // res.send(content);
       res.send(generateHTML());
     });
 

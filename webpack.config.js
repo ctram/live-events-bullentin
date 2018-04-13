@@ -1,7 +1,7 @@
 const path = require('path');
 
 const sharedConfig = {
-  watch: true
+  watch: false
 };
 
 const serverConfig = {
@@ -10,7 +10,7 @@ const serverConfig = {
   entry: './src/app.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].node.js'
+    filename: 'app.bundle.js'
   },
 };
 Object.assign(serverConfig, sharedConfig);
@@ -21,7 +21,7 @@ const clientConfig = {
   target: 'web',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js'
+    filename: 'index.bundle.js'
   },
   module: {
     rules: [
