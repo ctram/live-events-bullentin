@@ -6,12 +6,12 @@ const sharedConfig = {
 
 const serverConfig = {
   mode: 'development',
+  target: 'node',
   entry: './src/app.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js'
+    filename: '[name].node.js'
   },
-  target: 'node'
 };
 Object.assign(serverConfig, sharedConfig);
 
@@ -28,8 +28,12 @@ const clientConfig = {
       {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader',
-        options: { presets: ['react', 'env'] }
+        use: [
+          {
+            loader: 'babel-loader',
+            options: { presets: ['react', 'env'] }
+          }
+        ]
       },
       {
         test: /\.scss$/,
