@@ -7,12 +7,16 @@ function load(app) {
     console.log('user', req.user);
     if (config.authenticate && !req.isAuthenticated()) {
       // FIXME: remove this, let client read the default statusText within the response;
-      return res.status(401).json({ msg: 'Not authenticated' });
+      const msg = 'Not authenticated';
+      console.error(msg);
+      return res.status(401).json({ msg });
     }
 
     if (!config.authenticate) {
       return User.query().then(users => {
-        res.json({ user: users[0] });
+        const user = users[0];
+        console.log('Authenticated user', user);
+        res.json({ user });
       });
     }
 
