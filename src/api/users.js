@@ -29,9 +29,12 @@ function load(app) {
           return res.json({ user });
         }
 
-        res.status(404).json({ msg: 'user not found' });
+        const msg = 'User not found';
+        console.log(msg);
+        res.status(404).json({ msg });
       })
       .catch(e => {
+        console.error(e);
         res.status(500).json({ msg: e });
       });
   });
