@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node dist/app.bundle.js",
+    "start": "DEBUG=express:* node dist/app.bundle.js",
     "debug": "DEBUG=express:* nodemon dist/app.bundle.js"
   },
   "dependencies": {
