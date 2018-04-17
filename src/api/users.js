@@ -16,13 +16,12 @@ function load(app) {
       return User.query().then(users => {
         if (users.length === 0) {
           console.log('No users found');
-          res.status(500).json({ user: null, msg: 'No users found' });
-          return;
+          return res.status(500).json({ user: null, msg: 'No users found' });
         }
 
         const user = users[0];
         console.log('Authenticated user', user);
-        res.json({ user });
+        return res.json({ user });
       });
     }
 
@@ -30,7 +29,7 @@ function load(app) {
       return res.json({ user: req.user });
     }
 
-    res.status(500).json({ msg: 'No user found, whoops' });
+    return res.status(500).json({ msg: 'No user found, whoops' });
   });
 
   /////// USER ///////
@@ -45,17 +44,17 @@ function load(app) {
 
         const msg = 'User not found';
         console.log(msg);
-        res.status(404).json({ msg });
+        return res.status(404).json({ msg });
       })
       .catch(e => {
         console.error(e);
-        res.status(500).json({ msg: e });
+        return res.status(500).json({ msg: e });
       });
   });
 
   app.get('/api/logout', (req, res) => {
     req.logout();
-    res.json({});
+    return res.json({});
   });
 
   //////// USERS ////////
@@ -66,10 +65,10 @@ function load(app) {
 
     User.query()
       .then(users => {
-        res.json({ users });
+        return res.json({ users });
       })
       .catch(e => {
-        res.status(500).json({ msg: e });
+        return res.status(500).json({ msg: e });
       });
   });
 
@@ -77,17 +76,16 @@ function load(app) {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      res.status(400).json({ msg: 'Email and password cannot be blank' });
-      return;
+      return res.status(400).json({ msg: 'Email and password cannot be blank' });
     }
 
     User.create(req.body)
       .then(data => {
         let { status = 200 } = data;
-        res.status(status).json(data);
+        return res.status(status).json(data);
       })
       .catch(e => {
-        res.status(500).json({ msg: e });
+        return res.status(500).json({ msg: e });
       });
   });
 
@@ -103,10 +101,10 @@ function load(app) {
           return res.json({ user });
         }
 
-        res.status(404).json({ msg: 'User not found' });
+        return res.status(404).json({ msg: 'User not found' });
       })
       .catch(e => {
-        res.status(500).json({ msg: e });
+        return res.status(500).json({ msg: e });
       });
   });
 
@@ -136,12 +134,12 @@ function load(app) {
         }
 
         return usersQuery.del().then(() => {
-          res.end();
+          return res.end();
         });
       })
       .catch(e => {
         console.error(e);
-        res.status(500).json({ msg: e });
+        return res.status(500).json({ msg: e });
       });
   });
 }
