@@ -4,6 +4,8 @@ import config from '../app-config';
 
 function load(app) {
   app.get('/api/authentication', (req, res) => {
+    console.error('just an error');
+    console.log('in authenticate');
     console.log('user', req.user);
     if (config.authenticate && !req.isAuthenticated()) {
       // FIXME: remove this, let client read the default statusText within the response;
