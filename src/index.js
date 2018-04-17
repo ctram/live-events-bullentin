@@ -18,9 +18,13 @@ import toastr from 'toastr';
 import './styles/slate-theme.scss';
 import './styles/application.scss';
 import { setDispatchForAppFetch } from './helpers/app-fetch';
+import appConfig from './app-config';
 
 window.LEB = {};
 window.LEB.ClientStore = {};
+window.LEB.URLDOMAIN = appConfig.urlDomain;
+console.log('app config', appConfig);
+console.log('url domain', window.LEB.URLDOMAIN);
 
 const loggerMiddleware = createLogger();
 const store = createStore(reducers, applyMiddleware(thunkMiddleware, loggerMiddleware));

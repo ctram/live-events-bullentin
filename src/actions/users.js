@@ -4,6 +4,8 @@ import appFetch from '../helpers/app-fetch';
 import requestParams from '../helpers/request-params';
 import toastr from 'toastr';
 
+console.log('appConfig', appConfig);
+
 function fetchUsersRequest() {
   return dispatch => {
     const req = new Request(
@@ -93,6 +95,8 @@ function fetchUserRequest(id) {
 
 function checkAuthenticationRequest() {
   return dispatch => {
+    console.log('app config in authetication', appConfig);
+
     const req = new Request(
       appConfig.urlDomain + `/api/authentication`,
       Object.assign(requestParams, { method: 'GET' })

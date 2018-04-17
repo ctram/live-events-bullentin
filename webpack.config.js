@@ -1,7 +1,7 @@
 const path = require('path');
 
 const sharedConfig = {
-  watch: false
+  watch: true
 };
 
 const serverConfig = {
