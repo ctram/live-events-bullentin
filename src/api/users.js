@@ -14,13 +14,23 @@ function load(app) {
 
     if (!config.authenticate) {
       return User.query().then(users => {
+        if (users.length === 0) {
+          console.log('No users found');
+          res.status(500).json({ user: null, msg: 'No users found' });
+          return;
+        }
+
         const user = users[0];
         console.log('Authenticated user', user);
         res.json({ user });
       });
     }
 
-    res.json({ user: req.user });
+    if (req.user) {
+      return res.json({ user: req.user });
+    }
+
+    res.status(500).json({ msg: 'No user found, whoops' });
   });
 
   /////// USER ///////
