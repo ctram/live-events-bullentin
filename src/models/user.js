@@ -1,11 +1,13 @@
-import Backbone from 'backbone';
-
-export default class User extends Backbone.Model {
-  constructor(props) {
-    super(props);
-  }
-
-  isAdmin() {
-    return this.get('role') === 'admin';
-  }
-}
+'use strict';
+module.exports = (sequelize, DataTypes) => {
+  var User = sequelize.define('User', {
+    email: DataTypes.STRING,
+    username: DataTypes.STRING,
+    role: DataTypes.STRING,
+    password: DataTypes.STRING
+  }, {});
+  User.associate = function(models) {
+    // associations can be defined here
+  };
+  return User;
+};
