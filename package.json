@@ -46,7 +46,8 @@
     "serve-favicon": "~2.4.5",
     "style-loader": "^0.20.3",
     "toastr": "^2.1.4",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "yarn": "^1.6.0"
   },
   "devDependencies": {
     "ajv": "^6.4.0",
