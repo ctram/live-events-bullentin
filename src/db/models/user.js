@@ -3,7 +3,9 @@ import sequelize from '../sequelize';
 
 const User = sequelize.define('user', {
   username: Sequelize.STRING,
-  birthday: Sequelize.DATE
+  // email: Sequelize.STRING,
+  // role: Sequelize.STRING,
+  // password: Sequelize.STRING
 });
 
 sequelize.sync();

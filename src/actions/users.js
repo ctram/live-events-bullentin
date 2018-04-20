@@ -9,7 +9,7 @@ console.log('appConfig', appConfig);
 function fetchUsersRequest() {
   return dispatch => {
     const req = new Request(
-      appConfig.urlDomain + '/api/users',
+      appConfig.serverUrl + '/api/users',
       Object.assign(requestParams, { method: 'GET', body: null })
     );
 
@@ -40,7 +40,7 @@ function createUserRequest(data) {
   return function(dispatch) {
     const req = new Request(
       // eslint-disable-next-line quotes
-      appConfig.urlDomain + `/api/users`,
+      appConfig.serverUrl + `/api/users`,
       Object.assign(requestParams, { method: 'POST', body: JSON.stringify(data) })
     );
 
@@ -56,7 +56,7 @@ function loginUserRequest(data) {
   return dispatch => {
     requestParams;
     const req = new Request(
-      appConfig.urlDomain + `/api/login`,
+      appConfig.serverUrl + `/api/login`,
       Object.assign(requestParams, { method: 'POST', body: JSON.stringify(data) })
     );
 
@@ -78,7 +78,7 @@ function loginUserSuccess(user) {
 function fetchUserRequest(id) {
   return () => {
     const req = new Request(
-      appConfig.urlDomain + `/api/users/${id}`,
+      appConfig.serverUrl + `/api/users/${id}`,
       Object.assign(requestParams, { method: 'GET' })
     );
 
@@ -100,7 +100,7 @@ function checkAuthenticationRequest() {
     console.log('appconfig', appConfig);
 
     const req = new Request(
-      appConfig.urlDomain + `/api/authentication`,
+      appConfig.serverUrl + `/api/authentication`,
       Object.assign(requestParams, { method: 'GET' })
     );
 
@@ -126,7 +126,7 @@ function checkAuthenticationFailure() {
 function logoutUserRequest() {
   return dispatch => {
     const req = new Request(
-      appConfig.urlDomain + `/api/logout`,
+      appConfig.serverUrl + `/api/logout`,
       Object.assign(requestParams, { method: 'GET', body: null })
     );
 
@@ -145,7 +145,7 @@ function logoutUserSuccess() {
 function deleteUserRequest(id) {
   return () => {
     const req = new Request(
-      appConfig.urlDomain + `/api/users/${id}`,
+      appConfig.serverUrl + `/api/users/${id}`,
       Object.assign(requestParams, { method: 'DELETE', body: null })
     );
 

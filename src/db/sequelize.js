@@ -1,6 +1,8 @@
 import Sequelize from 'sequelize';
 
-export default new Sequelize('database', 'chris', null, {
+export default new Sequelize({
+  name: 'live_events_bulletin',
+  username: 'chris',
   host: 'localhost',
   dialect: 'postgres',
   port: 5432,

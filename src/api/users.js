@@ -4,9 +4,6 @@ import config from '../app-config';
 
 function load(app) {
   app.get('/api/authentication', (req, res) => {
-    console.error('just an error');
-    console.log('in authenticate');
-    console.log('user', req.user);
     if (config.authenticate && !req.isAuthenticated()) {
       // FIXME: remove this, let client read the default statusText within the response;
       const msg = 'Not authenticated';
@@ -15,7 +12,7 @@ function load(app) {
     }
 
     if (!config.authenticate) {
-      return User.query().then(users => {
+      return User.findAll().then(users => {
         if (users.length === 0) {
           console.log('No users found');
           return res.status(500).json({ user: null, msg: 'No users found' });

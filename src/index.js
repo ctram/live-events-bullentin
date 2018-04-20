@@ -22,9 +22,9 @@ import appConfig from './app-config';
 
 window.LEB = {};
 window.LEB.ClientStore = {};
-window.LEB.URLDOMAIN = appConfig.urlDomain;
+window.LEB.serverUrl = appConfig.serverUrl;
 console.log('app config', appConfig);
-console.log('url domain', window.LEB.URLDOMAIN);
+console.log('url domain', window.LEB.serverUrl);
 
 const loggerMiddleware = createLogger();
 const store = createStore(reducers, applyMiddleware(thunkMiddleware, loggerMiddleware));

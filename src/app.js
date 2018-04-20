@@ -6,7 +6,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import User from './db/models/user';
-import { setServerDetails } from './app-config';
+import appConfig from './app-config';
 
 const app = express();
 app.use(express.static('dist'));
@@ -60,9 +60,6 @@ passport.deserializeUser((id, done) => {
     });
 });
 
-console.log('setting server details');
-// setServerDetails({ port: process.env.PORT, host: process.env.HOST });
 routes.setRoutes(app);
-const port = process.env.PORT || 3000;
-console.log('environment', process.env);
-app.listen(port, () => console.log(`App listening on port ${port}! hotdog`));
+console.log('appconfig', appConfig);
+app.listen(appConfig.port, () => console.log(`App listening on port ${appConfig.port}!`));

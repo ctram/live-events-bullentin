@@ -7,7 +7,7 @@ import actionTypes from './action-types';
 function createTemplateRequest(data) {
   return () => {
     const req = new Request(
-      appConfig.urlDomain + `/api/templates`,
+      appConfig.serverUrl + `/api/templates`,
       Object.assign(requestParams, { method: 'POST', body: JSON.stringify(data) })
     );
 
@@ -21,7 +21,7 @@ function createTemplateRequest(data) {
 function saveTemplateRequest(data) {
   return dispatch => {
     const req = new Request(
-      appConfig.urlDomain + `/api/templates/${data.id}`,
+      appConfig.serverUrl + `/api/templates/${data.id}`,
       Object.assign(requestParams, { method: 'PATCH', body: JSON.stringify(data) })
     );
     dispatch(setTemplate(data));
@@ -53,7 +53,7 @@ function saveTemplateSuccess(template) {
 function fetchTemplatesRequest() {
   return dispatch => {
     const req = new Request(
-      appConfig.urlDomain + `/api/templates`,
+      appConfig.serverUrl + `/api/templates`,
       Object.assign(requestParams, { method: 'GET', body: null })
     );
 
@@ -70,7 +70,7 @@ function fetchTemplatesSuccess(templates) {
 function fetchTemplateRequest(id) {
   return dispatch => {
     const req = new Request(
-      appConfig.urlDomain + `/api/templates/${id}`,
+      appConfig.serverUrl + `/api/templates/${id}`,
       Object.assign(requestParams, { method: 'GET', body: null })
     );
 
@@ -87,7 +87,7 @@ function fetchTemplateRequest(id) {
 function fetchTemplateEventsRequest(id) {
   return dispatch => {
     const req = new Request(
-      appConfig.urlDomain + `/api/templates/${id}/events`,
+      appConfig.serverUrl + `/api/templates/${id}/events`,
       Object.assign(requestParams, { method: 'GET', body: null })
     );
 
@@ -120,7 +120,7 @@ function fetchTemplateSuccess(template, events) {
 function deleteTemplateRequest(id) {
   return dispatch => {
     const req = new Request(
-      appConfig.urlDomain + `/api/templates/${id}`,
+      appConfig.serverUrl + `/api/templates/${id}`,
       Object.assign(requestParams, { method: 'DELETE', body: null })
     );
 
