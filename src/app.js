@@ -61,7 +61,7 @@ passport.deserializeUser((id, done) => {
 });
 
 console.log('setting server details');
-setServerDetails({ port: process.env.PORT, host: process.env.HOST });
+// setServerDetails({ port: process.env.PORT, host: process.env.HOST });
 routes.setRoutes(app);
 const port = process.env.PORT || 3000;
 console.log('environment', process.env);

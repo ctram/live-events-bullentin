@@ -97,6 +97,8 @@ function checkAuthenticationRequest() {
   return dispatch => {
     console.log('app config in authetication', appConfig);
 
+    console.log('appconfig', appConfig);
+
     const req = new Request(
       appConfig.urlDomain + `/api/authentication`,
       Object.assign(requestParams, { method: 'GET' })

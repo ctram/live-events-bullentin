@@ -1,7 +1,7 @@
 console.log('environment', process.env);
 // const port = process.env.PORT || 3000;
 // const host = process.env.HOST || 'http://localhost';
-const config = {};
+let config = {};
 const defaultConfig = {
   port: 3000,
   host: 'http://localhost',
@@ -18,5 +18,7 @@ export function setServerDetails({ port = defaultConfig.port, host = defaultConf
 
   console.log('config on client after set', config);
 }
+
+config = defaultConfig;
 
 export default config;

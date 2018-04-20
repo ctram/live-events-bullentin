@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=production XXXXX=asdasd DEBUG=express:* node dist/app.bundle.js",
+    "start": "NODE_ENV=production DEBUG=express:* node dist/app.bundle.js",
+    "predebug": "webpack",
     "debug": "DEBUG=express:* nodemon dist/app.bundle.js"
   },
   "dependencies": {
@@ -33,6 +34,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg": "^7.4.1",
+    "pg-hstore": "^2.3.2",
     "popper.js": "^1.12.9",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
@@ -43,6 +45,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
     "scrape-it": "^5.0.2",
+    "sequelize": "^4.37.6",
     "serve-favicon": "~2.4.5",
     "style-loader": "^0.20.3",
     "toastr": "^2.1.4",
