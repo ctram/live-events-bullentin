@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import User from '../models/user';
 
 class UserProfile extends React.Component {
   constructor(props) {

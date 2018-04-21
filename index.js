@@ -12,7 +12,7 @@ import React from 'react';
 // eslint-disable-next-line no-unused-vars
 import { BrowserRouter } from 'react-router-dom';
 // eslint-disable-next-line no-unused-vars
-import _toastr from '../node_modules/toastr/build/toastr.css';
+import _toastr from './node_modules/toastr/build/toastr.css';
 // eslint-disable-next-line no-unused-vars
 import toastr from 'toastr';
 import './styles/slate-theme.scss';

@@ -1,7 +1,5 @@
 const environment = process.env.NODE_ENV || 'development';
 
-console.log('node_env', process.env.NODE_ENV);
-
 let port;
 let host;
 

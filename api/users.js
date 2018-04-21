@@ -1,5 +1,5 @@
 import passport from 'passport';
-import User from '../db/models/user';
+import { User } from '../models/index';
 import config from '../app-config';
 
 function load(app) {

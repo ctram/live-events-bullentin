@@ -5,13 +5,12 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
-import User from './db/models/user';
+import { User } from './models/index';
 import appConfig from './app-config';
 
 const app = express();
 app.use(express.static('dist'));
 app.use(express.static('styles'));
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());

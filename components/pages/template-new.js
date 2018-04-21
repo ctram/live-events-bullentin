@@ -1,7 +1,8 @@
 import React from 'react';
 import _ from 'underscore';
+// eslint-disable-next-line no-unused-vars
 import FormTemplate from '../form-template';
-import Template from '../../models/template';
+import { Template } from '../../backbone/models/template';
 
 export default class PageTemplateNew extends React.Component {
   constructor(props) {

@@ -1,5 +1,5 @@
 import actionTypes from '../actions/action-types';
-import Templates from '../collections/templates';
+import Templates from '../backbone/collections/templates';
 
 const intialState = {
   templates: new Templates()

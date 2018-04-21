@@ -1,23 +1,29 @@
 const path = require('path');
+const webpack = require('webpack');
 
 const sharedConfig = {
-  watch: true
+  watch: false
 };
 
 const serverConfig = {
   mode: 'development',
   target: 'node',
-  entry: './src/app.js',
+  entry: './app.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'app.bundle.js'
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      $dirname: JSON.stringify(__dirname)
+    })
+  ]
 };
 Object.assign(serverConfig, sharedConfig);
 
 const clientConfig = {
   mode: 'development',
-  entry: './src/index.js',
+  entry: './index.js',
   target: 'web',
   output: {
     path: path.resolve(__dirname, 'dist'),

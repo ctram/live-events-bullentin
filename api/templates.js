@@ -1,4 +1,8 @@
-import Template from '../db/models/template';
+import db from '../models/index';
+
+console.log('template', db.Template);
+
+import {Template} from '../models/index'
 import config from '../app-config';
 
 function load(app) {
