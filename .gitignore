@@ -1,6 +1,6 @@
 dist/*update*
 dist/*map
-dist
+dist/
 
 node_modules
 
