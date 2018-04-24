@@ -1,8 +1,5 @@
 import db from '../models/index';
-
-console.log('template', db.Template);
-
-import {Template} from '../models/index'
+const { Website } = db;
 import config from '../app-config';
 
 function load(app) {
@@ -17,7 +14,7 @@ function load(app) {
       return res.status(400).json({ msg: 'name, URL and selector cannot be blank' });
     }
 
-    Template.create(req.body)
+    Website.create(req.body)
       .then(data => {
         let { status = 200 } = data;
         res.status(status).json(data);
@@ -33,7 +30,7 @@ function load(app) {
       return res.status(401).end();
     }
 
-    Template.query().then(templates => {
+    Website.query().then(templates => {
       console.log('templates', templates);
       res.json({ templates });
     });
@@ -49,12 +46,12 @@ function load(app) {
     const { id } = req.params;
     let template;
 
-    Template.query()
+    Website.query()
       .findById(id)
       .then(_template => {
         template = _template;
         if (!template) {
-          throw 'Template not found';
+          throw 'Website not found';
         }
         res.json({ template });
       })
@@ -67,16 +64,18 @@ function load(app) {
     if (config.authenticate && !req.isAuthenticated()) {
       res.status(401).end();
     }
-    let { body: { name, url, selector } } = req;
+    let {
+      body: { name, url, selector }
+    } = req;
     const { id } = req.params;
     const { include: decorators } = req.query;
     let template;
 
-    Template.query()
+    Website.query()
       .where({ id })
       .update({ name, url, selector })
       .then(() => {
-        return Template.query().where({ id });
+        return Website.query().where({ id });
       })
       .then(templates => {
         template = templates[0];
@@ -102,7 +101,7 @@ function load(app) {
       res.status(401).end();
     }
 
-    Template.query()
+    Website.query()
       .findById(id)
       .del()
       .then(() => {
@@ -121,12 +120,12 @@ function load(app) {
     const { id } = req.params;
     let template;
 
-    Template.query()
+    Website.query()
       .findById(id)
       .then(_template => {
         template = _template;
         if (!template) {
-          return res.status(400).json({ msg: 'Template not found' });
+          return res.status(400).json({ msg: 'Website not found' });
         }
         return template.getEvents();
       })

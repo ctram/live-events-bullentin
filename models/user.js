@@ -3,7 +3,7 @@ import Sequelize from 'sequelize';
 import sequelize from './sequelize';
 
 const User = sequelize.define(
-  'User',
+  'user',
   {
     email: Sequelize.STRING,
     username: Sequelize.STRING,
