@@ -1,12 +1,18 @@
 'use strict';
-module.exports = (sequelize, DataTypes) => {
-  var website = sequelize.define('website', {
-    url: DataTypes.STRING,
-    selector: DataTypes.STRING,
-    name: DataTypes.STRING
-  }, {});
-  website.associate = function(models) {
-    // associations can be defined here
-  };
-  return website;
-};
+import sequelize from './sequelize';
+import Sequelize from 'sequelize';
+
+const Website = sequelize.define(
+  'website',
+  {
+    url: Sequelize.STRING,
+    selector: Sequelize.STRING,
+    name: Sequelize.STRING
+  },
+  {}
+);
+// Website.associate = function(models) {
+//   // associations can be defined here
+// };
+
+export default Website;
