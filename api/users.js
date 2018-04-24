@@ -1,9 +1,11 @@
 import passport from 'passport';
-import { User } from '../models/index';
+import db from '../models/index';
 import config from '../app-config';
 
 function load(app) {
   app.get('/api/authentication', (req, res) => {
+    const { User } = db;
+
     if (config.authenticate && !req.isAuthenticated()) {
       // FIXME: remove this, let client read the default statusText within the response;
       const msg = 'Not authenticated';
