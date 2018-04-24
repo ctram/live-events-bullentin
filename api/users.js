@@ -2,10 +2,10 @@ import passport from 'passport';
 import db from '../models/index';
 import config from '../app-config';
 
+const { User } = db;
+
 function load(app) {
   app.get('/api/authentication', (req, res) => {
-    const { User } = db;
-
     if (config.authenticate && !req.isAuthenticated()) {
       // FIXME: remove this, let client read the default statusText within the response;
       const msg = 'Not authenticated';
@@ -21,6 +21,7 @@ function load(app) {
         }
 
         const user = users[0];
+        user.hi();
         console.log('Authenticated user', user);
         return res.json({ user });
       });
@@ -64,7 +65,7 @@ function load(app) {
       return res.status(401).json({ msg: 'Not authorized' });
     }
 
-    User.query()
+    User.findAll()
       .then(users => {
         return res.json({ users });
       })

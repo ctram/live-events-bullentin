@@ -27,7 +27,7 @@ class FormUser extends React.Component {
   }
 
   render() {
-    const labelSubmitBtn = this.pathname === 'register' ? 'Register' : 'Submit';
+    const labelSubmitBtn = this.pathname === 'register' ? 'Register' : 'Login';
     return (
       <div className="row justify-content-center">
         <div className="col-2">

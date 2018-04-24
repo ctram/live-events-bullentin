@@ -53,7 +53,7 @@ export class Navbar extends React.Component {
           )}
 
           {loggedIn &&
-            currentUser.isAdmin() && (
+            currentUser.isAdmin && (
               <LinkWrapper to="/users" active={pathname === '/users'}>
                 Users
               </LinkWrapper>
@@ -66,8 +66,8 @@ export class Navbar extends React.Component {
           )}
 
           {loggedIn && (
-            <LinkWrapper to="/templates" active={pathname === '/templates'}>
-              Templates
+            <LinkWrapper to="/websites" active={pathname === '/websites'}>
+              Websites
             </LinkWrapper>
           )}
 

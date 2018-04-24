@@ -1,7 +1,7 @@
 import reducerUsers from './users';
 import reducerLoader from './loader';
-import reducerTemplates from './templates';
+import reducerWebsites from './websites';
 import { combineReducers } from 'redux';
 
-const reducers = Object.assign({}, reducerUsers, reducerLoader, reducerTemplates);
+const reducers = Object.assign({}, reducerUsers, reducerLoader, reducerWebsites);
 export default combineReducers(reducers);

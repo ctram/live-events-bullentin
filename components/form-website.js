@@ -2,20 +2,20 @@ import React from 'react';
 import _ from 'underscore';
 import toastr from 'toastr';
 import { connect } from 'react-redux';
-import actionsTemplates from '../actions/templates';
+import actionsWebsites from '../actions/websites';
 
-export class FormTemplate extends React.Component {
+export class FormWebsite extends React.Component {
   constructor(props) {
     super(props);
-    const { template, isNew } = props;
+    const { website, isNew } = props;
 
     this.state = {
-      templateName: template.get('name') || '',
-      templateSelector: template.get('selector') || '',
-      templateUrl: template.get('url') || '',
+      websiteName: website.get('name') || '',
+      websiteSelector: website.get('selector') || '',
+      websiteUrl: website.get('url') || '',
       editMode: isNew || false
     };
-    this.addTemplate = this.addTemplate.bind(this);
+    this.addWebsite = this.addWebsite.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.delete = this.delete.bind(this);
     this.edit = this.edit.bind(this);
@@ -23,46 +23,46 @@ export class FormTemplate extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { templateSelector, templateName, templateUrl } = nextProps;
-    this.setState({ templateSelector, templateName, templateUrl, editMode: false });
+    const { websiteSelector, websiteName, websiteUrl } = nextProps;
+    this.setState({ websiteSelector, websiteName, websiteUrl, editMode: false });
   }
 
-  addTemplate(e) {
+  addWebsite(e) {
     e.preventDefault();
-    const { templateName, templateSelector, templateUrl } = this.state;
+    const { websiteName, websiteSelector, websiteUrl } = this.state;
 
     if (!this.validateForm()) {
       return;
     }
 
-    this.props.createTemplateRequest({
-      name: templateName,
-      url: templateUrl,
-      selector: templateSelector
+    this.props.createWebsiteRequest({
+      name: websiteName,
+      url: websiteUrl,
+      selector: websiteSelector
     });
   }
 
   save(e) {
     e.preventDefault();
-    const { templateName, templateSelector, templateUrl } = this.state;
-    const { template } = this.props;
+    const { websiteName, websiteSelector, websiteUrl } = this.state;
+    const { website } = this.props;
 
     if (!this.validateForm()) {
       return;
     }
 
-    this.props.saveTemplateRequest({
-      name: templateName,
-      url: templateUrl,
-      selector: templateSelector,
-      id: template.id
+    this.props.saveWebsiteRequest({
+      name: websiteName,
+      url: websiteUrl,
+      selector: websiteSelector,
+      id: website.id
     });
   }
 
   validateForm() {
-    const { templateName, templateSelector, templateUrl } = this.state;
+    const { websiteName, websiteSelector, websiteUrl } = this.state;
 
-    if (_.isEmpty(templateName) || _.isEmpty(templateUrl) || _.isEmpty(templateSelector)) {
+    if (_.isEmpty(websiteName) || _.isEmpty(websiteUrl) || _.isEmpty(websiteSelector)) {
       toastr.error('Name, URL and Selector required');
       return false;
     }
@@ -71,8 +71,8 @@ export class FormTemplate extends React.Component {
 
   delete(e) {
     e.preventDefault();
-    const { deleteTemplateRequest, template } = this.props;
-    deleteTemplateRequest(template.id);
+    const { deleteWebsiteRequest, website } = this.props;
+    deleteWebsiteRequest(website.id);
   }
 
   edit(e) {
@@ -88,14 +88,14 @@ export class FormTemplate extends React.Component {
   handleChange(e) {
     e.preventDefault();
     const { value, name } = e.target;
-    const element = `template${name.charAt(0).toUpperCase() + name.slice(1)}`;
+    const element = `website${name.charAt(0).toUpperCase() + name.slice(1)}`;
     const state = {};
     state[element] = value;
     this.setState(state);
   }
 
   render() {
-    const { templateName, templateSelector, templateUrl } = this.state;
+    const { websiteName, websiteSelector, websiteUrl } = this.state;
     const { isNew } = this.props;
     const { editMode } = this.state;
 
@@ -109,9 +109,9 @@ export class FormTemplate extends React.Component {
                 name="name"
                 className="form-control"
                 id="name"
-                value={templateName}
+                value={websiteName}
                 onChange={this.handleChange}
-                ref="inputTemplateName"
+                ref="inputWebsiteName"
                 disabled={!editMode}
               />
             </fieldset>
@@ -121,9 +121,9 @@ export class FormTemplate extends React.Component {
                 name="url"
                 className="form-control"
                 id="url"
-                value={templateUrl}
+                value={websiteUrl}
                 onChange={this.handleChange}
-                ref="inputTemplateUrl"
+                ref="inputWebsiteUrl"
                 disabled={!editMode}
               />
             </fieldset>
@@ -133,16 +133,16 @@ export class FormTemplate extends React.Component {
                 name="selector"
                 className="form-control"
                 id="selector"
-                value={templateSelector}
+                value={websiteSelector}
                 onChange={this.handleChange}
-                ref="inputTemplateSelector"
+                ref="inputWebsiteSelector"
                 disabled={!editMode}
               />
             </fieldset>
             <div className="btn-group">
               {isNew && (
-                <button className="btn btn-primary" onClick={this.addTemplate}>
-                  Add Template
+                <button className="btn btn-primary" onClick={this.addWebsite}>
+                  Add Website
                 </button>
               )}
               {!isNew &&
@@ -177,30 +177,30 @@ export class FormTemplate extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { template } = ownProps;
+  const { website } = ownProps;
 
-  const templateName = template.get('name');
-  const templateUrl = template.get('url');
-  const templateSelector = template.get('selector');
+  const websiteName = website.get('name');
+  const websiteUrl = website.get('url');
+  const websiteSelector = website.get('selector');
   return Object.assign(state.loader, state.root, state.storeUsers, {
-    templateName,
-    templateUrl,
-    templateSelector
+    websiteName,
+    websiteUrl,
+    websiteSelector
   });
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    createTemplateRequest: data => {
-      dispatch(actionsTemplates.createTemplateRequest(data));
+    createWebsiteRequest: data => {
+      dispatch(actionsWebsites.createWebsiteRequest(data));
     },
-    deleteTemplateRequest: id => {
-      dispatch(actionsTemplates.deleteTemplateRequest(id));
+    deleteWebsiteRequest: id => {
+      dispatch(actionsWebsites.deleteWebsiteRequest(id));
     },
-    saveTemplateRequest: data => {
-      dispatch(actionsTemplates.saveTemplateRequest(data));
+    saveWebsiteRequest: data => {
+      dispatch(actionsWebsites.saveWebsiteRequest(data));
     }
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormTemplate);
+export default connect(mapStateToProps, mapDispatchToProps)(FormWebsite);

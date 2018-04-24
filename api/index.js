@@ -1,7 +1,7 @@
 import apiUsers from './users';
-import apiTemplates from './templates';
+import apiWebsites from './websites';
 
-const APIs = [apiUsers, apiTemplates];
+const APIs = [apiUsers, apiWebsites];
 
 function loadApi(app) {
   APIs.forEach(APIs => {

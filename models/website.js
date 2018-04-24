@@ -2,7 +2,7 @@
 import sequelize from './sequelize';
 import Sequelize from 'sequelize';
 
-const Website = sequelize.define(
+const Base = sequelize.define(
   'website',
   {
     url: Sequelize.STRING,
@@ -15,4 +15,14 @@ const Website = sequelize.define(
 //   // associations can be defined here
 // };
 
-export default Website;
+export default class Website extends Base {
+  hi() {
+    console.log(this.url);
+  }
+}
+
+
+
+
+
+

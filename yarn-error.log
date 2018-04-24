@@ -496,7 +496,7 @@ Lockfile:
       babel-messages "^6.23.0"
       babel-register "^6.26.0"
       babel-runtime "^6.26.0"
-      babel-template "^6.26.0"
+      babel-website "^6.26.0"
       babel-traverse "^6.26.0"
       babel-types "^6.26.0"
       babylon "^6.18.0"
@@ -588,7 +588,7 @@ Lockfile:
     dependencies:
       babel-helper-get-function-arity "^6.24.1"
       babel-runtime "^6.22.0"
-      babel-template "^6.24.1"
+      babel-website "^6.24.1"
       babel-traverse "^6.24.1"
       babel-types "^6.24.1"
   
@@ -627,7 +627,7 @@ Lockfile:
     dependencies:
       babel-helper-function-name "^6.24.1"
       babel-runtime "^6.22.0"
-      babel-template "^6.24.1"
+      babel-website "^6.24.1"
       babel-traverse "^6.24.1"
       babel-types "^6.24.1"
   
@@ -638,7 +638,7 @@ Lockfile:
       babel-helper-optimise-call-expression "^6.24.1"
       babel-messages "^6.23.0"
       babel-runtime "^6.22.0"
-      babel-template "^6.24.1"
+      babel-website "^6.24.1"
       babel-traverse "^6.24.1"
       babel-types "^6.24.1"
   
@@ -647,7 +647,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/babel-helpers/-/babel-helpers-6.24.1.tgz#3471de9caec388e5c850e597e58a26ddf37602b2"
     dependencies:
       babel-runtime "^6.22.0"
-      babel-template "^6.24.1"
+      babel-website "^6.24.1"
   
   babel-loader@^7.1.4:
     version "7.1.4"
@@ -739,7 +739,7 @@ Lockfile:
     dependencies:
       babel-plugin-syntax-class-constructor-call "^6.18.0"
       babel-runtime "^6.22.0"
-      babel-template "^6.24.1"
+      babel-website "^6.24.1"
   
   babel-plugin-transform-class-properties@^6.24.1:
     version "6.24.1"
@@ -748,7 +748,7 @@ Lockfile:
       babel-helper-function-name "^6.24.1"
       babel-plugin-syntax-class-properties "^6.8.0"
       babel-runtime "^6.22.0"
-      babel-template "^6.24.1"
+      babel-website "^6.24.1"
   
   babel-plugin-transform-decorators@^6.24.1:
     version "6.24.1"
@@ -757,7 +757,7 @@ Lockfile:
       babel-helper-explode-class "^6.24.1"
       babel-plugin-syntax-decorators "^6.13.0"
       babel-runtime "^6.22.0"
-      babel-template "^6.24.1"
+      babel-website "^6.24.1"
       babel-types "^6.24.1"
   
   babel-plugin-transform-es2015-arrow-functions@^6.22.0:
@@ -777,7 +777,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-block-scoping/-/babel-plugin-transform-es2015-block-scoping-6.26.0.tgz#d70f5299c1308d05c12f463813b0a09e73b1895f"
     dependencies:
       babel-runtime "^6.26.0"
-      babel-template "^6.26.0"
+      babel-website "^6.26.0"
       babel-traverse "^6.26.0"
       babel-types "^6.26.0"
       lodash "^4.17.4"
@@ -792,7 +792,7 @@ Lockfile:
       babel-helper-replace-supers "^6.24.1"
       babel-messages "^6.23.0"
       babel-runtime "^6.22.0"
-      babel-template "^6.24.1"
+      babel-website "^6.24.1"
       babel-traverse "^6.24.1"
       babel-types "^6.24.1"
   
@@ -801,7 +801,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-computed-properties/-/babel-plugin-transform-es2015-computed-properties-6.24.1.tgz#6fe2a8d16895d5634f4cd999b6d3480a308159b3"
     dependencies:
       babel-runtime "^6.22.0"
-      babel-template "^6.24.1"
+      babel-website "^6.24.1"
   
   babel-plugin-transform-es2015-destructuring@^6.22.0, babel-plugin-transform-es2015-destructuring@^6.23.0:
     version "6.23.0"
@@ -842,7 +842,7 @@ Lockfile:
     dependencies:
       babel-plugin-transform-es2015-modules-commonjs "^6.24.1"
       babel-runtime "^6.22.0"
-      babel-template "^6.24.1"
+      babel-website "^6.24.1"
   
   babel-plugin-transform-es2015-modules-commonjs@^6.23.0, babel-plugin-transform-es2015-modules-commonjs@^6.24.1:
     version "6.26.0"
@@ -850,7 +850,7 @@ Lockfile:
     dependencies:
       babel-plugin-transform-strict-mode "^6.24.1"
       babel-runtime "^6.26.0"
-      babel-template "^6.26.0"
+      babel-website "^6.26.0"
       babel-types "^6.26.0"
   
   babel-plugin-transform-es2015-modules-systemjs@^6.23.0, babel-plugin-transform-es2015-modules-systemjs@^6.24.1:
@@ -859,7 +859,7 @@ Lockfile:
     dependencies:
       babel-helper-hoist-variables "^6.24.1"
       babel-runtime "^6.22.0"
-      babel-template "^6.24.1"
+      babel-website "^6.24.1"
   
   babel-plugin-transform-es2015-modules-umd@^6.23.0, babel-plugin-transform-es2015-modules-umd@^6.24.1:
     version "6.24.1"
@@ -867,7 +867,7 @@ Lockfile:
     dependencies:
       babel-plugin-transform-es2015-modules-amd "^6.24.1"
       babel-runtime "^6.22.0"
-      babel-template "^6.24.1"
+      babel-website "^6.24.1"
   
   babel-plugin-transform-es2015-object-super@^6.22.0, babel-plugin-transform-es2015-object-super@^6.24.1:
     version "6.24.1"
@@ -883,7 +883,7 @@ Lockfile:
       babel-helper-call-delegate "^6.24.1"
       babel-helper-get-function-arity "^6.24.1"
       babel-runtime "^6.22.0"
-      babel-template "^6.24.1"
+      babel-website "^6.24.1"
       babel-traverse "^6.24.1"
       babel-types "^6.24.1"
   
@@ -908,9 +908,9 @@ Lockfile:
       babel-runtime "^6.22.0"
       babel-types "^6.24.1"
   
-  babel-plugin-transform-es2015-template-literals@^6.22.0:
+  babel-plugin-transform-es2015-website-literals@^6.22.0:
     version "6.22.0"
-    resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-template-literals/-/babel-plugin-transform-es2015-template-literals-6.22.0.tgz#a84b3450f7e9f8f1f6839d6d687da84bb1236d8d"
+    resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-website-literals/-/babel-plugin-transform-es2015-website-literals-6.22.0.tgz#a84b3450f7e9f8f1f6839d6d687da84bb1236d8d"
     dependencies:
       babel-runtime "^6.22.0"
   
@@ -1032,7 +1032,7 @@ Lockfile:
       babel-plugin-transform-es2015-shorthand-properties "^6.22.0"
       babel-plugin-transform-es2015-spread "^6.22.0"
       babel-plugin-transform-es2015-sticky-regex "^6.22.0"
-      babel-plugin-transform-es2015-template-literals "^6.22.0"
+      babel-plugin-transform-es2015-website-literals "^6.22.0"
       babel-plugin-transform-es2015-typeof-symbol "^6.23.0"
       babel-plugin-transform-es2015-unicode-regex "^6.22.0"
       babel-plugin-transform-exponentiation-operator "^6.22.0"
@@ -1065,7 +1065,7 @@ Lockfile:
       babel-plugin-transform-es2015-shorthand-properties "^6.24.1"
       babel-plugin-transform-es2015-spread "^6.22.0"
       babel-plugin-transform-es2015-sticky-regex "^6.24.1"
-      babel-plugin-transform-es2015-template-literals "^6.22.0"
+      babel-plugin-transform-es2015-website-literals "^6.22.0"
       babel-plugin-transform-es2015-typeof-symbol "^6.22.0"
       babel-plugin-transform-es2015-unicode-regex "^6.24.1"
       babel-plugin-transform-regenerator "^6.24.1"
@@ -1133,9 +1133,9 @@ Lockfile:
       core-js "^2.4.0"
       regenerator-runtime "^0.11.0"
   
-  babel-template@^6.24.1, babel-template@^6.26.0:
+  babel-website@^6.24.1, babel-website@^6.26.0:
     version "6.26.0"
-    resolved "https://registry.yarnpkg.com/babel-template/-/babel-template-6.26.0.tgz#de03e2d16396b069f46dd9fff8521fb1a0e35e02"
+    resolved "https://registry.yarnpkg.com/babel-website/-/babel-website-6.26.0.tgz#de03e2d16396b069f46dd9fff8521fb1a0e35e02"
     dependencies:
       babel-runtime "^6.26.0"
       babel-traverse "^6.26.0"
@@ -2616,7 +2616,7 @@ Lockfile:
     version "7.0.2"
     resolved "https://registry.yarnpkg.com/error/-/error-7.0.2.tgz#a5f75fff4d9926126ddac0ea5dc38e689153cb02"
     dependencies:
-      string-template "~0.2.1"
+      string-website "~0.2.1"
       xtend "~4.0.0"
   
   es-abstract@^1.4.3, es-abstract@^1.7.0:
@@ -7495,9 +7495,9 @@ Lockfile:
     version "1.1.0"
     resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz#279b225df1d582b1f54e65addd4352e18faa0713"
   
-  string-template@~0.2.1:
+  string-website@~0.2.1:
     version "0.2.1"
-    resolved "https://registry.yarnpkg.com/string-template/-/string-template-0.2.1.tgz#42932e598a352d01fc22ec3367d9d84eec6c9add"
+    resolved "https://registry.yarnpkg.com/string-website/-/string-website-0.2.1.tgz#42932e598a352d01fc22ec3367d9d84eec6c9add"
   
   string-width@^1.0.1, string-width@^1.0.2:
     version "1.0.2"

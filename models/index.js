@@ -8,6 +8,4 @@ const db = { User, Website };
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-console.log('user' , db.User)
-
 export default db;

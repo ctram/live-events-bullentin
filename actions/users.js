@@ -71,7 +71,7 @@ function loginUserRequest(data) {
 
 function loginUserSuccess(user) {
   toastr.success('Login Successful');
-  window.LEB.reactRouterHistory.push('/templates');
+  window.LEB.reactRouterHistory.push('/websites');
   return { type: actionTypes.LOGIN_USER_SUCCESS, user };
 }
 

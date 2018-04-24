@@ -1,9 +1,9 @@
 const Base = require('./base');
 const scrapeIt = require('scrape-it');
 
-class Template extends Base {
+class Website extends Base {
   static get tableName() {
-    return 'templates';
+    return 'websites';
   }
 
   static get jsonSchema() {
@@ -19,18 +19,18 @@ class Template extends Base {
 
   static create(data) {
     const { name, selector, url } = data;
-    const templates = Template.query();
+    const websites = Website.query();
 
-    return templates.where({ name }).then(rows => {
+    return websites.where({ name }).then(rows => {
       if (rows.length > 1) {
-        return { msg: 'Template of name already exists', status: 400 };
+        return { msg: 'Website of name already exists', status: 400 };
       } else {
-        return templates.insert({ name, selector, url }).then(template => {
+        return websites.insert({ name, selector, url }).then(website => {
           return {
-            id: template.id,
-            name: template.name,
-            selector: template.selector,
-            url: template.url
+            id: website.id,
+            name: website.name,
+            selector: website.selector,
+            url: website.url
           };
         });
       }
@@ -59,4 +59,4 @@ class Template extends Base {
   }
 }
 
-module.exports = Template;
+module.exports = Website;

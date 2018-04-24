@@ -6,7 +6,8 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        unique: true
       },
       url: {
         type: Sequelize.STRING
@@ -15,6 +16,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       name: {
+        unique: true,
         type: Sequelize.STRING
       },
       createdAt: {
@@ -27,7 +29,7 @@ module.exports = {
       }
     });
   },
-  down: (queryInterface, Sequelize) => {
+  down: (queryInterface) => {
     return queryInterface.dropTable('websites');
   }
 };

@@ -3,7 +3,7 @@ const { Website } = db;
 import config from '../app-config';
 
 function load(app) {
-  app.post('/api/templates', (req, res) => {
+  app.post('/api/websites', (req, res) => {
     if (config.authenticate && !req.isAuthenticated()) {
       return res.status(401).end();
     }
@@ -25,42 +25,39 @@ function load(app) {
       });
   });
 
-  app.get('/api/templates', (req, res) => {
+  app.get('/api/websites', (req, res) => {
     if (config.authenticate && !req.isAuthenticated()) {
       return res.status(401).end();
     }
 
-    Website.query().then(templates => {
-      console.log('templates', templates);
-      res.json({ templates });
+    Website.findAll().then(websites => {
+      console.log('websites', websites);
+      res.json({ websites });
     });
   });
 
-  app.get('/api/templates/:id', (req, res) => {
+  app.get('/api/websites/:id', (req, res) => {
     if (config.authenticate && !req.isAuthenticated()) {
       res.status(401).end();
     }
 
-    console.log('query', req.query);
-
     const { id } = req.params;
-    let template;
+    let website;
 
-    Website.query()
-      .findById(id)
-      .then(_template => {
-        template = _template;
-        if (!template) {
+    Website.findAll({ where: { id } })
+      .then(_website => {
+        website = _website;
+        if (!website) {
           throw 'Website not found';
         }
-        res.json({ template });
+        res.json({ website });
       })
       .catch(e => {
-        res.status(500).json({ msg: e.msg, template });
+        res.status(500).json({ msg: e.msg, website });
       });
   });
 
-  app.patch('/api/templates/:id', (req, res) => {
+  app.patch('/api/websites/:id', (req, res) => {
     if (config.authenticate && !req.isAuthenticated()) {
       res.status(401).end();
     }
@@ -68,25 +65,25 @@ function load(app) {
       body: { name, url, selector }
     } = req;
     const { id } = req.params;
-    const { include: decorators } = req.query;
-    let template;
+    const { include: decorators } = req.findAll;
+    let website;
 
-    Website.query()
+    Website.findAll()
       .where({ id })
       .update({ name, url, selector })
       .then(() => {
-        return Website.query().where({ id });
+        return Website.findAll().where({ id });
       })
-      .then(templates => {
-        template = templates[0];
+      .then(websites => {
+        website = websites[0];
         if (decorators && decorators.includes('events')) {
-          return template.getEvents();
+          return website.getEvents();
         }
         return null;
       })
       .then(events => {
-        events ? (template.events = events) : null;
-        res.json({ template });
+        events ? (website.events = events) : null;
+        res.json({ website });
       })
       .catch(e => {
         console.error('scrape error', e);
@@ -94,14 +91,14 @@ function load(app) {
       });
   });
 
-  app.delete('/api/templates/:id', (req, res) => {
+  app.delete('/api/websites/:id', (req, res) => {
     const { id } = req.params;
 
     if (config.authenticate && !req.isAuthenticated()) {
       res.status(401).end();
     }
 
-    Website.query()
+    Website.findAll()
       .findById(id)
       .del()
       .then(() => {
@@ -113,24 +110,24 @@ function load(app) {
       });
   });
 
-  app.get('/api/templates/:id/events', (req, res) => {
+  app.get('/api/websites/:id/events', (req, res) => {
     if (config.authenticate && !req.isAuthenticated()) {
       res.status(401).end();
     }
     const { id } = req.params;
-    let template;
+    let website;
 
-    Website.query()
+    Website.findAll()
       .findById(id)
-      .then(_template => {
-        template = _template;
-        if (!template) {
+      .then(_website => {
+        website = _website;
+        if (!website) {
           return res.status(400).json({ msg: 'Website not found' });
         }
-        return template.getEvents();
+        return website.getEvents();
       })
       .then(events => {
-        res.json({ events, templateId: template.id });
+        res.json({ events, websiteId: website.id });
       })
       .catch(e => {
         console.error('scrape error', e);

@@ -17,13 +17,13 @@ import Users from './users';
 import { connect } from 'react-redux';
 import actionsUsers from '../actions/users';
 import { withRouter } from 'react-router-dom';
-import PageTemplates from './pages/templates';
+import PageWebsites from './pages/websites';
 // eslint-disable-next-line no-unused-vars
 import ErrorBoundary from './error-boundary';
 // eslint-disable-next-line no-unused-vars
-import PageTemplateNew from './pages/template-new';
+import PageWebsiteNew from './pages/website-new';
 // eslint-disable-next-line no-unused-vars
-import PageTemplateShow from './pages/template-show';
+import PageWebsiteShow from './pages/website-show';
 import Page404 from './pages/404';
 
 // eslint-disable-next-line no-unused-vars
@@ -33,9 +33,9 @@ function SwitchLoggedIn(props) {
       <Route exact path="/" component={PageWelcome} />
       {props.isAdmin && <Route exact path="/users" component={Users} />}
       <Route exact path="/profile" component={UserProfile} />
-      <Route exact path="/templates" component={PageTemplates} />
-      <Route exact path="/templates/new" component={PageTemplateNew} />
-      <Route exact path="/templates/:id" component={PageTemplateShow} />
+      <Route exact path="/websites" component={PageWebsites} />
+      <Route exact path="/websites/new" component={PageWebsiteNew} />
+      <Route exact path="/websites/:id" component={PageWebsiteShow} />
       <Route component={Page404} />
     </Switch>
   );
@@ -71,7 +71,7 @@ export class Root extends React.Component {
   render() {
     const { loggedIn, currentUser } = this.props;
     const Routes = loggedIn ? (
-      <SwitchLoggedIn isAdmin={currentUser && currentUser.isAdmin()} />
+      <SwitchLoggedIn isAdmin={currentUser && currentUser.isAdmin} />
     ) : (
       <SwitchLoggedOut />
     );

@@ -1,32 +1,32 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import actionsTemplates from '../../actions/templates';
+import actionsWebsites from '../../actions/websites';
 import actionTypes from '../../actions/action-types';
 
-export class TemplatesList extends React.Component {
+export class WebsitesList extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    const { templates } = this.props;
+    const { websites } = this.props;
 
     return (
       <section>
-        <h1>Templates</h1>
+        <h1>Websites</h1>
         <ul>
-          {templates.map((template, idx) => {
+          {websites.map((website, idx) => {
             return (
               <li key={idx} className="row">
-                <Link to={`/templates/${template.id}`} className="col-6">
-                  {template.get('name')}
+                <Link to={`/websites/${website.id}`} className="col-6">
+                  {website.get('name')}
                 </Link>
                 <div className="col-1 offset-3">
                   <span
                     onClick={e => {
                       e.preventDefault();
-                      this.props.onClickRemove(template.id);
+                      this.props.onClickRemove(website.id);
                     }}
                   >
                     <i className="fas fa-trash" />
@@ -41,33 +41,33 @@ export class TemplatesList extends React.Component {
   }
 }
 
-export class Templates extends React.Component {
+export class Websites extends React.Component {
   constructor() {
     super();
   }
 
   componentDidMount() {
-    this.props.fetchTemplatesRequest();
+    this.props.fetchWebsitesRequest();
   }
 
   render() {
-    const { templates = [] } = this.props;
+    const { websites = [] } = this.props;
 
     return (
       <div className="row justify-content-center">
         <div className="col-4">
-          <Link to="/templates/new">
+          <Link to="/websites/new">
             <div className="row justify-content-center">
-              <button className="btn btn-primary">Add Template</button>
+              <button className="btn btn-primary">Add Website</button>
             </div>
           </Link>
-          <div className="templates">
-            {templates.length > 0 && (
+          <div className="websites">
+            {websites.length > 0 && (
               <div>
                 <hr />
-                <TemplatesList
-                  templates={templates}
-                  onClickRemove={this.props.deleteTemplateRequest}
+                <WebsitesList
+                  websites={websites}
+                  onClickRemove={this.props.deleteWebsiteRequest}
                 />
               </div>
             )}
@@ -79,18 +79,18 @@ export class Templates extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return Object.assign({}, state.storeTemplates, state.storeUsers);
+  return Object.assign({}, state.storeWebsites, state.storeUsers);
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchTemplatesRequest: () => {
-      dispatch(actionsTemplates.fetchTemplatesRequest());
+    fetchWebsitesRequest: () => {
+      dispatch(actionsWebsites.fetchWebsitesRequest());
     },
-    deleteTemplateRequest: id => {
-      dispatch(actionsTemplates.deleteTemplateRequest(id));
+    deleteWebsiteRequest: id => {
+      dispatch(actionsWebsites.deleteWebsiteRequest(id));
     }
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Templates);
+export default connect(mapStateToProps, mapDispatchToProps)(Websites);

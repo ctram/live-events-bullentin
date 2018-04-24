@@ -1,5 +1,5 @@
 import actionTypes from '../actions/action-types';
-import { User } from '../backbone/models/user';
+import User from '../backbone/models/user';
 
 const intialState = {
   users: [],
