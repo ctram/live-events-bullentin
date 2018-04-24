@@ -87,7 +87,9 @@ function load(app) {
         return res.status(status).json(data);
       })
       .catch(e => {
-        return res.status(500).json({ msg: e });
+        // TODO: more intricate errors
+        const msg = `${e.name}`;
+        return res.status(500).json({ msg });
       });
   });
 
