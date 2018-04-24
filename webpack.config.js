@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 const sharedConfig = {
-  watch: false
+  watch: true
 };
 
 const serverConfig = {
