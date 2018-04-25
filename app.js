@@ -5,8 +5,9 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
-import { User } from './models/index';
+import db from './models/index';
 import appConfig from './app-config';
+const { User } = db;
 
 const app = express();
 app.use(express.static('dist'));
@@ -22,8 +23,7 @@ app.use(passport.session());
 
 passport.use(
   new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-    User.query()
-      .findOne({ email })
+    User.findOne({ email })
       .then(user => {
         if (!user) {
           return done(null, false, { message: 'Incorrect email.' });
@@ -45,8 +45,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  User.query()
-    .findById(id)
+  User.findById(id)
     .then(user => {
       if (!user) {
         return done('user not found', false);
