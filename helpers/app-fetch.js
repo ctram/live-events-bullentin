@@ -11,8 +11,7 @@ function parseResponse(res) {
     })
     .catch(e => {
       console.error('json parsing error:', e);
-
-      return res.text();
+      return { statusText: res.statusText, status: res.status };
     });
 }
 
@@ -47,7 +46,19 @@ export default function appFetch(req) {
         return data;
       }
       if (status >= 400) {
-        const msg = data.msg || statusText || 'Unknown error';
+        let errorMsg;
+
+        if (data.msg) {
+          errorMsg = data.msg + '<br/>';
+        }
+
+        if (data.errors && data.errors.length > 0) {
+          data.errors.forEach(error => {
+            errorMsg += error.message + '<br/>';
+          });
+        }
+
+        const msg = errorMsg || statusText || 'Unknown error';
         toastr.error(msg);
         throw msg;
       }

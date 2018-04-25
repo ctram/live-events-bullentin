@@ -35,24 +35,27 @@ function load(app) {
   });
 
   /////// USER ///////
-  app.post('/api/login', passport.authenticate('local'), (req, res) => {
-    User.query()
-      .findById(req.user.id)
-      .then(user => {
-        if (user) {
-          delete user.password;
-          return res.json({ user });
-        }
+  app.post(
+    '/api/login',
+    passport.authenticate('local', {  badRequestMessage: 'nope' }),
+    (req, res) => {
+      User.findById(req.user.id)
+        .then(user => {
+          if (user) {
+            delete user.password;
+            return res.json({ user });
+          }
 
-        const msg = 'User not found';
-        console.log(msg);
-        return res.status(404).json({ msg });
-      })
-      .catch(e => {
-        console.error(e);
-        return res.status(500).json({ msg: e });
-      });
-  });
+          const msg = 'User not found';
+          console.log(msg);
+          return res.status(404).json({ msg });
+        })
+        .catch(e => {
+          console.error('error here is', e);
+          return res.status(500).json({ msg: e.name || e });
+        });
+    }
+  );
 
   app.get('/api/logout', (req, res) => {
     req.logout();
@@ -70,7 +73,7 @@ function load(app) {
         return res.json({ users });
       })
       .catch(e => {
-        return res.status(500).json({ msg: e });
+        return res.status(500).json({ msg: e.name || e });
       });
   });
 
@@ -87,9 +90,7 @@ function load(app) {
         return res.status(status).json(data);
       })
       .catch(e => {
-        // TODO: more intricate errors
-        const msg = `${e.name}`;
-        return res.status(500).json({ msg });
+        return res.status(500).json({ msg: e.name || e, errors: e.errors });
       });
   });
 
@@ -98,8 +99,7 @@ function load(app) {
       return res.status(401);
     }
 
-    User.query()
-      .findById(req.params.id)
+    User.findById(req.params.id)
       .then(user => {
         if (user) {
           return res.json({ user });
@@ -108,7 +108,7 @@ function load(app) {
         return res.status(404).json({ msg: 'User not found' });
       })
       .catch(e => {
-        return res.status(500).json({ msg: e });
+        return res.status(500).json({ msg: e.name || e });
       });
   });
 
@@ -118,33 +118,22 @@ function load(app) {
     }
     console.log('params', req.params);
     const currentUser = req.user;
-    const usersQuery = User.query().where({ id: req.params.id });
+    const user = User.findById(req.params.id);
 
-    usersQuery
-      .then(users => {
-        const user = users[0];
-        console.log('found user', user);
+    if (!user) {
+      return res.status(400).json({ msg: 'User to delete not found' });
+    }
+    if (currentUser.role !== 'admin') {
+      return res.status(400).json({ msg: 'Current User must be of type admin to delete users' });
+    }
+    if (currentUser.id === user.id) {
+      return res.status(400).json({ msg: 'User cannot delete themself' });
+    }
 
-        if (!user) {
-          return res.status(400).json({ msg: 'User to delete not found' });
-        }
-        if (currentUser.role !== 'admin') {
-          return res
-            .status(400)
-            .json({ msg: 'Current User must be of type admin to delete users' });
-        }
-        if (currentUser.id === user.id) {
-          return res.status(400).json({ msg: 'User cannot delete themself' });
-        }
-
-        return usersQuery.del().then(() => {
-          return res.end();
-        });
-      })
-      .catch(e => {
-        console.error(e);
-        return res.status(500).json({ msg: e });
-      });
+    User.destroy({ where: { id: req.params.id } }).catch(e => {
+      console.error(e);
+      return res.status(500).json({ msg: e.name || e });
+    });
   });
 }
 

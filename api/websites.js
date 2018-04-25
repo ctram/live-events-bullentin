@@ -21,7 +21,7 @@ function load(app) {
       })
       .catch(e => {
         console.error('error message', e);
-        res.status(500).json({ msg: e });
+        res.status(500).json({ msg: e.name || e });
       });
   });
 
@@ -30,10 +30,14 @@ function load(app) {
       return res.status(401).end();
     }
 
-    Website.findAll().then(websites => {
-      console.log('websites', websites);
-      res.json({ websites });
-    });
+    Website.findAll()
+      .then(websites => {
+        console.log('websites', websites);
+        res.json({ websites });
+      })
+      .catch(e => {
+        res.status(500).json({ msg: e.name || e });
+      });
   });
 
   app.get('/api/websites/:id', (req, res) => {
@@ -53,7 +57,7 @@ function load(app) {
         res.json({ website });
       })
       .catch(e => {
-        res.status(500).json({ msg: e.msg, website });
+        res.status(500).json({ msg: e.msg || e.name || e, website });
       });
   });
 
@@ -87,7 +91,7 @@ function load(app) {
       })
       .catch(e => {
         console.error('scrape error', e);
-        res.status(500).json({ msg: e.msg });
+        res.status(500).json({ msg: e.msg || e.name || e });
       });
   });
 
@@ -106,7 +110,7 @@ function load(app) {
       })
       .catch(e => {
         console.error('error in catch', e);
-        res.status(400).json({ msg: e });
+        res.status(400).json({ msg: e.name || e });
       });
   });
 
@@ -131,7 +135,7 @@ function load(app) {
       })
       .catch(e => {
         console.error('scrape error', e);
-        res.status(500).json({ msg: e.msg });
+        res.status(500).json({ msg: e.msg || e.name || e });
       });
   });
 }
