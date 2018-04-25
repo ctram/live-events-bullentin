@@ -74,10 +74,10 @@ function load(app) {
         return website.update({ name, url, selector });
       })
       .then(({ dataValues }) => {
-        return res.json({ website: dataValues});
+        return res.json({ website: dataValues });
       })
       .catch(e => {
-        console.log('whoops an error')
+        console.log('whoops an error');
         console.error('scrape error', typeof e);
         res.status(500).json({ msg: e.msg || e.name || e });
       });
@@ -90,9 +90,8 @@ function load(app) {
       res.status(401).end();
     }
 
-    Website.findAll()
-      .findById(id)
-      .del()
+    Website.findById(id)
+      .then(website => website.destroy())
       .then(() => {
         res.end();
       })

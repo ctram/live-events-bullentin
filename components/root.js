@@ -49,7 +49,7 @@ function SwitchLoggedOut() {
       <Route exact path="/register" component={FormUser} />
       <Route exact path="/login" component={FormUser} />
       <Route component={Page404} />
-      </Switch>
+    </Switch>
   );
 }
 
@@ -70,6 +70,8 @@ export class Root extends React.Component {
 
   render() {
     const { loggedIn, currentUser } = this.props;
+    const pathname = window.LEB.reactRouterHistory.location.pathname;
+
     const Routes = loggedIn ? (
       <SwitchLoggedIn isAdmin={currentUser && currentUser.isAdmin} />
     ) : (
@@ -79,7 +81,7 @@ export class Root extends React.Component {
     return (
       <div>
         <Loader loaded={this.props.loaded} options={{ color: 'white' }} />
-        <Navbar />
+        <Navbar pathname={pathname} />
         <main>
           <ErrorBoundary>
             <div className="row justify-content-center">

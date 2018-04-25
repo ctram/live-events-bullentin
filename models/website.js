@@ -6,15 +6,17 @@ import scrapeIt from 'scrape-it';
 const Base = sequelize.define(
   'website',
   {
-    url: Sequelize.STRING,
+    url: {
+      type: Sequelize.STRING,
+      validate: {
+        isUrl: true
+      }
+    },
     selector: Sequelize.STRING,
     name: Sequelize.STRING
   },
   {}
 );
-// Website.associate = function(models) {
-//   // associations can be defined here
-// };
 
 export default class Website extends Base {
   getEvents() {
