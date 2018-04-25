@@ -121,8 +121,7 @@ function load(app) {
         res.json({ events, websiteId: website.id });
       })
       .catch(e => {
-        console.error('scrape error', e);
-        res.status(500).json({ msg: e.msg || e.name || e });
+        res.status(500).json({ msg: e.name || e });
       });
   });
 }

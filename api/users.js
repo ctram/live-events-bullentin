@@ -33,27 +33,23 @@ function load(app) {
   });
 
   /////// USER ///////
-  app.post(
-    '/api/login',
-    passport.authenticate('local'),
-    (req, res) => {
-      User.findById(req.user.id)
-        .then(user => {
-          if (user) {
-            delete user.password;
-            return res.json({ user });
-          }
+  app.post('/api/login', passport.authenticate('local'), (req, res) => {
+    User.findById(req.user.id)
+      .then(user => {
+        if (user) {
+          delete user.password;
+          return res.json({ user });
+        }
 
-          const msg = 'User not found';
-          console.log(msg);
-          return res.status(404).json({ msg });
-        })
-        .catch(e => {
-          console.error('error here is', e);
-          return res.status(500).json({ msg: e.name || e });
-        });
-    }
-  );
+        const msg = 'User not found';
+        console.log(msg);
+        return res.status(404).json({ msg });
+      })
+      .catch(e => {
+        console.error('error here is', e);
+        return res.status(500).json({ msg: e.name || e });
+      });
+  });
 
   app.get('/api/logout', (req, res) => {
     req.logout();
@@ -111,12 +107,15 @@ function load(app) {
   });
 
   app.delete('/api/users/:id', (req, res) => {
+    const currentUser = req.user;
+
     if (config.authenticate && !req.isAuthenticated()) {
       return res.status(401);
     }
-    console.log('params', req.params);
-    const currentUser = req.user;
-    console.log('currentuser', currentUser)
+    if (!currentUser) {
+      return res.status(401).json({ msg: 'Must be logged to delete a user' });
+    }
+
     User.findById(req.params.id)
       .then(user => {
         if (!user) {
@@ -136,7 +135,7 @@ function load(app) {
       .catch(e => {
         console.error(e);
         return res.status(500).json({ msg: e.name || e });
-      }); 
+      });
   });
 }
 
