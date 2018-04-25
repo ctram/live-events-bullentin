@@ -1,8 +1,7 @@
 import React from 'react';
-import _ from 'underscore';
 // eslint-disable-next-line no-unused-vars
 import FormWebsite from '../form-website';
-import { Website } from '../../backbone/models/website';
+import Website from '../../backbone/models/website';
 
 export default class PageWebsiteNew extends React.Component {
   constructor(props) {

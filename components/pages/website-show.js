@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import actionsWebsites from '../../actions/websites';
 // eslint-disable-next-line no-unused-vars
 import FormWebsite from '../form-website';
-import { Website } from '../../backbone/models/website';
+import Website from '../../backbone/models/website';
 import _ from 'underscore';
 
 // eslint-disable-next-line no-unused-vars
@@ -22,15 +22,9 @@ export class PageWebsiteShow extends React.Component {
     const { location } = window.LEB.reactRouterHistory;
     const websiteId = location.pathname.split('/')[2];
 
-    // Website is from server, no need to fetch it again.
-    if (website.id) {
-      return;
-    }
-
-    // fetch website from server with events.
-    fetchWebsiteRequest(websiteId).then(() => {
+    return fetchWebsiteRequest(websiteId).then(() => {
       if (!website.get('events')) {
-        fetchWebsiteEventsRequest(websiteId);
+        return fetchWebsiteEventsRequest(websiteId);
       }
     });
   }

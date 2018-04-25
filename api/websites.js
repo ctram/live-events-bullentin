@@ -32,7 +32,6 @@ function load(app) {
 
     Website.findAll()
       .then(websites => {
-        console.log('websites', websites);
         res.json({ websites });
       })
       .catch(e => {
@@ -69,28 +68,17 @@ function load(app) {
       body: { name, url, selector }
     } = req;
     const { id } = req.params;
-    const { include: decorators } = req.findAll;
-    let website;
 
-    Website.findAll()
-      .where({ id })
-      .update({ name, url, selector })
-      .then(() => {
-        return Website.findAll().where({ id });
+    Website.findById(id)
+      .then(website => {
+        return website.update({ name, url, selector });
       })
-      .then(websites => {
-        website = websites[0];
-        if (decorators && decorators.includes('events')) {
-          return website.getEvents();
-        }
-        return null;
-      })
-      .then(events => {
-        events ? (website.events = events) : null;
-        res.json({ website });
+      .then(({ dataValues }) => {
+        return res.json({ website: dataValues});
       })
       .catch(e => {
-        console.error('scrape error', e);
+        console.log('whoops an error')
+        console.error('scrape error', typeof e);
         res.status(500).json({ msg: e.msg || e.name || e });
       });
   });
@@ -121,8 +109,7 @@ function load(app) {
     const { id } = req.params;
     let website;
 
-    Website.findAll()
-      .findById(id)
+    Website.findById(id)
       .then(_website => {
         website = _website;
         if (!website) {
