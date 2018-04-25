@@ -32,9 +32,10 @@ export class Navbar extends React.Component {
   render() {
     const { loggedIn, currentUser } = this.props;
     const { pathname } = window.LEB.reactRouterHistory.location;
-    
+
     return (
       <nav className="navbar navbar-dark bg-primary collapse navbar-collapse navbar-expand-sm row justify-content-center">
+        {currentUser && <span className="navbar-brand">{currentUser.get('email')}</span>}
         <ul className="navbar-nav">
           <LinkWrapper to="/" active={pathname === '/'}>
             Home
