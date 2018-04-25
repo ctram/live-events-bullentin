@@ -18,5 +18,6 @@ function serverUrl() {
 export default {
   port,
   host,
-  serverUrl: serverUrl()
+  serverUrl: serverUrl(),
+  authenticate: true
 };

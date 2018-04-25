@@ -21,8 +21,6 @@ function load(app) {
         }
 
         const user = users[0];
-        user.hi();
-        console.log('Authenticated user', user);
         return res.json({ user });
       });
     }
@@ -37,7 +35,7 @@ function load(app) {
   /////// USER ///////
   app.post(
     '/api/login',
-    passport.authenticate('local', {  badRequestMessage: 'nope' }),
+    passport.authenticate('local'),
     (req, res) => {
       User.findById(req.user.id)
         .then(user => {
@@ -118,22 +116,27 @@ function load(app) {
     }
     console.log('params', req.params);
     const currentUser = req.user;
-    const user = User.findById(req.params.id);
+    console.log('currentuser', currentUser)
+    User.findById(req.params.id)
+      .then(user => {
+        if (!user) {
+          return res.status(400).json({ msg: 'User to delete not found' });
+        }
+        if (currentUser.role !== 'admin') {
+          return res
+            .status(400)
+            .json({ msg: 'Current User must be of type admin to delete users' });
+        }
+        if (currentUser.id === user.id) {
+          return res.status(400).json({ msg: 'User cannot delete themself' });
+        }
 
-    if (!user) {
-      return res.status(400).json({ msg: 'User to delete not found' });
-    }
-    if (currentUser.role !== 'admin') {
-      return res.status(400).json({ msg: 'Current User must be of type admin to delete users' });
-    }
-    if (currentUser.id === user.id) {
-      return res.status(400).json({ msg: 'User cannot delete themself' });
-    }
-
-    User.destroy({ where: { id: req.params.id } }).catch(e => {
-      console.error(e);
-      return res.status(500).json({ msg: e.name || e });
-    });
+        return User.destroy({ where: { id: req.params.id } });
+      })
+      .catch(e => {
+        console.error(e);
+        return res.status(500).json({ msg: e.name || e });
+      }); 
   });
 }
 
