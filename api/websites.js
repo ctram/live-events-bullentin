@@ -1,6 +1,7 @@
 import db from '../models/index';
 const { Website } = db;
 import config from '../app-config';
+import { saveRequestErrorMessage } from './helpers/error-handler';
 
 function load(app) {
   app.post('/api/websites', (req, res) => {
@@ -20,8 +21,7 @@ function load(app) {
         res.status(status).json(data);
       })
       .catch(e => {
-        console.error('error message', e);
-        res.status(500).json({ msg: e.name || e });
+        res.status(500).json({ msg: saveRequestErrorMessage(e) });
       });
   });
 
@@ -77,9 +77,7 @@ function load(app) {
         return res.json({ website: dataValues });
       })
       .catch(e => {
-        console.log('whoops an error');
-        console.error('scrape error', typeof e);
-        res.status(500).json({ msg: e.msg || e.name || e });
+        res.status(500).json({ msg: saveRequestErrorMessage(e, { type: 'save' }) });
       });
   });
 
