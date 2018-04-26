@@ -58,5 +58,6 @@ passport.deserializeUser((id, done) => {
     });
 });
 
+console.log('appConfig', appConfig);
 routes.setRoutes(app);
 app.listen(appConfig.port, () => console.log(`App listening on port ${appConfig.port}!`));
