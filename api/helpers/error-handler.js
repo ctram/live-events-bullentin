@@ -6,16 +6,5 @@ export function translateErrors(e) {
     errorMessages = errors.map(error => error.message);
   }
 
-  return translateWebsiteValidationError(errorMessages);
-}
-
-export function translateWebsiteValidationError(errorMessages) {
-  errorMessages = errorMessages.map(msg => {
-    if (msg.includes('Validation isUrl')) {
-      return 'URL must include a protocol prefix, i.e. "http://"';
-    }
-    return msg;
-  });
-
   return errorMessages;
 }

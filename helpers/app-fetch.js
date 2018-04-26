@@ -49,12 +49,12 @@ export default function appFetch(req) {
         let errorMsg;
 
         if (data.msg) {
-          errorMsg = data.msg + '<br/>';
+          errorMsg = data.msg + '; ';
         }
 
         if (data.errors && data.errors.length > 0) {
           data.errors.forEach(error => {
-            errorMsg += error.message + '<br/>';
+            errorMsg += error.message + '; ';
           });
         }
 

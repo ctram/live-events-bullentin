@@ -12,7 +12,7 @@ const Base = sequelize.define(
       validate: {
         stricterUrl(value) {
           if (!validator.isURL(value, { require_protocol: true })) {
-            throw new Error('URL must include protocol prefix, i.e. "http://"');
+            throw new Error('Invalid URL format');
           }
         }
       }
