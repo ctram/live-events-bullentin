@@ -1,8 +1,8 @@
 import React from 'react';
+// eslint-disable-next-line no-unused-vars
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actionsWebsites from '../../actions/websites';
-import actionTypes from '../../actions/action-types';
 
 export class WebsitesList extends React.Component {
   constructor(props) {
