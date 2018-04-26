@@ -71,6 +71,10 @@ function load(app) {
 
     Website.findById(id)
       .then(website => {
+        website
+          .validate()
+          .then(() => console.log('website is valid with url of ', website.url))
+          .catch(e => console.log('website not valid', e));
         return website.update({ name, url, selector });
       })
       .then(({ dataValues }) => {

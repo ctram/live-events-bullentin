@@ -2,6 +2,7 @@
 import sequelize from './sequelize';
 import Sequelize from 'sequelize';
 import scrapeIt from 'scrape-it';
+import validator from 'validator';
 
 const Base = sequelize.define(
   'website',
@@ -9,7 +10,11 @@ const Base = sequelize.define(
     url: {
       type: Sequelize.STRING,
       validate: {
-        isUrl: true
+        stricterUrl(value) {
+          if (!validator.isURL(value, { require_protocol: true })) {
+            throw new Error('URL must include protocol prefix, i.e. "http://"');
+          }
+        }
       }
     },
     selector: Sequelize.STRING,
