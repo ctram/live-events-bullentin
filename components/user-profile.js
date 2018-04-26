@@ -10,7 +10,12 @@ class UserProfile extends React.Component {
     const { currentUser } = this.props;
     return (
       <div>
-        <span>Email:</span> {currentUser.get('email')}
+        <h1>Profile</h1>
+        <div className="row justify-content-center">
+          <div className="col-3">
+            <span>Email:</span> {currentUser.get('email')}
+          </div>
+        </div>
       </div>
     );
   }

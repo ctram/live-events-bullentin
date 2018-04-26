@@ -53,6 +53,17 @@ export class Websites extends React.Component {
   render() {
     const { websites = [] } = this.props;
 
+    let domWebsites = <div className="text-center">No websites saved yet.</div>;
+
+    if (websites.length > 0) {
+      domWebsites = (
+        <div>
+          <hr />
+          <WebsitesList websites={websites} onClickRemove={this.props.deleteWebsiteRequest} />
+        </div>
+      );
+    }
+
     return (
       <div className="row justify-content-center">
         <div className="col-4">
@@ -61,17 +72,7 @@ export class Websites extends React.Component {
               <button className="btn btn-primary">Add Website</button>
             </div>
           </Link>
-          <div className="websites">
-            {websites.length > 0 && (
-              <div>
-                <hr />
-                <WebsitesList
-                  websites={websites}
-                  onClickRemove={this.props.deleteWebsiteRequest}
-                />
-              </div>
-            )}
-          </div>
+          <div className="websites">{domWebsites}</div>
         </div>
       </div>
     );

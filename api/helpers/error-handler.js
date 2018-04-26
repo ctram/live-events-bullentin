@@ -1,10 +1,11 @@
 export function translateErrors(e) {
   const { errors } = e;
-  let errorMessages = ['There was an error'];
 
-  if (errors && errors.length > 0) {
-    errorMessages = errors.map(error => error.message);
+  if (e.msg) {
+    return [e.msg];
   }
-
-  return errorMessages;
+  if (errors && errors.length > 0) {
+    return errors.map(error => error.message);
+  }
+  return ['There was an error'];
 }
