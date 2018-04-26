@@ -1,14 +1,21 @@
-export function saveRequestErrorMessage(e) {
+export function translateErrors(e) {
   const { errors } = e;
-  let msg;
-  if (errors && errors[0]) {
-    msg = errors[0].message;
-  } else {
-    msg = e.name || 'Error saving website data';
+  let errorMessages = ['There was an error'];
+
+  if (errors && errors.length > 0) {
+    errorMessages = errors.map(error => error.message);
   }
 
-  if (msg.includes('Validation isUrl')) {
-    msg = 'URL must include a protocol prefix, i.e. "http://"';
-  }
-  return msg;
+  return translateWebsiteValidationError(errorMessages);
+}
+
+export function translateWebsiteValidationError(errorMessages) {
+  errorMessages = errorMessages.map(msg => {
+    if (msg.includes('Validation isUrl')) {
+      return 'URL must include a protocol prefix, i.e. "http://"';
+    }
+    return msg;
+  });
+
+  return errorMessages;
 }

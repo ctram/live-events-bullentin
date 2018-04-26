@@ -27,21 +27,23 @@ export default class Website extends Base {
   getEvents() {
     let { url, selector } = this;
 
-    const opts = {
-      events: {
-        listItem: selector
-      }
-    };
+    return this.validate().then(() => {
+      const opts = {
+        events: {
+          listItem: selector
+        }
+      };
 
-    return scrapeIt(url, opts).then(({ data, response: { statusCode } }) => {
-      console.log('statuscode', statusCode);
-      if (statusCode && statusCode >= 400) {
-        throw { msg: `Error scraping events`, statusCode };
-      }
-      if (data && data.events) {
-        return data.events;
-      }
-      throw `Unknown error scrapping events`;
+      return scrapeIt(url, opts).then(({ data, response: { statusCode } }) => {
+        console.log('statuscode', statusCode);
+        if (statusCode && statusCode >= 400) {
+          throw { msg: `Error scraping events`, statusCode };
+        }
+        if (data && data.events) {
+          return data.events;
+        }
+        throw `Unknown error scrapping events`;
+      });
     });
   }
 }

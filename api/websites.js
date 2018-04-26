@@ -1,7 +1,7 @@
 import db from '../models/index';
 const { Website } = db;
 import config from '../app-config';
-import { saveRequestErrorMessage } from './helpers/error-handler';
+import { translateErrors } from './helpers/error-handler';
 
 function load(app) {
   app.post('/api/websites', (req, res) => {
@@ -21,7 +21,7 @@ function load(app) {
         res.status(status).json(data);
       })
       .catch(e => {
-        res.status(500).json({ msg: saveRequestErrorMessage(e) });
+        res.status(500).json({ msg: translateErrors(e) });
       });
   });
 
@@ -81,7 +81,7 @@ function load(app) {
         return res.json({ website: dataValues });
       })
       .catch(e => {
-        res.status(500).json({ msg: saveRequestErrorMessage(e, { type: 'save' }) });
+        res.status(500).json({ msg: translateErrors(e, { type: 'save' }) });
       });
   });
 
@@ -122,7 +122,7 @@ function load(app) {
         res.json({ events, websiteId: website.id });
       })
       .catch(e => {
-        res.status(500).json({ msg: e.name || e });
+        res.status(500).json({ msg:  translateErrors(e)});
       });
   });
 }
