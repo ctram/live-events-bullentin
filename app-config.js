@@ -3,6 +3,8 @@ const environment = process.env.NODE_ENV || 'development';
 let port;
 let host;
 
+console.log('vars', process.env);
+
 if (environment === 'production') {
   port = null;
   host = '';

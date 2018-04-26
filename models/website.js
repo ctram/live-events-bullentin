@@ -37,7 +37,7 @@ export default class Website extends Base {
       return scrapeIt(url, opts).then(({ data, response: { statusCode } }) => {
         console.log('statuscode', statusCode);
         if (statusCode && statusCode >= 400) {
-          throw { msg: `Error scraping events`, statusCode };
+          throw { msg: `Error finding any events`, statusCode };
         }
         if (data && data.events) {
           return data.events;
