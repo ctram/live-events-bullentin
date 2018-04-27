@@ -1,8 +1,8 @@
 import actionTypes from './action-types';
-import appConfig from '../app-config';
 import appFetch from '../helpers/app-fetch';
 import requestParams from '../helpers/request-params';
 import toastr from 'toastr';
+const appConfig = window.LEB.appConfig;
 
 console.log('appConfig', appConfig);
 

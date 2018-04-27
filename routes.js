@@ -1,4 +1,5 @@
 import loadApi from './api/index';
+import appConfig from './app-config';
 
 function generateHTML() {
   return `<!DOCTYPE html>
@@ -13,6 +14,11 @@ function generateHTML() {
   </head>
   <body>
   <div id="root"></div>
+  <script>
+    window.LEB = window.LEB || {};
+    window.LEB.appConfig = window.LEB.appConfig || {};
+    window.LEB.appConfig.serverUrl = '${appConfig.serverUrl}';
+  </script>
   <script src="../index.bundle.js"></script>
   </body>
   </html>

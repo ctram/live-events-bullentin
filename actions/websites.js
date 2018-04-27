@@ -1,8 +1,8 @@
-import appConfig from '../app-config';
 import appFetch from '../helpers/app-fetch';
 import requestParams from '../helpers/request-params';
 import toastr from 'toastr';
 import actionTypes from './action-types';
+const appConfig = window.LEB.appConfig;
 
 function createWebsiteRequest(data) {
   return () => {
