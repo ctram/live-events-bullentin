@@ -5,7 +5,12 @@ import config from '../app-config';
 const { User } = db;
 
 function load(app) {
+  console.log('loading user apis');
+
   app.get('/api/authentication', (req, res) => {
+    console.log('in authentication');
+    console.log('here are the config vars', config);
+
     if (config.authenticate && !req.isAuthenticated()) {
       // FIXME: remove this, let client read the default statusText within the response;
       const msg = 'Not authenticated';
@@ -14,7 +19,9 @@ function load(app) {
     }
 
     if (!config.authenticate) {
+      console.log('do not authenticate, start finding all users');
       return User.findAll().then(users => {
+        console.log('in authenticatioin, user findall');
         if (users.length === 0) {
           console.log('No users found');
           return res.status(500).json({ user: null, msg: 'No users found' });
@@ -31,6 +38,8 @@ function load(app) {
 
     return res.status(500).json({ msg: 'No user found, whoops' });
   });
+
+  console.log('authentication end point loaded');
 
   /////// USER ///////
   app.post('/api/login', passport.authenticate('local'), (req, res) => {

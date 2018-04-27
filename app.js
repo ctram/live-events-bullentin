@@ -23,6 +23,8 @@ app.use(passport.session());
 
 passport.use(
   new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+    console.log('in passport');
+
     User.findOne({ email })
       .then(user => {
         if (!user) {
@@ -57,6 +59,13 @@ passport.deserializeUser((id, done) => {
       done(e);
     });
 });
+
+console.log('app start up, User.findall');
+db.User.findAll()
+  .then(users => {
+    console.log('users', users);
+  })
+  .catch(e => console.log('user find all error', e));
 
 console.log('appConfig', appConfig);
 routes.setRoutes(app);
