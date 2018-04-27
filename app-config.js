@@ -1,25 +1,19 @@
-const environment = process.env.NODE_ENV || 'development';
+const environment = process.env.ENVIRONMENT || 'development';
 
 let port;
 let host;
 
-console.log('vars', process.env);
-
 if (environment === 'production') {
-  port = null;
-  host = '';
+  port = process.env.PORT;
+  host = process.env.HOST;
 } else if (environment === 'development') {
   port = 3000;
   host = 'http://localhost';
 }
 
-function serverUrl() {
-  return `${host}:${port}`;
-}
-
 export default {
   port,
   host,
-  serverUrl: serverUrl(),
+  serverUrl: `${host}:${port}`,
   authenticate: false
 };
