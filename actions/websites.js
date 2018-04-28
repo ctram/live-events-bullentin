@@ -5,7 +5,7 @@ import actionTypes from './action-types';
 const appConfig = window.LEB.appConfig;
 
 function createWebsiteRequest(data) {
-  return () => {
+  return dispatch => {
     const req = new Request(
       appConfig.serverUrl + `/api/websites`,
       Object.assign(requestParams, { method: 'POST', body: JSON.stringify(data) })
@@ -14,8 +14,20 @@ function createWebsiteRequest(data) {
     appFetch(req).then(() => {
       toastr.success('Website created');
       window.LEB.reactRouterHistory.push('/websites');
+      dispatch(createWebsiteSuccess());
+    }).catch(e => {
+      console.error(e);
+      dispatch(createWebsiteFailure(data));
     });
   };
+}
+
+function createWebsiteSuccess() {
+  return { type: actionTypes.CREATE_WEBSITE_SUCCESS };
+}
+
+function createWebsiteFailure(data) {
+  return { type: actionTypes.CREATE_WEBSITE_FAILURE, website: data };
 }
 
 function saveWebsiteRequest(data) {

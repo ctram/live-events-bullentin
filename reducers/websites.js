@@ -1,8 +1,10 @@
 import actionTypes from '../actions/action-types';
 import Websites from '../backbone/collections/websites';
+import Website from '../backbone/models/website';
 
 const intialState = {
-  websites: new Websites()
+  websites: new Websites(),
+  newWebsite: new Website()
 };
 
 function storeWebsites(state = intialState, action) {
@@ -50,6 +52,10 @@ function storeWebsites(state = intialState, action) {
       website.set(action.website);
       websites = new Websites(websites.toJSON());
       return Object.assign({}, state, { websites });
+    case actionTypes.CREATE_WEBSITE_FAILURE:
+      return Object.assign({}, state, { newWebsite: new Website(action.website) });
+    case actionTypes.CREATE_WEBSITE_SUCCESS:
+      return Object.assign({}, state, { newWebsite: new Website() });
     default:
       return state;
   }
