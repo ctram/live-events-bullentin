@@ -23,7 +23,7 @@ app.use(passport.session());
 
 passport.use(
   new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-    User.findOne({ email })
+    User.findOne({ where: { email } })
       .then(user => {
         if (!user) {
           return done(null, false, { message: 'Incorrect email.' });
