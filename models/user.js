@@ -5,6 +5,12 @@ import sequelize from './sequelize';
 const Base = sequelize.define(
   'user',
   {
+    id: {
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
+      allowNull: false,
+      primaryKey: true
+    },
     email: { type: Sequelize.STRING, unique: true },
     username: { type: Sequelize.STRING, unique: true },
     role: { type: Sequelize.STRING, defaultValue: 'standard' },
@@ -17,8 +23,4 @@ const Base = sequelize.define(
 //   // associations can be defined here
 // };
 
-export default class User extends Base {
-  hi() {
-    console.log('saying hi', this.role);
-  }
-}
+export default class User extends Base {}

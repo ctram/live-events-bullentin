@@ -10,7 +10,6 @@ function load(app) {
     }
 
     const { name, selector, url } = req.body;
-    console.log('user', req.user);
 
     if (!name || !selector || !url) {
       return res.status(400).json({ msg: 'name, URL and selector cannot be blank' });
@@ -22,6 +21,7 @@ function load(app) {
         res.status(status).json(data);
       })
       .catch(e => {
+        console.log('error in saving website', e);
         res.status(500).json({ msg: translateErrors(e) });
       });
   });

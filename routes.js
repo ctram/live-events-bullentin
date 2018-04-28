@@ -27,7 +27,6 @@ function generateHTML() {
 
 export default {
   setRoutes: app => {
-    console.log('loading apis')
     loadApi(app);
 
     app.get(/.*/, (req, res) => {

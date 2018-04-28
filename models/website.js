@@ -7,6 +7,12 @@ import validator from 'validator';
 const Base = sequelize.define(
   'website',
   {
+    id: {
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
+      allowNull: false,
+      primaryKey: true
+    },
     url: {
       type: Sequelize.STRING,
       validate: {
@@ -18,7 +24,8 @@ const Base = sequelize.define(
       }
     },
     selector: Sequelize.STRING,
-    name: Sequelize.STRING
+    name: Sequelize.STRING,
+    creator_id: { type: Sequelize.UUID, allowNull: false }
   },
   { underscored: true }
 );
