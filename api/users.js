@@ -6,8 +6,6 @@ import uuidv1 from 'uuid/v1';
 const { User } = db;
 
 function load(app) {
-  console.log('loading user apis');
-
   app.get('/api/authentication', (req, res) => {
     if (config.authenticate && !req.isAuthenticated()) {
       // FIXME: remove this, let client read the default statusText within the response;
@@ -17,9 +15,7 @@ function load(app) {
     }
 
     if (!config.authenticate) {
-      console.log('do not authenticate, start finding all users');
       return User.findAll().then(users => {
-        console.log('in authenticatioin, user findall');
         if (users.length === 0) {
           console.log('No users found');
           return res.status(500).json({ user: null, msg: 'No users found' });
@@ -36,8 +32,6 @@ function load(app) {
 
     return res.status(500).json({ msg: 'No user found, whoops' });
   });
-
-  console.log('authentication end point loaded');
 
   /////// USER ///////
   app.post('/api/login', passport.authenticate('local'), (req, res) => {
@@ -91,7 +85,7 @@ function load(app) {
         return res.status(status).json(data);
       })
       .catch(e => {
-        console.log(e)
+        console.log(e);
         return res.status(500).json({ msg: e.name || e, errors: e.errors });
       });
   });

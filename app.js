@@ -23,8 +23,6 @@ app.use(passport.session());
 
 passport.use(
   new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-    console.log('in passport');
-
     User.findOne({ email })
       .then(user => {
         if (!user) {
