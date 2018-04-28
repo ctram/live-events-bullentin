@@ -4,10 +4,14 @@ module.exports = {
     return queryInterface.createTable('websites', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         unique: true
+      },
+      creator_id: {
+        allowNull: false,
+        type: Sequelize.UUID
       },
       url: {
         type: Sequelize.STRING
@@ -19,11 +23,11 @@ module.exports = {
         unique: true,
         type: Sequelize.STRING
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }

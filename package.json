@@ -59,6 +59,7 @@
     "tls": "^0.0.1",
     "toastr": "^2.1.4",
     "underscore": "^1.8.3",
+    "uuid": "^3.2.1",
     "webpack": "^4.6.0",
     "webpack-cli": "^2.0.15",
     "yarn": "^1.6.0"

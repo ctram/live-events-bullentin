@@ -1,6 +1,7 @@
 import passport from 'passport';
 import db from '../models/index';
 import config from '../app-config';
+import uuidv1 from 'uuid/v1';
 
 const { User } = db;
 
@@ -8,9 +9,6 @@ function load(app) {
   console.log('loading user apis');
 
   app.get('/api/authentication', (req, res) => {
-    console.log('in authentication');
-    console.log('here are the config vars', config);
-
     if (config.authenticate && !req.isAuthenticated()) {
       // FIXME: remove this, let client read the default statusText within the response;
       const msg = 'Not authenticated';
@@ -87,12 +85,13 @@ function load(app) {
       return res.status(400).json({ msg: 'Email and password cannot be blank' });
     }
 
-    User.create(req.body)
+    User.create(Object.assign(req.body, { id: uuidv1() }))
       .then(data => {
         let { status = 200 } = data;
         return res.status(status).json(data);
       })
       .catch(e => {
+        console.log(e)
         return res.status(500).json({ msg: e.name || e, errors: e.errors });
       });
   });
