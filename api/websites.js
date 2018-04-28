@@ -16,7 +16,7 @@ function load(app) {
       return res.status(400).json({ msg: 'name, URL and selector cannot be blank' });
     }
 
-    Website.create(req.body)
+    Website.create(Object.assign(req.body, { creator_id: req.user.dataValues.id }))
       .then(data => {
         let { status = 200 } = data;
         res.status(status).json(data);
@@ -123,7 +123,7 @@ function load(app) {
         res.json({ events, websiteId: website.id });
       })
       .catch(e => {
-        res.status(500).json({ msg:  translateErrors(e)});
+        res.status(500).json({ msg: translateErrors(e) });
       });
   });
 }

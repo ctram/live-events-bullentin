@@ -1,7 +1,6 @@
 import passport from 'passport';
 import db from '../models/index';
 import config from '../app-config';
-import uuidv1 from 'uuid/v1';
 
 const { User } = db;
 
@@ -79,7 +78,7 @@ function load(app) {
       return res.status(400).json({ msg: 'Email and password cannot be blank' });
     }
 
-    User.create(Object.assign(req.body, { id: uuidv1() }))
+    User.create(req.body)
       .then(data => {
         let { status = 200 } = data;
         return res.status(status).json(data);

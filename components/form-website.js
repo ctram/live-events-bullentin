@@ -23,8 +23,8 @@ export class FormWebsite extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { websiteSelector, websiteName, websiteUrl } = nextProps;
-    this.setState({ websiteSelector, websiteName, websiteUrl, editMode: false });
+    const { websiteSelector, websiteName, websiteUrl, isNew } = nextProps;
+    this.setState({ websiteSelector, websiteName, websiteUrl, editMode: isNew || false });
   }
 
   addWebsite(e) {
