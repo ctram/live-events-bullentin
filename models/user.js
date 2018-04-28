@@ -10,7 +10,7 @@ const Base = sequelize.define(
     role: { type: Sequelize.STRING, defaultValue: 'standard' },
     password: Sequelize.STRING
   },
-  { indexes: [{ unique: true, fields: ['email'] }] }
+  { indexes: [{ unique: true, fields: ['email'] }], underscored: true }
 );
 
 // User.associate = function(models) {

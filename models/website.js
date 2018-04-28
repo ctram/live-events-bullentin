@@ -20,7 +20,7 @@ const Base = sequelize.define(
     selector: Sequelize.STRING,
     name: Sequelize.STRING
   },
-  {}
+  { underscored: true }
 );
 
 export default class Website extends Base {

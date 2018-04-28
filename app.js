@@ -60,13 +60,5 @@ passport.deserializeUser((id, done) => {
     });
 });
 
-console.log('app start up, User.findall');
-db.User.findAll()
-  .then(users => {
-    console.log('users', users);
-  })
-  .catch(e => console.log('user find all error', e));
-
-console.log('appConfig', appConfig);
 routes.setRoutes(app);
 app.listen(appConfig.port, () => console.log(`App listening on port ${appConfig.port}!`));
