@@ -1,7 +1,12 @@
 import loadApi from './api/index';
 import appConfig from './app-config';
 
-function generateHTML() {
+function generateHTML(numLevelsNested) {
+  let pathPrefix = '';
+  for (let i = 0; i < numLevelsNested; i++) {
+    pathPrefix += '../';
+  }
+  
   return `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -19,7 +24,7 @@ function generateHTML() {
     window.LEB.appConfig = window.LEB.appConfig || {};
     window.LEB.appConfig.serverUrl = '${appConfig.serverUrl}';
   </script>
-  <script src="../index.bundle.js"></script>
+  <script src="${pathPrefix}index.bundle.js"></script>
   </body>
   </html>
   `;
@@ -30,11 +35,15 @@ export default {
     loadApi(app);
 
     app.get(/.*/, (req, res) => {
-      res.send(generateHTML());
+      const numLevelsNested = req.path.split('/').length;
+      console.log(req.path.split('/').length);
+      console.log('req.path', req.path);
+      res.send(generateHTML(numLevelsNested));
     });
 
     // eslint-disable-next-line no-unused-vars
     app.use((err, req, res, next) => {
+      console.log('req.path');
       console.log(err);
       res.status(500).json({ msg: err.msg });
     });
