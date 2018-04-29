@@ -27,28 +27,28 @@ import PageWebsiteShow from './pages/website-show';
 import Page404 from './pages/404';
 
 // eslint-disable-next-line no-unused-vars
-function SwitchLoggedIn(props) {
+function SwitchLoggedIn({ isAdmin, loaded }) {
   return (
     <Switch>
       <Route exact path="/" component={PageWelcome} />
-      {props.isAdmin && <Route exact path="/users" component={Users} />}
+      {isAdmin && <Route exact path="/users" component={Users} />}
       <Route exact path="/profile" component={UserProfile} />
       <Route exact path="/websites" component={PageWebsites} />
       <Route exact path="/websites/new" component={PageWebsiteNew} />
       <Route exact path="/websites/:id" component={PageWebsiteShow} />
-      <Route component={Page404} />
+      <Route component={loaded && Page404} />
     </Switch>
   );
 }
 
 // eslint-disable-next-line no-unused-vars
-function SwitchLoggedOut() {
+function SwitchLoggedOut({ loaded }) {
   return (
     <Switch>
       <Route exact path="/" component={PageWelcome} />
       <Route exact path="/register" component={FormUser} />
       <Route exact path="/login" component={FormUser} />
-      <Route component={Page404} />
+      <Route component={loaded && Page404} />
     </Switch>
   );
 }
@@ -69,13 +69,13 @@ export class Root extends React.Component {
   }
 
   render() {
-    const { loggedIn, currentUser } = this.props;
+    const { loggedIn, currentUser, loaded } = this.props;
     const pathname = window.LEB.reactRouterHistory.location.pathname;
 
     const Routes = loggedIn ? (
-      <SwitchLoggedIn isAdmin={currentUser && currentUser.isAdmin} />
+      <SwitchLoggedIn isAdmin={currentUser && currentUser.isAdmin} loaded={loaded} />
     ) : (
-      <SwitchLoggedOut />
+      <SwitchLoggedOut loaded={loaded} />
     );
 
     return (
