@@ -18,11 +18,11 @@ function load(app) {
     Website.create(Object.assign(req.body, { creator_id: req.user.dataValues.id }))
       .then(data => {
         let { status = 200 } = data;
-        res.status(status).json(data);
+        return res.status(status).json(data);
       })
       .catch(e => {
         console.log('error in saving website', e);
-        res.status(500).json({ msg: translateErrors(e) });
+        return res.status(500).json({ msg: translateErrors(e) });
       });
   });
 
@@ -79,7 +79,7 @@ function load(app) {
         res.json({ website });
       })
       .catch(e => {
-        res.status(500).json({ msg: e.msg || e.name || e, website });
+        return res.status(500).json({ msg: e.msg || e.name || e, website });
       });
   });
 
@@ -104,7 +104,7 @@ function load(app) {
         return res.json({ website: dataValues });
       })
       .catch(e => {
-        res.status(500).json({ msg: translateErrors(e, { type: 'save' }) });
+        return res.status(500).json({ msg: translateErrors(e, { type: 'save' }) });
       });
   });
 
@@ -122,7 +122,7 @@ function load(app) {
       })
       .catch(e => {
         console.error('error in catch', e);
-        res.status(400).json({ msg: e.name || e });
+        return res.status(400).json({ msg: e.name || e });
       });
   });
 
@@ -142,10 +142,10 @@ function load(app) {
         return website.getEvents();
       })
       .then(events => {
-        res.json({ events, websiteId: website.id });
+        return res.json({ events, websiteId: website.id });
       })
       .catch(e => {
-        res.status(500).json({ msg: translateErrors(e) });
+        return res.status(500).json({ msg: translateErrors(e) });
       });
   });
 }
