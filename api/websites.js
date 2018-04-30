@@ -15,7 +15,9 @@ function load(app) {
       return res.status(400).json({ msg: 'name, URL and selector cannot be blank' });
     }
 
-    Website.create(Object.assign(req.body, { creator_id: req.user.dataValues.id }))
+    const { user } = req;
+
+    Website.create(Object.assign(req.body, { creator_id: user.id, view_permission: user.role }))
       .then(data => {
         let { status = 200 } = data;
         return res.status(status).json(data);
@@ -46,7 +48,6 @@ function load(app) {
         return Website.findAll(query);
       })
       .then(websites => {
-        console.log('the  websites', websites);
         return res.json({ websites });
       })
       .catch(e => {
