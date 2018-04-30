@@ -31,7 +31,7 @@ function load(app) {
       return res.status(401).end();
     }
 
-    User.findById(req.user.id)
+    return User.findById(req.user.id)
       .then(user => {
         if (!user) {
           throw 'User not found';
@@ -63,7 +63,7 @@ function load(app) {
     const { id } = req.params;
     let website;
 
-    User.findById(req.user.id)
+    return User.findById(req.user.id)
       .then(user => {
         if (!user) {
           throw 'User not found';
@@ -75,15 +75,7 @@ function load(app) {
         if (!website) {
           return 'Website not found';
         }
-        
-      });
 
-    Website.findAll({ where: { id } })
-      .then(_website => {
-        website = _website;
-        if (!website) {
-          throw 'Website not found';
-        }
         res.json({ website });
       })
       .catch(e => {
