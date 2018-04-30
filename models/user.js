@@ -2,7 +2,7 @@
 import Sequelize from 'sequelize';
 import sequelize from './sequelize';
 
-const Base = sequelize.define(
+const User = sequelize.define(
   'user',
   {
     id: {
@@ -19,8 +19,12 @@ const Base = sequelize.define(
   { indexes: [{ unique: true, fields: ['email'] }], underscored: true }
 );
 
-// User.associate = function(models) {
-//   // associations can be defined here
-// };
+User.prototype.isAdmin = function() {
+  return this.role === 'admin';
+};
 
-export default class User extends Base {}
+User.associate = function(models) {
+  models.User.hasMany(models.Website, {});
+};
+
+export default User;

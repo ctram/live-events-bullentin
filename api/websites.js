@@ -1,5 +1,5 @@
 import db from '../models/index';
-const { Website } = db;
+const { Website, User } = db;
 import config from '../app-config';
 import { translateErrors } from './helpers/error-handler';
 
@@ -31,12 +31,27 @@ function load(app) {
       return res.status(401).end();
     }
 
-    Website.findAll()
+    User.findById(req.user.id)
+      .then(user => {
+        if (!user) {
+          throw 'User not found';
+        }
+
+        let query = {};
+
+        if (!user.isAdmin()) {
+          query = { where: { creator_id: user.id } };
+        }
+
+        return Website.findAll(query);
+      })
       .then(websites => {
-        res.json({ websites });
+        console.log('the  websites', websites);
+        return res.json({ websites });
       })
       .catch(e => {
-        res.status(500).json({ msg: e.name || e });
+        console.log('the errors', e);
+        return res.status(500).json({ msg: e.name || e });
       });
   });
 
@@ -47,6 +62,21 @@ function load(app) {
 
     const { id } = req.params;
     let website;
+
+    User.findById(req.user.id)
+      .then(user => {
+        if (!user) {
+          throw 'User not found';
+        }
+
+        return Website.findById(id);
+      })
+      .then(website => {
+        if (!website) {
+          return 'Website not found';
+        }
+        
+      });
 
     Website.findAll({ where: { id } })
       .then(_website => {
