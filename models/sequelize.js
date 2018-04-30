@@ -1,7 +1,6 @@
 'use strict';
 import Sequelize from 'sequelize';
 const env = process.env.ENVIRONMENT || 'development';
-console.log('from sequelize, node env', env);
 const config = require(__dirname + '/../config/config.js')[env];
 let sequelize;
 

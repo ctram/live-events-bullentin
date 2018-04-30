@@ -36,8 +36,6 @@ export default {
 
     app.get(/.*/, (req, res) => {
       const numLevelsNested = req.path.split('/').length;
-      console.log(req.path.split('/').length);
-      console.log('req.path', req.path);
       res.send(generateHTML(numLevelsNested));
     });
 
