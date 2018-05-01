@@ -34,6 +34,13 @@ export default {
   setRoutes: app => {
     loadApi(app);
 
+    app.get(/^\/$/, (req, res) => {
+      if (req.user) {
+        return res.redirect('/websites');
+      }
+      return res.redirect('/login');
+    });
+    
     app.get(/.*/, (req, res) => {
       const numLevelsNested = req.path.split('/').length;
       res.send(generateHTML(numLevelsNested));

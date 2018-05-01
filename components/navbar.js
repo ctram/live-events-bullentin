@@ -36,10 +36,6 @@ export class Navbar extends React.Component {
       <nav className="navbar navbar-dark bg-primary collapse navbar-collapse navbar-expand-sm row justify-content-center">
         {currentUser && <span className="navbar-brand">{currentUser.get('email')}</span>}
         <ul className="navbar-nav">
-          <LinkWrapper to="/" active={pathname === '/'}>
-            Home
-          </LinkWrapper>
-
           {!loggedIn && (
             <LinkWrapper to="/register" active={pathname === '/register'}>
               Register

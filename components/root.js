@@ -30,12 +30,11 @@ import Page404 from './pages/404';
 function SwitchLoggedIn({ isAdmin, loaded }) {
   return (
     <Switch>
-      <Route exact path="/" component={PageWelcome} />
       {isAdmin && <Route exact path="/users" component={Users} />}
       <Route exact path="/profile" component={UserProfile} />
-      <Route exact path="/websites" component={PageWebsites} />
       <Route exact path="/websites/new" component={PageWebsiteNew} />
       <Route exact path="/websites/:id" component={PageWebsiteShow} />
+      <Route path="/websites" component={PageWebsites} />
       <Route component={loaded && Page404} />
     </Switch>
   );
@@ -45,9 +44,8 @@ function SwitchLoggedIn({ isAdmin, loaded }) {
 function SwitchLoggedOut({ loaded }) {
   return (
     <Switch>
-      <Route exact path="/" component={PageWelcome} />
       <Route exact path="/register" component={FormUser} />
-      <Route exact path="/login" component={FormUser} />
+      <Route path="/login" component={FormUser} />
       <Route component={loaded && Page404} />
     </Switch>
   );
