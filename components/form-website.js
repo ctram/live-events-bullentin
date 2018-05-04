@@ -20,6 +20,7 @@ export class FormWebsite extends React.Component {
     this.delete = this.delete.bind(this);
     this.edit = this.edit.bind(this);
     this.save = this.save.bind(this);
+    this.cancel = this.cancel.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {

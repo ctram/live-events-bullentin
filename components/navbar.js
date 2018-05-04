@@ -33,7 +33,7 @@ export class Navbar extends React.Component {
     const { loggedIn, currentUser, pathname } = this.props;
 
     return (
-      <nav className="navbar navbar-dark bg-primary collapse navbar-collapse navbar-expand-sm row justify-content-center">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light row justify-content-center">
         {currentUser && <span className="navbar-brand">{currentUser.get('email')}</span>}
         <ul className="navbar-nav">
           {!loggedIn && (
