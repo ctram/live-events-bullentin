@@ -1,68 +1,47 @@
 import passport from 'passport';
 import db from '../models/index';
 import config from '../app-config';
+import { authenticateUser } from '../helpers/authentication-helper';
 
 const { User } = db;
 
 function load(app) {
   app.get('/api/authentication', (req, res) => {
-    if (config.authenticate && !req.isAuthenticated()) {
-      // FIXME: remove this, let client read the default statusText within the response;
-      const msg = 'Not authenticated';
-      console.error(msg);
-      return res.status(401).json({ msg });
-    }
-
-    if (!config.authenticate) {
-      return User.findAll().then(users => {
-        if (users.length === 0) {
-          console.log('No users found');
-          return res.status(500).json({ user: null, msg: 'No users found' });
-        }
-
-        const user = users[0];
+    return authenticateUser(req)
+      .then(user => {
         return res.json({ user });
+      })
+      .catch(e => {
+        return res.status(e.statusCode).json({ msg: e.msg });
       });
-    }
-
-    if (req.user) {
-      return res.json({ user: req.user });
-    }
-
-    return res.status(500).json({ msg: 'No user found, whoops' });
   });
 
   /////// USER ///////
   app.post('/api/login', passport.authenticate('local'), (req, res) => {
-    User.findById(req.user.id)
+    return authenticateUser(req)
       .then(user => {
         if (user) {
           delete user.password;
           return res.json({ user });
         }
-
-        const msg = 'User not found';
-        console.log(msg);
-        return res.status(404).json({ msg });
+        throw { msg: 'User not found', statusCode: 500 };
       })
       .catch(e => {
-        console.error('error here is', e);
-        return res.status(500).json({ msg: e.name || e });
+        return res.status(e.statusCode || 500).json({ msg: e.name || e.msg || e });
       });
   });
 
   app.get('/api/logout', (req, res) => {
     req.logout();
-    return res.json({});
+    return res.end();
   });
 
   //////// USERS ////////
   app.get('/api/users', (req, res) => {
-    if (config.authenticate && !req.isAuthenticated()) {
-      return res.status(401).json({ msg: 'Not authorized' });
-    }
-
-    User.findAll()
+    return authenticateUser(req)
+      .then(() => {
+        return User.findAll();
+      })
       .then(users => {
         return res.json({ users });
       })
@@ -74,33 +53,28 @@ function load(app) {
   app.post('/api/users', (req, res) => {
     const { email, password } = req.body;
 
-    if (!email || !password) {
-      return res.status(400).json({ msg: 'Email and password cannot be blank' });
-    }
-
-    User.create(req.body)
+    return authenticateUser
+      .then(() => {
+        if (!email || !password) {
+          throw { msg: 'Email and password cannot be blank', statusCode: 400 };
+        }
+        return User.create(req.body);
+      })
       .then(data => {
         let { status = 200 } = data;
         return res.status(status).json(data);
       })
       .catch(e => {
-        console.log(e);
-        return res.status(500).json({ msg: e.name || e, errors: e.errors });
+        return res
+          .status(e.statusCode || 500)
+          .json({ msg: e.name || e.msg || e, errors: e.errors });
       });
   });
 
   app.get('/api/users/:id', (req, res) => {
-    if (config.authenticate && !req.isAuthenticated()) {
-      return res.status(401);
-    }
-
-    User.findById(req.params.id)
+    return authenticateUser(req)
       .then(user => {
-        if (user) {
-          return res.json({ user });
-        }
-
-        return res.status(404).json({ msg: 'User not found' });
+        return res.json({ user });
       })
       .catch(e => {
         return res.status(500).json({ msg: e.name || e });
@@ -108,33 +82,28 @@ function load(app) {
   });
 
   app.delete('/api/users/:id', (req, res) => {
-    const currentUser = req.user;
-
-    if (config.authenticate && !req.isAuthenticated()) {
-      return res.status(401);
-    }
-    if (!currentUser) {
-      return res.status(401).json({ msg: 'Must be logged to delete a user' });
-    }
-
-    User.findById(req.params.id)
-      .then(user => {
-        if (!user) {
-          return res.status(400).json({ msg: 'User to delete not found' });
+    let currentUser;
+    return authenticateUser(req)
+      .then(_user => {
+        currentUser = _user;
+        return User.findById(req.params.id);
+      })
+      .then(targetUser => {
+        if (!targetUser) {
+          throw { msg: 'User to delete not found', statusCode: 400 };
         }
         if (currentUser.role !== 'admin') {
-          return res
-            .status(400)
-            .json({ msg: 'Current User must be of type admin to delete users' });
+          throw { msg: 'Current User must be of type admin to delete users', statusCode: 400 };
         }
-        if (currentUser.id === user.id) {
-          return res.status(400).json({ msg: 'User cannot delete themself' });
+        if (currentUser.id === targetUser.id) {
+          throw { msg: 'User cannot delete themself', statusCode: 400 };
         }
-
         return User.destroy({ where: { id: req.params.id } });
       })
+      .then(() => {
+        return res.end();
+      })
       .catch(e => {
-        console.error(e);
         return res.status(500).json({ msg: e.name || e });
       });
   });
