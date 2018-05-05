@@ -13,7 +13,7 @@ function createWebsiteRequest(website) {
         dispatch(createWebsiteSuccess());
       })
       .catch(e => {
-        console.error(e);
+        toastr.error(e.responseJSON.msg);
         dispatch(createWebsiteFailure(website));
       });
   };
@@ -68,7 +68,6 @@ function fetchWebsitesRequest(websites = new Websites()) {
     websites
       .fetch()
       .then(() => {
-        debugger
         dispatch(fetchWebsitesSuccess(websites));
       })
       .catch(e => {
