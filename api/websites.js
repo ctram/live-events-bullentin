@@ -23,7 +23,16 @@ function load(app) {
       })
       .catch(e => {
         console.log('error in saving website', e);
-        return res.status(500).json({ msg: translateErrors(e) });
+        let errors = [];
+        if (e.errors) {
+          errors = e.errors.map(error => error.message);
+        }
+        errors = errors.map(errorMessage => {
+          if (errorMessage === 'name must be unique') {
+            return 'Name must be unique. This name might be reserved by another user.';
+          }
+        });
+        return res.status(500).json({ msg: translateErrors(errors) });
       });
   });
 
