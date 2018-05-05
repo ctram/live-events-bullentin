@@ -3,6 +3,16 @@ import config from '../app-config';
 
 const { User } = db;
 
+/**
+ * @function authenticateUser
+ * Attempts to authenticate the client; is authentication succeeds, resolves with 
+ * the authenticated user; otherwise resolves with an object containing http status code 
+ * and a message. If config is set to not authenticate, attempts to resolve with the first
+ * admin user found.
+ * @param {Request} req
+ * @return Promise<Object>
+ * @return Promise<User>
+ */
 export function authenticateUser(req) {
   if (config.authenticate) {
     if (req.isAuthenticated()) {

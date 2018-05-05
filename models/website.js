@@ -31,6 +31,7 @@ const Website = sequelize.define(
   { underscored: true }
 );
 
+// TODO: cache the results by week or day.
 Website.prototype.getEvents = function() {
   let { url, selector } = this;
 

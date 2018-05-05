@@ -20,11 +20,8 @@ function load(app) {
   app.post('/api/login', passport.authenticate('local'), (req, res) => {
     return authenticateUser(req)
       .then(user => {
-        if (user) {
-          delete user.password;
-          return res.json({ user });
-        }
-        throw { msg: 'User not found', statusCode: 500 };
+        delete user.password;
+        return res.json({ user });
       })
       .catch(e => {
         return res.status(e.statusCode || 500).json({ msg: e.name || e.msg || e });
