@@ -10,4 +10,8 @@ export default class Websites extends Backbone.Collection {
   url() {
     return `${appConfig.serverUrl}/api/websites`;
   }
+
+  parse(res) {
+    return res.websites;
+  }
 }

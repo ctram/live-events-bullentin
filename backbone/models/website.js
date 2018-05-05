@@ -1,6 +1,7 @@
 import Backbone from 'backbone';
 import appConfig from '../../app-config';
 import requestParams from '../../helpers/request-params';
+import _ from 'underscore';
 
 export default class Website extends Backbone.Model {
   urlRoot() {
@@ -8,8 +9,16 @@ export default class Website extends Backbone.Model {
   }
 
   parse(res) {
-    const { id, selector, url, name } = res.website;
+    const website = res.website || res;
+    const { id, selector, url, name } = website;
     return { id, selector, url, name };
+  }
+
+  validate(attrs) {
+    const { name, url, selector } = attrs;
+    if (_.isEmpty(name) || _.isEmpty(url) || _.isEmpty(selector)) {
+      return 'Name, URL, and Selector must not be empty';
+    }
   }
 
   fetchEvents() {
