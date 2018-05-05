@@ -7,14 +7,14 @@ import { connect } from 'react-redux';
 export class PageWebsiteNew extends React.Component {
   constructor(props) {
     super(props);
+    this.website = new Website();
   }
 
   render() {
-    const { newWebsite } = this.props;
     return (
       <section className="website-new">
         <h1>Add New Website</h1>
-        <FormWebsite className="row" website={newWebsite || new Website()} isNew={true} />
+        <FormWebsite className="row" website={this.website} isNew={true} />
       </section>
     );
   }

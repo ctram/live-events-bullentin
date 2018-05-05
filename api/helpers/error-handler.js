@@ -1,6 +1,10 @@
 export function translateErrors(e) {
+  if (Array.isArray(e)) {
+    return e;
+  }
+  
   const { errors } = e;
-
+  
   if (e.msg) {
     return [e.msg];
   }
