@@ -48,7 +48,6 @@ export class FormWebsite extends React.Component {
     const { website } = this.props;
     website.set(this.state);
 
-    debugger
     if (website.isValid()) {
       return this.props.saveWebsiteRequest(website);
     }
@@ -93,7 +92,6 @@ export class FormWebsite extends React.Component {
     const { name, selector, url } = this.state;
     const { isNew } = this.props;
     const { editMode } = this.state;
-debugger
 
     return (
       <div className="row justify-content-center">
