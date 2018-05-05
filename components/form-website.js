@@ -64,7 +64,13 @@ export class FormWebsite extends React.Component {
 
   cancel(e) {
     e.preventDefault();
-    this.setState({ editMode: false });
+    const { website } = this.props;
+    this.setState({
+      url: website.get('url'),
+      name: website.get('name'),
+      selector: website.get('selector'),
+      editMode: false
+    });
   }
 
   handleChange(e) {
