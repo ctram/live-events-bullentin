@@ -68,7 +68,7 @@ function load(app) {
       });
   });
 
-  app.patch('/api/websites/:id', (req, res) => {
+  app.put('/api/websites/:id', (req, res) => {
     let { body } = req;
     let { name, url, selector } = body;
     const { id } = req.params;
