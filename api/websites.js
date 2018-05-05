@@ -1,6 +1,6 @@
 import db from '../models/index';
-const { Website, User } = db;
-import { translateErrors } from './helpers/error-handler';
+const { Website } = db;
+import { parseErrorMessages } from './helpers/error-handler';
 import { authenticateUser } from '../helpers/authentication-helper';
 
 function load(app) {
@@ -22,17 +22,11 @@ function load(app) {
         return res.status(status).json(data);
       })
       .catch(e => {
-        console.log('error in saving website', e);
-        let errors = [];
+        let errors;
         if (e.errors) {
           errors = e.errors.map(error => error.message);
         }
-        errors = errors.map(errorMessage => {
-          if (errorMessage === 'name must be unique') {
-            return 'Name must be unique. This name might be reserved by another user.';
-          }
-        });
-        return res.status(500).json({ msg: translateErrors(errors) });
+        return res.status(500).json({ msg: parseErrorMessages(e) });
       });
   });
 
@@ -58,7 +52,7 @@ function load(app) {
         return res.json({ websites });
       })
       .catch(e => {
-        return res.status(500).json({ msg: e.name || e });
+        return res.status(500).json({ msg: parseErrorMessages(e) });
       });
   });
 
@@ -78,7 +72,7 @@ function load(app) {
         throw 'Website not found';
       })
       .catch(e => {
-        return res.status(500).json({ msg: e.msg || e.name || e });
+        return res.status(500).json({ msg: parseErrorMessages(e) });
       });
   });
 
@@ -100,7 +94,7 @@ function load(app) {
         return res.json({ website: dataValues });
       })
       .catch(e => {
-        return res.status(500).json({ msg: translateErrors(e, { type: 'save' }) });
+        return res.status(500).json({ msg: parseErrorMessages(e) });
       });
   });
 
@@ -115,7 +109,7 @@ function load(app) {
       })
       .catch(e => {
         console.error('error in catch', e);
-        return res.status(400).json({ msg: e.name || e });
+        return res.status(400).json({ msg: parseErrorMessages(e) });
       });
   });
 
@@ -136,7 +130,7 @@ function load(app) {
         return res.json({ events, websiteId: website.id });
       })
       .catch(e => {
-        return res.status(e.statusCode || 500).json({ msg: translateErrors(e.msg) });
+        return res.status(e.statusCode || 500).json({ msg: parseErrorMessages(e) });
       });
   });
 }

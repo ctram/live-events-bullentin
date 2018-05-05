@@ -1,7 +1,7 @@
 import passport from 'passport';
 import db from '../models/index';
-import config from '../app-config';
 import { authenticateUser } from '../helpers/authentication-helper';
+import { parseErrorMessages } from './helpers/error-handler';
 
 const { User } = db;
 
@@ -12,7 +12,7 @@ function load(app) {
         return res.json({ user });
       })
       .catch(e => {
-        return res.status(e.statusCode).json({ msg: e.msg });
+        return res.status(e.statusCode).json({ msg: parseErrorMessages(e) });
       });
   });
 
@@ -24,7 +24,7 @@ function load(app) {
         return res.json({ user });
       })
       .catch(e => {
-        return res.status(e.statusCode || 500).json({ msg: e.name || e.msg || e });
+        return res.status(e.statusCode || 500).json({ msg: parseErrorMessages(e) });
       });
   });
 
@@ -43,7 +43,7 @@ function load(app) {
         return res.json({ users });
       })
       .catch(e => {
-        return res.status(500).json({ msg: e.name || e });
+        return res.status(500).json({ msg: parseErrorMessages(e) });
       });
   });
 
@@ -62,9 +62,7 @@ function load(app) {
         return res.status(status).json(data);
       })
       .catch(e => {
-        return res
-          .status(e.statusCode || 500)
-          .json({ msg: e.name || e.msg || e, errors: e.errors });
+        return res.status(e.statusCode || 500).json({ msg: parseErrorMessages(e) });
       });
   });
 
@@ -74,7 +72,7 @@ function load(app) {
         return res.json({ user });
       })
       .catch(e => {
-        return res.status(500).json({ msg: e.name || e });
+        return res.status(500).json({ msg: parseErrorMessages(e) });
       });
   });
 
@@ -101,7 +99,7 @@ function load(app) {
         return res.end();
       })
       .catch(e => {
-        return res.status(500).json({ msg: e.name || e });
+        return res.status(e.statusCode || 500).json({ msg: parseErrorMessages(e) });
       });
   });
 }
