@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'underscore';
 import toastr from 'toastr';
 import { connect } from 'react-redux';
 import actionsWebsites from '../actions/websites';
@@ -30,44 +29,32 @@ export class FormWebsite extends React.Component {
 
   addWebsite(e) {
     e.preventDefault();
-    const { name, selector, url } = this.state;
+    const { website } = this.props;
+    const { name, url, selector } = this.state;
+    website.set({name, url, selector});
 
-    if (!this.validateForm()) {
-      return;
+    if (website.isValid()) {
+      return this.props.createWebsiteRequest(website);
     }
-
-    this.props.createWebsiteRequest({
-      name: name,
-      url: url,
-      selector: selector
-    });
+    return toastr.error(website.validationError);
   }
 
   save(e) {
     e.preventDefault();
     const { website } = this.props;
-    website.set(this.state);
+    const { name, url, selector } = this.state;
+    website.set({name, url, selector});
 
     if (website.isValid()) {
       return this.props.saveWebsiteRequest(website);
     }
-    return;
-  }
-
-  validateForm() {
-    const { name, selector, url } = this.state;
-
-    if (_.isEmpty(name) || _.isEmpty(url) || _.isEmpty(selector)) {
-      toastr.error('Name, URL and Selector required');
-      return false;
-    }
-    return true;
+    return toastr.error(website.validationError);
   }
 
   delete(e) {
     e.preventDefault();
     const { deleteWebsiteRequest, website } = this.props;
-    deleteWebsiteRequest(website.id);
+    deleteWebsiteRequest(website);
   }
 
   edit(e) {
