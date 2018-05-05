@@ -63,12 +63,17 @@ function saveWebsiteSuccess(website) {
   return { type: actionTypes.SAVE_WEBSITE_SUCCESS, website };
 }
 
-function fetchWebsitesRequest(websites) {
+function fetchWebsitesRequest(websites = new Websites()) {
   return dispatch => {
-    websites = websites || new Websites();
-    websites.fetch().then(() => {
-      dispatch(fetchWebsitesSuccess(websites));
-    });
+    websites
+      .fetch()
+      .then(() => {
+        debugger
+        dispatch(fetchWebsitesSuccess(websites));
+      })
+      .catch(e => {
+        toastr.error(e);
+      });
   };
 }
 

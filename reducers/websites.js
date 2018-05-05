@@ -10,14 +10,10 @@ const intialState = {
 function storeWebsites(state = intialState, action) {
   let { websites } = state;
 
-  if (action.websites) {
-    websites = new Websites(action.websites);
-  }
-
   switch (action.type) {
     case actionTypes.FETCH_WEBSITES_SUCCESS:
       return Object.assign({}, state, {
-        websites
+        websites: action.websites
       });
     case actionTypes.SAVE_WEBSITE_SUCCESS:
     case actionTypes.FETCH_WEBSITE_SUCCESS:
