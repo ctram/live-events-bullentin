@@ -26,7 +26,7 @@ export class WebsitesList extends React.Component {
                   <span
                     onClick={e => {
                       e.preventDefault();
-                      this.props.onClickRemove(website.id);
+                      this.props.onClickRemove(website);
                     }}
                   >
                     <i className="fas fa-trash" />
@@ -52,7 +52,6 @@ export class Websites extends React.Component {
 
   render() {
     const { websites = [] } = this.props;
-
     let domWebsites = <div className="text-center">No websites saved yet.</div>;
 
     if (websites.length > 0) {
@@ -88,8 +87,8 @@ const mapDispatchToProps = dispatch => {
     fetchWebsitesRequest: () => {
       dispatch(actionsWebsites.fetchWebsitesRequest());
     },
-    deleteWebsiteRequest: id => {
-      dispatch(actionsWebsites.deleteWebsiteRequest(id));
+    deleteWebsiteRequest: website => {
+      dispatch(actionsWebsites.deleteWebsiteRequest(website));
     }
   };
 };
