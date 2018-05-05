@@ -1,24 +1,21 @@
-import appFetch from '../helpers/app-fetch';
-import requestParams from '../helpers/request-params';
 import toastr from 'toastr';
 import actionTypes from './action-types';
-const appConfig = window.LEB.appConfig;
+import Website from '../backbone/models/website';
+import Websites from '../backbone/collections/websites';
 
-function createWebsiteRequest(data) {
+function createWebsiteRequest(website) {
   return dispatch => {
-    const req = new Request(
-      appConfig.serverUrl + `/api/websites`,
-      Object.assign(requestParams, { method: 'POST', body: JSON.stringify(data) })
-    );
-
-    appFetch(req).then(() => {
-      toastr.success('Website created');
-      window.LEB.reactRouterHistory.push('/websites');
-      dispatch(createWebsiteSuccess());
-    }).catch(e => {
-      console.error(e);
-      dispatch(createWebsiteFailure(data));
-    });
+    website
+      .save()
+      .then(() => {
+        toastr.success('Website created');
+        window.LEB.reactRouterHistory.push('/websites');
+        dispatch(createWebsiteSuccess());
+      })
+      .catch(e => {
+        console.error(e);
+        dispatch(createWebsiteFailure(website));
+      });
   };
 }
 
@@ -26,19 +23,14 @@ function createWebsiteSuccess() {
   return { type: actionTypes.CREATE_WEBSITE_SUCCESS };
 }
 
-function createWebsiteFailure(data) {
-  return { type: actionTypes.CREATE_WEBSITE_FAILURE, website: data };
+function createWebsiteFailure(website) {
+  return { type: actionTypes.CREATE_WEBSITE_FAILURE, website };
 }
 
-function saveWebsiteRequest(data) {
+function saveWebsiteRequest(website) {
   return dispatch => {
-    const req = new Request(
-      appConfig.serverUrl + `/api/websites/${data.id}`,
-      Object.assign(requestParams, { method: 'PATCH', body: JSON.stringify(data) })
-    );
-    dispatch(setWebsite(data));
-
-    appFetch(req)
+    return website
+      .save()
       .then(({ website }) => {
         toastr.success('Website saved');
         dispatch(saveWebsiteSuccess(website));
@@ -46,31 +38,36 @@ function saveWebsiteRequest(data) {
       .catch(() => {
         toastr.error('Error saving website');
         // grab the original website on the server.
-        return dispatch(fetchWebsiteRequest(data.id));
+        return dispatch(fetchWebsiteRequest(website));
       })
-      .then(() => {
-        dispatch(fetchWebsiteEventsRequest(data.id));
+      .finally(() => {
+        dispatch(fetchWebsiteEventsRequest(website));
       });
   };
 }
 
-function setWebsite(website) {
-  return { type: actionTypes.SET_WEBSITE, website };
+function fetchWebsiteEventsRequest(website) {
+  return dispatch => {
+    return website
+      .fetchEvents()
+      .then(() => {
+        dispatch(fetchWebsiteEventsSuccess(website));
+      })
+      .catch(e => {
+        dispatch(fetchWebsiteEventsFailure(website, e));
+      });
+  };
 }
 
 function saveWebsiteSuccess(website) {
   return { type: actionTypes.SAVE_WEBSITE_SUCCESS, website };
 }
 
-function fetchWebsitesRequest() {
+function fetchWebsitesRequest(websites) {
   return dispatch => {
-    const req = new Request(
-      appConfig.serverUrl + `/api/websites`,
-      Object.assign(requestParams, { method: 'GET', body: null })
-    );
-
-    appFetch(req).then(res => {
-      dispatch(fetchWebsitesSuccess(res.websites));
+    websites = websites || new Websites();
+    websites.fetch().then(() => {
+      dispatch(fetchWebsitesSuccess(websites));
     });
   };
 }
@@ -81,62 +78,37 @@ function fetchWebsitesSuccess(websites) {
 
 function fetchWebsiteRequest(id) {
   return dispatch => {
-    const req = new Request(
-      appConfig.serverUrl + `/api/websites/${id}`,
-      Object.assign(requestParams, { method: 'GET', body: null })
-    );
-
-    return appFetch(req)
-      .then(res => {
-        dispatch(fetchWebsiteSuccess(res.website));
+    const website = new Website({ id });
+    return website
+      .fetch()
+      .then(() => {
+        dispatch(fetchWebsiteSuccess(website));
       })
       .catch(e => {
-        dispatch(fetchWebsiteFailure(id, e));
+        dispatch(fetchWebsiteFailure(website, e));
       });
   };
 }
 
-function fetchWebsiteEventsRequest(id) {
+function fetchWebsiteEventsSuccess(website) {
+  return { type: actionTypes.FETCH_WEBSITE_EVENTS_SUCCESS, website };
+}
+
+function fetchWebsiteEventsFailure(website, msg) {
+  return { type: actionTypes.FETCH_WEBSITE_EVENTS_FAILURE, website, msg };
+}
+
+function fetchWebsiteFailure(website, msg) {
+  return { type: actionTypes.FETCH_WEBSITE_FAILURE, website, msg };
+}
+
+function fetchWebsiteSuccess(website) {
+  return { type: actionTypes.FETCH_WEBSITE_SUCCESS, website };
+}
+
+function deleteWebsiteRequest(website) {
   return dispatch => {
-    const req = new Request(
-      appConfig.serverUrl + `/api/websites/${id}/events`,
-      Object.assign(requestParams, { method: 'GET', body: null })
-    );
-
-    appFetch(req)
-      .then(({ events, websiteId }) => {
-        dispatch(fetchWebsiteEventsSuccess(events, websiteId));
-      })
-      .catch(e => {
-        dispatch(fetchWebsiteEventsFailure(id, e));
-      });
-  };
-}
-
-function fetchWebsiteEventsSuccess(events, id) {
-  return { type: actionTypes.FETCH_WEBSITE_EVENTS_SUCCESS, events, id };
-}
-
-function fetchWebsiteEventsFailure(id, msg) {
-  return { type: actionTypes.FETCH_WEBSITE_EVENTS_FAILURE, id, msg };
-}
-
-function fetchWebsiteFailure(id, msg) {
-  return { type: actionTypes.FETCH_WEBSITE_FAILURE, id, msg };
-}
-
-function fetchWebsiteSuccess(website, events) {
-  return { type: actionTypes.FETCH_WEBSITE_SUCCESS, website, events, id: website.id };
-}
-
-function deleteWebsiteRequest(id) {
-  return dispatch => {
-    const req = new Request(
-      appConfig.serverUrl + `/api/websites/${id}`,
-      Object.assign(requestParams, { method: 'DELETE', body: null })
-    );
-
-    appFetch(req).then(() => {
+    website.destroy().then(() => {
       dispatch(deleteWebsiteSuccess());
     });
   };
