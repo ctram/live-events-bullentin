@@ -133,7 +133,7 @@ function logoutUserRequest() {
     appFetch(req).then(() => {
       dispatch(logoutUserSuccess());
       toastr.success('Logged Out Successfully');
-      window.LEB.reactRouterHistory.push('/');
+      window.LEB.reactRouterHistory.push('/login');
     });
   };
 }
