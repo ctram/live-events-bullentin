@@ -10,9 +10,9 @@ export class FormWebsite extends React.Component {
     const { website, isNew } = props;
 
     this.state = {
-      websiteName: website.get('name') || '',
-      websiteSelector: website.get('selector') || '',
-      websiteUrl: website.get('url') || '',
+      name: website.get('name') || '',
+      selector: website.get('selector') || '',
+      url: website.get('url') || '',
       editMode: isNew || false
     };
     this.addWebsite = this.addWebsite.bind(this);
@@ -24,46 +24,41 @@ export class FormWebsite extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { websiteSelector, websiteName, websiteUrl, isNew } = nextProps;
-    this.setState({ websiteSelector, websiteName, websiteUrl, editMode: isNew || false });
+    const { selector, name, url, isNew } = nextProps;
+    this.setState({ selector, name, url, editMode: isNew || false });
   }
 
   addWebsite(e) {
     e.preventDefault();
-    const { websiteName, websiteSelector, websiteUrl } = this.state;
+    const { name, selector, url } = this.state;
 
     if (!this.validateForm()) {
       return;
     }
 
     this.props.createWebsiteRequest({
-      name: websiteName,
-      url: websiteUrl,
-      selector: websiteSelector
+      name: name,
+      url: url,
+      selector: selector
     });
   }
 
   save(e) {
     e.preventDefault();
-    const { websiteName, websiteSelector, websiteUrl } = this.state;
     const { website } = this.props;
+    website.set(this.state);
 
-    if (!this.validateForm()) {
-      return;
+    debugger
+    if (website.isValid()) {
+      return this.props.saveWebsiteRequest(website);
     }
-
-    this.props.saveWebsiteRequest({
-      name: websiteName,
-      url: websiteUrl,
-      selector: websiteSelector,
-      id: website.id
-    });
+    return;
   }
 
   validateForm() {
-    const { websiteName, websiteSelector, websiteUrl } = this.state;
+    const { name, selector, url } = this.state;
 
-    if (_.isEmpty(websiteName) || _.isEmpty(websiteUrl) || _.isEmpty(websiteSelector)) {
+    if (_.isEmpty(name) || _.isEmpty(url) || _.isEmpty(selector)) {
       toastr.error('Name, URL and Selector required');
       return false;
     }
@@ -89,16 +84,16 @@ export class FormWebsite extends React.Component {
   handleChange(e) {
     e.preventDefault();
     const { value, name } = e.target;
-    const element = `website${name.charAt(0).toUpperCase() + name.slice(1)}`;
     const state = {};
-    state[element] = value;
+    state[name] = value;
     this.setState(state);
   }
 
   render() {
-    const { websiteName, websiteSelector, websiteUrl } = this.state;
+    const { name, selector, url } = this.state;
     const { isNew } = this.props;
     const { editMode } = this.state;
+debugger
 
     return (
       <div className="row justify-content-center">
@@ -110,9 +105,9 @@ export class FormWebsite extends React.Component {
                 name="name"
                 className="form-control"
                 id="name"
-                value={websiteName}
+                value={name}
                 onChange={this.handleChange}
-                ref="inputWebsiteName"
+                ref="inputname"
                 disabled={!editMode}
               />
             </fieldset>
@@ -122,9 +117,9 @@ export class FormWebsite extends React.Component {
                 name="url"
                 className="form-control"
                 id="url"
-                value={websiteUrl}
+                value={url}
                 onChange={this.handleChange}
-                ref="inputWebsiteUrl"
+                ref="inputurl"
                 disabled={!editMode}
               />
             </fieldset>
@@ -134,9 +129,9 @@ export class FormWebsite extends React.Component {
                 name="selector"
                 className="form-control"
                 id="selector"
-                value={websiteSelector}
+                value={selector}
                 onChange={this.handleChange}
-                ref="inputWebsiteSelector"
+                ref="inputselector"
                 disabled={!editMode}
               />
             </fieldset>
@@ -180,26 +175,23 @@ export class FormWebsite extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   const { website } = ownProps;
 
-  const websiteName = website.get('name');
-  const websiteUrl = website.get('url');
-  const websiteSelector = website.get('selector');
   return Object.assign(state.loader, state.root, state.storeUsers, {
-    websiteName,
-    websiteUrl,
-    websiteSelector
+    name: website.get('name'),
+    url: website.get('url'),
+    selector: website.get('selector')
   });
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    createWebsiteRequest: data => {
-      dispatch(actionsWebsites.createWebsiteRequest(data));
+    createWebsiteRequest: website => {
+      dispatch(actionsWebsites.createWebsiteRequest(website));
     },
     deleteWebsiteRequest: id => {
       dispatch(actionsWebsites.deleteWebsiteRequest(id));
     },
-    saveWebsiteRequest: data => {
-      dispatch(actionsWebsites.saveWebsiteRequest(data));
+    saveWebsiteRequest: website => {
+      dispatch(actionsWebsites.saveWebsiteRequest(website));
     }
   };
 };
