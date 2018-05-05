@@ -41,6 +41,11 @@ function load(app) {
         return Website.findAll(query);
       })
       .then(websites => {
+        websites = websites.map(website => {
+          const { id, name, url, selector, view_permission } = website.dataValues;
+          return { id, name, url, selector, view_permission };
+        });
+        console.log('websites', websites);
         return res.json({ websites });
       })
       .catch(e => {
