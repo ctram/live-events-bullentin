@@ -23,16 +23,18 @@ export class FormWebsite extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { selector, name, url, isNew } = nextProps;
-    this.setState({ selector, name, url, editMode: isNew || false });
+    const { website, isNew } = nextProps;
+    this.setState({
+      selector: website.get('selector'),
+      name: website.get('name'),
+      url: website.get('url'),
+      editMode: isNew || false
+    });
   }
 
   addWebsite(e) {
     e.preventDefault();
     const { website } = this.props;
-    const { name, url, selector } = this.state;
-    website.set({ name, url, selector });
-
     if (website.isValid()) {
       return this.props.createWebsiteRequest(website);
     }
