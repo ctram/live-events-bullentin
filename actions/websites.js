@@ -2,6 +2,7 @@ import toastr from 'toastr';
 import actionTypes from './action-types';
 import Website from '../backbone/models/website';
 import Websites from '../backbone/collections/websites';
+import parseError from '../helpers/error-parser';
 
 function createWebsiteRequest(website) {
   return dispatch => {
@@ -13,7 +14,7 @@ function createWebsiteRequest(website) {
         dispatch(createWebsiteSuccess());
       })
       .catch(e => {
-        toastr.error(e.responseJSON.msg);
+        toastr.error(parseError(e));
         dispatch(createWebsiteFailure(website));
       });
   };
@@ -35,10 +36,10 @@ function saveWebsiteRequest(website) {
         toastr.success('Website saved');
         dispatch(saveWebsiteSuccess(website));
       })
-      .catch(() => {
-        toastr.error('Error saving website');
+      .catch(e => {
+        toastr.error(parseError(e));
         // grab the original website on the server.
-        return dispatch(fetchWebsiteRequest(website));
+        return dispatch(fetchWebsiteRequest(website.id));
       })
       .finally(() => {
         dispatch(fetchWebsiteEventsRequest(website));
