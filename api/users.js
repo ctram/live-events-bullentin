@@ -49,18 +49,18 @@ function load(app) {
   app.post('/api/users', (req, res) => {
     const { email, password } = req.body;
 
-    return authenticateUser
-      .then(() => {
-        if (!email || !password) {
-          throw { msg: 'Email and password cannot be blank', statusCode: 400 };
-        }
-        return User.create(req.body);
-      })
+    if (!email || !password) {
+      return res.status(400).json({ msg: 'Email and password cannot be blank' });
+    }
+    
+    return User.create(req.body)
       .then(data => {
+        console.log('user', data)
         let { status = 200 } = data;
         return res.status(status).json(data);
       })
       .catch(e => {
+        console.log('error', e)
         return res.status(e.statusCode || 500).json({ msg: parseErrorMessages(e) });
       });
   });
