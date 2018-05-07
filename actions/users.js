@@ -10,14 +10,17 @@ const appConfig = window.LEB.appConfig;
 
 function fetchUsersRequest(users = new Users()) {
   return dispatch => {
-    users
+    dispatch(loader.startLoading());
+    return users
       .fetch()
       .then(() => {
-        return dispatch(fetchUsersSuccess(users));
+        dispatch(fetchUsersSuccess(users));
       })
       .catch(e => {
         toastr.error(e);
-        console.error(e);
+      })
+      .always(() => {
+        dispatch(loader.endLoading());
       });
   };
 }
@@ -38,7 +41,7 @@ function createUserRequest(data) {
       .catch(e => {
         toastr.error(parseError(e));
       })
-      .finally(() => {
+      .always(() => {
         dispatch(loader.endLoading());
       });
   };
@@ -52,7 +55,7 @@ function loginUserRequest(data) {
       Object.assign(requestParams, { method: 'POST', body: JSON.stringify(data) })
     );
 
-    appFetch(req).then(data => {
+    return appFetch(req).then(data => {
       if (data.user) {
         return dispatch(loginUserSuccess(data.user));
       }
@@ -74,13 +77,13 @@ function checkAuthenticationRequest() {
       Object.assign(requestParams, { method: 'GET' })
     );
 
-    appFetch(req).then(data => {
+    return appFetch(req).then(data => {
       if (data.user) {
         toastr.success('Authenticated');
         return dispatch(checkAuthenticationSuccess(data.user));
       }
       window.LEB.reactRouterHistory.push('/login');
-      return dispatch(checkAuthenticationFailure());
+      dispatch(checkAuthenticationFailure());
     });
   };
 }
@@ -100,7 +103,7 @@ function logoutUserRequest() {
       Object.assign(requestParams, { method: 'GET', body: null })
     );
 
-    appFetch(req).then(() => {
+    return appFetch(req).then(() => {
       dispatch(logoutUserSuccess());
       toastr.success('Logged Out Successfully');
       window.LEB.reactRouterHistory.push('/login');
@@ -112,16 +115,20 @@ function logoutUserSuccess() {
   return { type: actionTypes.LOGOUT_USER_SUCCESS };
 }
 
-function deleteUserRequest(id) {
-  return () => {
-    const req = new Request(
-      appConfig.serverUrl + `/api/users/${id}`,
-      Object.assign(requestParams, { method: 'DELETE', body: null })
-    );
-
-    appFetch(req).then(() => {
-      toastr.success('User deleted successfully');
-    });
+function deleteUserRequest(user) {
+  return dispatch => {
+    dispatch(loader.startLoading());
+    return user
+      .destroy()
+      .then(() => {
+        toastr.success('User deleted successfully');
+      })
+      .catch(e => {
+        toastr.error(parseError(e));
+      })
+      .always(() => {
+        dispatch(loader.endLoading());
+      });
   };
 }
 
