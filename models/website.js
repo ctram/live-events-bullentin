@@ -3,6 +3,7 @@ import sequelize from './sequelize';
 import Sequelize from 'sequelize';
 import scrapeIt from 'scrape-it';
 import validator from 'validator';
+import User from './user';
 
 const Website = sequelize.define(
   'website',
@@ -25,7 +26,7 @@ const Website = sequelize.define(
     },
     selector: Sequelize.STRING,
     name: Sequelize.STRING,
-    creator_id: { type: Sequelize.UUID, allowNull: false },
+    user_id: { type: Sequelize.UUID, allowNull: false },
     view_permission: Sequelize.STRING
   },
   { underscored: true }
@@ -55,8 +56,7 @@ Website.prototype.getEvents = function() {
   });
 };
 
-Website.associate = function(models) {
-  models.Base.belongsTo(models.Website, { as: 'Creator' });
-};
+console.log('in website model')
+console.log('user class', User);
 
 export default Website;

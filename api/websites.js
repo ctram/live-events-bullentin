@@ -14,7 +14,7 @@ function load(app) {
         }
 
         return Website.create(
-          Object.assign(req.body, { creator_id: user.id, view_permission: user.role })
+          Object.assign(req.body, { user_id: user.id, view_permission: user.role })
         );
       })
       .then(data => {
@@ -22,10 +22,6 @@ function load(app) {
         return res.status(status).json(data);
       })
       .catch(e => {
-        let errors;
-        if (e.errors) {
-          errors = e.errors.map(error => error.message);
-        }
         return res.status(500).json({ msg: parseErrorMessages(e) });
       });
   });
@@ -39,7 +35,7 @@ function load(app) {
 
         let query = {};
         if (!user.isAdmin()) {
-          query = { where: { creator_id: user.id } };
+          query = { where: { user_id: user.id } };
         }
         return Website.findAll(query);
       })
@@ -48,7 +44,6 @@ function load(app) {
           const { id, name, url, selector, view_permission } = website.dataValues;
           return { id, name, url, selector, view_permission };
         });
-        console.log('websites', websites);
         return res.json({ websites });
       })
       .catch(e => {
@@ -66,6 +61,8 @@ function load(app) {
         throw 'User not found';
       })
       .then(website => {
+        website.getUser().then(user => console.log('website"s user', user));
+
         if (website) {
           return res.json({ website });
         }

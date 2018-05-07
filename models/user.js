@@ -1,6 +1,7 @@
 'use strict';
 import Sequelize from 'sequelize';
 import sequelize from './sequelize';
+import Website from './website';
 
 const User = sequelize.define(
   'user',
@@ -16,15 +17,16 @@ const User = sequelize.define(
     role: { type: Sequelize.STRING, defaultValue: 'standard' },
     password: Sequelize.STRING
   },
-  { indexes: [{ unique: true, fields: ['email'] }], underscored: true }
+  {
+    indexes: [{ unique: true, fields: ['email'] }],
+    underscored: true
+  }
 );
 
 User.prototype.isAdmin = function() {
   return this.role === 'admin';
 };
 
-User.associate = function(models) {
-  models.User.hasMany(models.Website, {});
-};
-
+User.hasMany(Website);
+Website.belongsTo(User);
 export default User;

@@ -13,7 +13,7 @@ Promise.all([Website.findAll(), User.findAll()])
     }
 
     websites.forEach(website => {
-      const user = users.find(user => user.dataValues.id === website.dataValues.creator_id);
+      const user = users.find(user => user.dataValues.id === website.dataValues.user_id);
       console.log('website found', website);
       console.log('user found', user);
       if (!user) {

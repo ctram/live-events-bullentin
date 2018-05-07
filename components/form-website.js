@@ -35,6 +35,9 @@ export class FormWebsite extends React.Component {
   addWebsite(e) {
     e.preventDefault();
     const { website } = this.props;
+    const { name, url, selector } = this.state;
+    website.set({ name, url, selector });
+    
     if (website.isValid()) {
       return this.props.createWebsiteRequest(website);
     }
@@ -46,7 +49,7 @@ export class FormWebsite extends React.Component {
     const { website } = this.props;
     const { name, url, selector } = this.state;
     website.set({ name, url, selector });
-
+    
     if (website.isValid()) {
       return this.props.saveWebsiteRequest(website);
     }

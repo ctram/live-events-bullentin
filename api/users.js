@@ -67,8 +67,14 @@ function load(app) {
   });
 
   app.get('/api/users/:id', (req, res) => {
+    let user;
     return authenticateUser(req)
-      .then(user => {
+      .then(_user => {
+        user = _user;
+        return user.countWebsites();
+      })
+      .then(count => {
+        user.setDataValue('num_websites', count);
         return res.json({ user });
       })
       .catch(e => {
