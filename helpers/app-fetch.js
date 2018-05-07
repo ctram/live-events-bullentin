@@ -21,21 +21,17 @@ export function setDispatchForAppFetch(dispatch) {
 
 export default function appFetch(req) {
   _dispatch(loader.startLoading());
+  let res;
 
   return fetch(req)
-    .then(res => {
-      return parseResponse(res).then(body => {
-        return { data: body, statusText: res.statusText, status: res.status };
-      });
+    .then(_res => {
+      console.log('response', _res);
+      res = _res;
+      return parseResponse(res);
     })
-    .catch(e => {
-      console.error(e);
-      toastr.error(e);
-      _dispatch(loader.endLoading());
-      throw e;
-    })
-    .then(({ data, statusText, status }) => {
-      _dispatch(loader.endLoading());
+    .then(body => {
+      const data = body;
+      const { statusText, status } = res;
 
       if (status >= 100 && status < 200) {
         data.msg ? toastr.info(data.msg) : null;
@@ -64,5 +60,6 @@ export default function appFetch(req) {
       }
 
       return data;
-    });
+    })
+    .finally(() => _dispatch(loader.endLoading()));
 }

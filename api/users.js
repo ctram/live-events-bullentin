@@ -20,7 +20,6 @@ function load(app) {
   app.post('/api/login', passport.authenticate('local'), (req, res) => {
     return authenticateUser(req)
       .then(user => {
-        delete user.password;
         return res.json({ user });
       })
       .catch(e => {
