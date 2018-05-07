@@ -3,6 +3,9 @@ import appFetch from '../helpers/app-fetch';
 import requestParams from '../helpers/request-params';
 import toastr from 'toastr';
 import Users from '../backbone/collections/users';
+import User from '../backbone/models/user';
+import parseError from '../helpers/error-parser';
+import loader from './loader';
 const appConfig = window.LEB.appConfig;
 
 function fetchUsersRequest(users = new Users()) {
@@ -23,12 +26,21 @@ function fetchUsersSuccess(users) {
   return { type: actionTypes.FETCH_USERS_SUCCESS, users };
 }
 
-function createUserRequest(user) {
-  return () => {
-    user.save().then(() => {
-      toastr.success('Registration complete, please login');
-      window.LEB.reactRouterHistory.push('/login');
-    });
+function createUserRequest(data) {
+  return dispatch => {
+    dispatch(loader.startLoading());
+    new User(data)
+      .save()
+      .then(() => {
+        toastr.success('Registration complete, please login');
+        window.LEB.reactRouterHistory.push('/login');
+      })
+      .catch(e => {
+        toastr.error(parseError(e));
+      })
+      .finally(() => {
+        dispatch(loader.endLoading());
+      });
   };
 }
 

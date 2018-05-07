@@ -10,8 +10,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => {
   return {
     createUser: data => {
-      const user = new User(data);
-      dispatch(actionUsers.createUserRequest(user));
+      dispatch(actionUsers.createUserRequest(data));
     },
     loginUser: data => {
       dispatch(actionUsers.loginUserRequest(data));
