@@ -3,10 +3,12 @@ import actionTypes from './action-types';
 import Website from '../backbone/models/website';
 import Websites from '../backbone/collections/websites';
 import parseError from '../helpers/error-parser';
+import loader from './loader';
 
 function createWebsiteRequest(website) {
   return dispatch => {
-    website
+    dispatch(loader.startLoading());
+    return website
       .save()
       .then(() => {
         toastr.success('Website created');
@@ -16,7 +18,8 @@ function createWebsiteRequest(website) {
       .catch(e => {
         toastr.error(parseError(e));
         dispatch(createWebsiteFailure(website));
-      });
+      })
+      .always(() => dispatch(loader.endLoading()));
   };
 }
 
@@ -30,6 +33,7 @@ function createWebsiteFailure(website) {
 
 function saveWebsiteRequest(website) {
   return dispatch => {
+    dispatch(loader.startLoading());
     return website
       .save()
       .then(({ website }) => {
@@ -41,7 +45,8 @@ function saveWebsiteRequest(website) {
         // grab the original website on the server.
         return dispatch(fetchWebsiteRequest(website.id));
       })
-      .finally(() => {
+      .always(() => {
+        dispatch(loader.endLoading());
         dispatch(fetchWebsiteEventsRequest(website));
       });
   };
@@ -49,6 +54,7 @@ function saveWebsiteRequest(website) {
 
 function fetchWebsiteEventsRequest(website) {
   return dispatch => {
+    dispatch(loader.startLoading());
     return website
       .fetchEvents()
       .then(() => {
@@ -56,7 +62,8 @@ function fetchWebsiteEventsRequest(website) {
       })
       .catch(e => {
         dispatch(fetchWebsiteEventsFailure(website, e));
-      });
+      })
+      .always(() => dispatch(loader.endLoading()));
   };
 }
 
@@ -66,14 +73,16 @@ function saveWebsiteSuccess(website) {
 
 function fetchWebsitesRequest(websites = new Websites()) {
   return dispatch => {
-    websites
+    dispatch(loader.startLoading());
+    return websites
       .fetch()
       .then(() => {
         dispatch(fetchWebsitesSuccess(websites));
       })
       .catch(e => {
         toastr.error(e);
-      });
+      })
+      .always(() => dispatch(loader.endLoading()));
   };
 }
 
@@ -83,6 +92,7 @@ function fetchWebsitesSuccess(websites) {
 
 function fetchWebsiteRequest(id) {
   return dispatch => {
+    dispatch(loader.startLoading());
     const website = new Website({ id });
     return website
       .fetch()
@@ -90,6 +100,7 @@ function fetchWebsiteRequest(id) {
         dispatch(fetchWebsiteSuccess(website));
       })
       .catch(e => {
+        dispatch(loader.endLoading());
         dispatch(fetchWebsiteFailure(website, e));
       });
   };
@@ -113,9 +124,14 @@ function fetchWebsiteSuccess(website) {
 
 function deleteWebsiteRequest(website) {
   return dispatch => {
-    website.destroy().then(() => {
-      dispatch(deleteWebsiteSuccess());
-    });
+    dispatch(loader.startLoading());
+    return website
+      .destroy()
+      .then(() => {
+        dispatch(deleteWebsiteSuccess());
+      })
+      .catch(e => toastr.error(e))
+      .always(() => dispatch(loader.endLoading()));
   };
 }
 

@@ -1,5 +1,4 @@
 import React from 'react';
-// eslint-disable-next-line no-unused-vars
 import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actionsUsers from '../actions/users';
