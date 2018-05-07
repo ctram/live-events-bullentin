@@ -1,19 +1,19 @@
 import React from 'react';
 // eslint-disable-next-line no-unused-vars
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actionsUsers from '../actions/users';
 
 // eslint-disable-next-line no-unused-vars
-function LinkWrapper({ active, to, children, onClick }) {
-  active = active ? 'active' : '';
-  const className = `nav-item ${active}`;
+function LinkWrapper({ to, children, onClick, type = 'navlink' }) {
+  // eslint-disable-next-line no-unused-vars
+  const DomLink = type === 'navlink' ? NavLink : Link;
 
   return (
-    <li className={className}>
-      <Link to={to} className="nav-link" onClick={onClick}>
+    <li>
+      <DomLink to={to} className="nav-link nav-item" onClick={onClick}>
         {children}
-      </Link>
+      </DomLink>
     </li>
   );
 }
@@ -30,45 +30,24 @@ export class Navbar extends React.Component {
   }
 
   render() {
-    const { loggedIn, currentUser, pathname } = this.props;
+    const { loggedIn, currentUser } = this.props;
 
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light row justify-content-center">
         {currentUser && <span className="navbar-brand">{currentUser.get('email')}</span>}
         <ul className="navbar-nav">
-          {!loggedIn && (
-            <LinkWrapper to="/register" active={pathname === '/register'}>
-              Register
-            </LinkWrapper>
-          )}
+          {!loggedIn && <LinkWrapper to="/register">Register</LinkWrapper>}
 
-          {!loggedIn && (
-            <LinkWrapper to="/login" active={pathname === '/login'}>
-              Login
-            </LinkWrapper>
-          )}
+          {!loggedIn && <LinkWrapper to="/login">Login</LinkWrapper>}
 
-          {loggedIn &&
-            currentUser.isAdmin && (
-              <LinkWrapper to="/users" active={pathname === '/users'}>
-                Users
-              </LinkWrapper>
-            )}
+          {loggedIn && currentUser.isAdmin && <LinkWrapper to="/users">Users</LinkWrapper>}
+
+          {loggedIn && <LinkWrapper to="/profile">Profile</LinkWrapper>}
+
+          {loggedIn && <LinkWrapper to="/websites">Websites</LinkWrapper>}
 
           {loggedIn && (
-            <LinkWrapper to="/profile" active={pathname === '/profile'}>
-              Profile
-            </LinkWrapper>
-          )}
-
-          {loggedIn && (
-            <LinkWrapper to="/websites" active={pathname === '/websites'}>
-              Websites
-            </LinkWrapper>
-          )}
-
-          {loggedIn && (
-            <LinkWrapper to="/" onClick={this.logout}>
+            <LinkWrapper to="/" onClick={this.logout} type="link">
               Log Out
             </LinkWrapper>
           )}
