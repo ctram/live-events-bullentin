@@ -24,7 +24,7 @@ export class PageWebsiteShow extends React.Component {
 
     return fetchWebsiteRequest(websiteId).then(() => {
       if (!website.get('events')) {
-        return fetchWebsiteEventsRequest(websiteId);
+        return fetchWebsiteEventsRequest(website);
       }
     });
   }

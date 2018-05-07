@@ -36,15 +36,16 @@ const Website = sequelize.define(
 Website.prototype.getEvents = function() {
   let { url, selector } = this;
 
-  return this.validate().then(() => {
-    const opts = {
-      events: {
-        listItem: selector
-      }
-    };
-
-    return scrapeIt(url, opts).then(({ data, response: { statusCode } }) => {
-      console.log('statuscode', statusCode);
+  return this.validate()
+    .then(() => {
+      const opts = {
+        events: {
+          listItem: selector
+        }
+      };
+      return scrapeIt(url, opts);
+    })
+    .then(({ data, response: { statusCode } }) => {
       if (statusCode && statusCode >= 400) {
         throw { msg: `Error finding any events`, statusCode };
       }
@@ -53,10 +54,6 @@ Website.prototype.getEvents = function() {
       }
       throw `Unknown error scrapping events`;
     });
-  });
 };
-
-console.log('in website model')
-console.log('user class', User);
 
 export default Website;

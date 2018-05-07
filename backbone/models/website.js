@@ -27,9 +27,11 @@ export default class Website extends Backbone.Model {
       Object.assign(requestParams, { method: 'GET', body: null })
     );
 
-    return fetch(req).then(res => {
-      this.set('events', res.events);
-      return res.events;
-    });
+    return fetch(req)
+      .then(res => res.json())
+      .then(({ events }) => {
+        this.set('events', events);
+        return events;
+      });
   }
 }

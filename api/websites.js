@@ -61,8 +61,6 @@ function load(app) {
         throw 'User not found';
       })
       .then(website => {
-        website.getUser().then(user => console.log('website"s user', user));
-
         if (website) {
           return res.json({ website });
         }
