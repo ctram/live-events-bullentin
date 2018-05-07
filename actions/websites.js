@@ -61,9 +61,10 @@ function fetchWebsiteEventsRequest(website) {
         dispatch(fetchWebsiteEventsSuccess(website));
       })
       .catch(e => {
+        toastr.error(e);
         dispatch(fetchWebsiteEventsFailure(website, e));
       })
-      .always(() => dispatch(loader.endLoading()));
+      .finally(() => dispatch(loader.endLoading()));
   };
 }
 
