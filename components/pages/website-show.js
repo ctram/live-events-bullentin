@@ -37,7 +37,9 @@ export class PageWebsiteShow extends React.Component {
     if (error) {
       domList = error;
     } else if (_.isEmpty(events)) {
-      domList = 'No events found';
+      domList = (
+        <p>There are no events on the page or the page is preventing scraping.</p>
+      );
     } else {
       domList = (
         <div className="row justify-content-center">
