@@ -3,7 +3,7 @@ export default function parseError(e) {
     const { msg } = e.responseJSON;
     const errorMsg = msg.map(m => {
       return m + '<br/>';
-    })
+    });
     return errorMsg.join(' ');
   }
   return null;
