@@ -45,7 +45,7 @@ export default function appFetch(req) {
         let errorMsg;
 
         if (data.msg) {
-          errorMsg = data.msg + '; ';
+          errorMsg = data.msg;
         }
 
         if (data.errors && data.errors.length > 0) {
