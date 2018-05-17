@@ -17,14 +17,21 @@ function load(app) {
   });
 
   /////// USER ///////
-  app.post('/api/login', passport.authenticate('local'), (req, res) => {
-    return authenticateUser(req)
-      .then(user => {
+  app.post('/api/login', (req, res) => {
+    passport.authenticate('local', (err, user, info) => {
+      if (err) {
+        return res.status(500).json({ msg: parseErrorMessages(err) });
+      }
+      if (!user) {
+        return res.status(401).json({ msg: parseErrorMessages(info.message) });
+      }
+      return req.login(user, err => {
+        if (err) {
+          return res.status(500).json({ msg: parseErrorMessages(err) });
+        }
         return res.json({ user });
-      })
-      .catch(e => {
-        return res.status(e.statusCode || 500).json({ msg: parseErrorMessages(e) });
       });
+    })(req, res);
   });
 
   app.get('/api/logout', (req, res) => {
@@ -52,15 +59,15 @@ function load(app) {
     if (!email || !password) {
       return res.status(400).json({ msg: 'Email and password cannot be blank' });
     }
-    
+
     return User.create(req.body)
       .then(data => {
-        console.log('user', data)
+        console.log('user', data);
         let { status = 200 } = data;
         return res.status(status).json(data);
       })
       .catch(e => {
-        console.log('error', e)
+        console.log('error', e);
         return res.status(e.statusCode || 500).json({ msg: parseErrorMessages(e) });
       });
   });
