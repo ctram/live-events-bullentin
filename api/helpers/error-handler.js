@@ -5,6 +5,9 @@ export function parseErrorMessages(e) {
 
   const { errors } = e;
 
+  if (typeof e === 'string') {
+    return [e];
+  }
   if (e.msg) {
     return [e.msg];
   }
