@@ -2,5 +2,5 @@
 import React from 'react';
 
 export default function Page404() {
-  return <div className="four-oh-four">Oops, 404 page.</div>;
+  return <div className="four-oh-four text-center">Oops, 404 page.</div>;
 }
