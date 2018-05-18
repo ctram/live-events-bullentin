@@ -108,7 +108,7 @@ function load(app) {
         return User.destroy({ where: { id: req.params.id } });
       })
       .then(() => {
-        return res.end();
+        return res.json({});
       })
       .catch(e => {
         return res.status(e.statusCode || 500).json({ msg: parseErrorMessages(e) });
