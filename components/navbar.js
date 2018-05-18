@@ -32,30 +32,46 @@ export class Navbar extends React.Component {
     const { loggedIn, currentUser } = this.props;
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light row justify-content-center">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light ">
         {currentUser && (
-          <div className="navbar-brand align-middle">
+          <div className="navbar-brand align-middle ml-5">
             <span className="email">{currentUser.get('email')}</span>
-            {currentUser.isAdmin() && <span class="role badge badge-pull badge-dark ml-3">admin</span>}
+            {currentUser.isAdmin() && (
+              <span class="role badge badge-pull badge-dark ml-3">admin</span>
+            )}
           </div>
         )}
-        <ul className="navbar-nav">
-          {!loggedIn && <LinkWrapper to="/register">Register</LinkWrapper>}
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon" />
+        </button>
 
-          {!loggedIn && <LinkWrapper to="/login">Login</LinkWrapper>}
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            {!loggedIn && <LinkWrapper to="/register">Register</LinkWrapper>}
 
-          {loggedIn && currentUser.isAdmin() && <LinkWrapper to="/users">Users</LinkWrapper>}
+            {!loggedIn && <LinkWrapper to="/login">Login</LinkWrapper>}
 
-          {loggedIn && <LinkWrapper to="/profile">Profile</LinkWrapper>}
+            {loggedIn && currentUser.isAdmin() && <LinkWrapper to="/users">Users</LinkWrapper>}
 
-          {loggedIn && <LinkWrapper to="/websites">Websites</LinkWrapper>}
+            {loggedIn && <LinkWrapper to="/profile">Profile</LinkWrapper>}
 
-          {loggedIn && (
-            <LinkWrapper to="/" onClick={this.logout} type="link">
-              Log Out
-            </LinkWrapper>
-          )}
-        </ul>
+            {loggedIn && <LinkWrapper to="/websites">Websites</LinkWrapper>}
+
+            {loggedIn && (
+              <LinkWrapper to="/" onClick={this.logout} type="link">
+                Log Out
+              </LinkWrapper>
+            )}
+          </ul>
+        </div>
       </nav>
     );
   }
