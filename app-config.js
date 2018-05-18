@@ -18,5 +18,5 @@ export default {
   port,
   host,
   serverUrl,
-  authenticate: true
+  authenticate: false
 };

@@ -11,12 +11,16 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 // eslint-disable-next-line no-unused-vars
 import { BrowserRouter } from 'react-router-dom';
+
 // eslint-disable-next-line no-unused-vars
 import _toastr from './node_modules/toastr/build/toastr.css';
 // eslint-disable-next-line no-unused-vars
 import toastr from 'toastr';
+import 'bootstrap';
+import 'bootstrap/scss/bootstrap.scss';
 import './styles/minty-theme.scss';
 import './styles/application.scss';
+
 import { setDispatchForAppFetch } from './helpers/app-fetch';
 import appConfig from './app-config';
 
