@@ -119,7 +119,7 @@ function deleteUserRequest(user) {
   return dispatch => {
     dispatch(loader.startLoading());
     return user
-      .destroy()
+      .destroy({ wait: true})
       .then(() => {
         toastr.success('User deleted successfully');
       })
