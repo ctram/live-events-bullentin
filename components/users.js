@@ -3,14 +3,15 @@ import React from 'react';
 import actionsUsers from '../actions/users';
 
 // eslint-disable-next-line no-unused-vars
-function UserItem({ user: { email, id }, deleteUserRequest }) {
+function UserItem({ user, deleteUserRequest }) {
+
   const onClick = () => {
-    deleteUserRequest(id);
+    deleteUserRequest(user);
   };
 
   return (
     <li className="row justify-content-center">
-      <span className="col-6">{email}</span>
+      <span className="col-6">{user.get('email')}</span>
       <span className="col-1" onClick={onClick}>
         <i className="fas fa-trash" />
       </span>
