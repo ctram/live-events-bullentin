@@ -2,7 +2,7 @@ import Backbone from 'backbone';
 import appConfig from '../../app-config';
 
 export default class User extends Backbone.Model {
-  url() {
+  urlRoot() {
     return `${appConfig.serverUrl}/api/users`;
   }
 
