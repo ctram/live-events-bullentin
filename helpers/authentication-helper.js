@@ -30,7 +30,7 @@ export function authenticateUser(req) {
     return Promise.reject({ statusCode: 401, msg: 'User not authenticated' });
   }
 
-  return User.findAll({ role: 'admin' }).then(users => {
+  return User.findAll({ where: { role: 'admin' } }).then(users => {
     const user = users[0];
     if (user) {
       return user;
