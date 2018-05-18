@@ -4,7 +4,6 @@ import actionsUsers from '../actions/users';
 
 // eslint-disable-next-line no-unused-vars
 function UserItem({ user, deleteUserRequest }) {
-
   const onClick = () => {
     deleteUserRequest(user);
   };
@@ -55,8 +54,8 @@ const mapDispatchToProps = dispatch => {
     fetchUsersRequest: () => {
       dispatch(actionsUsers.fetchUsersRequest());
     },
-    deleteUserRequest: id => {
-      dispatch(actionsUsers.deleteUserRequest(id));
+    deleteUserRequest: user => {
+      dispatch(actionsUsers.deleteUserRequest(user));
     }
   };
 };
