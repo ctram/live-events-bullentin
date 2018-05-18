@@ -6,5 +6,5 @@ export default function parseError(e) {
     });
     return errorMsg.join(' ');
   }
-  return null;
+  return 'There was an error on the server';
 }
