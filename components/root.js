@@ -71,7 +71,7 @@ export class Root extends React.Component {
     const pathname = window.LEB.reactRouterHistory.location.pathname;
 
     const Routes = loggedIn ? (
-      <SwitchLoggedIn isAdmin={currentUser && currentUser.isAdmin} loaded={loaded} />
+      <SwitchLoggedIn isAdmin={currentUser && currentUser.isAdmin()} loaded={loaded} />
     ) : (
       <SwitchLoggedOut loaded={loaded} />
     );
