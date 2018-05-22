@@ -22,11 +22,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(
-  new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-    User.findOne({ where: { email } })
+  new LocalStrategy({ usernameField: 'username' }, (username, password, done) => {
+    User.findOne({ where: { username } })
       .then(user => {
         if (!user || user.password !== password) {
-          return done(null, false, { message: 'Incorrect email or password' });
+          return done(null, false, { message: 'Incorrect username or password' });
         }
         return done(null, user);
       })

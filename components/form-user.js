@@ -67,42 +67,32 @@ class FormUser extends React.Component {
                 onChange={e => this.setState({ password: e.target.value })}
               />
             </div>
-            <div className="form-group">
-              <label for="radio-role">
-                <radiogroup id="radio-role" className="btn-group">
-                  <radio className={`${btnRoleAdminClass}`} selected={activeRole === 'admin'} >
-                    One
-                  </radio>
-                  <radio className={`${btnRoleStandardClass}`} selected={activeRole === 'standard'}>
-                    One
-                  </radio>
-                </radiogroup>
-              </label>
-            </div>
 
             {this.pathname === 'register' && (
               <div className="form-group">
-                <label>User Role</label>
-                <div className="btn-group">
-                  <button
-                    className={`${btnRoleStandardClass}`}
-                    onClick={e => {
-                      e.preventDefault();
-                      this.toggleRole('standard');
-                    }}
-                  >
-                    Standard
-                  </button>
-                  <button
+                <label for="radio-role">User Role</label>
+                <radiogroup id="radio-role" className="btn-group">
+                  <radio
                     className={`${btnRoleAdminClass}`}
+                    selected={activeRole === 'admin'}
                     onClick={e => {
                       e.preventDefault();
                       this.toggleRole('admin');
                     }}
                   >
                     Admin
-                  </button>
-                </div>
+                  </radio>
+                  <radio
+                    className={`${btnRoleStandardClass}`}
+                    selected={activeRole === 'standard'}
+                    onClick={e => {
+                      e.preventDefault();
+                      this.toggleRole('standard');
+                    }}
+                  >
+                    Standard
+                  </radio>
+                </radiogroup>
               </div>
             )}
             <button

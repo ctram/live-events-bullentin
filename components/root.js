@@ -3,7 +3,6 @@
 
 import React from 'react';
 import FormUser from '../containers/form-user';
-import PageWelcome from './page-welcome';
 // eslint-disable-next-line no-unused-vars
 import Navbar from './navbar';
 // eslint-disable-next-line no-unused-vars

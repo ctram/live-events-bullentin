@@ -35,7 +35,7 @@ export class Navbar extends React.Component {
       <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-lg-center">
         {currentUser && (
           <div className="navbar-brand align-middle ml-5">
-            <span className="email">{currentUser.get('email')}</span>
+            <span className="username">{currentUser.get('username')}</span>
             {currentUser.isAdmin() && (
               <span class="role badge badge-pull badge-dark ml-3">admin</span>
             )}

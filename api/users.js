@@ -54,10 +54,10 @@ function load(app) {
   });
 
   app.post('/api/users', (req, res) => {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
-    if (!email || !password) {
-      return res.status(400).json({ msg: 'Email and password cannot be blank' });
+    if (!username || !password) {
+      return res.status(400).json({ msg: 'username and password cannot be blank' });
     }
 
     return User.create(req.body)
