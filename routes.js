@@ -1,7 +1,7 @@
 import loadApi from './api/index';
 import appConfig from './app-config';
 
-function generateHTML(numLevelsNested) {
+function generateIndexHTML(numLevelsNested) {
   let pathPrefix = '';
   for (let i = 0; i < numLevelsNested; i++) {
     pathPrefix += '../';
@@ -15,6 +15,7 @@ function generateHTML(numLevelsNested) {
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Live Events Bulletin</title>
         <script defer src="${pathPrefix}index.bundle.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
       </head>
       <body>
         <div id="root"></div>
@@ -41,7 +42,7 @@ export default {
 
     app.get(/.*/, (req, res) => {
       const numLevelsNested = req.path.split('/').length;
-      res.send(generateHTML(numLevelsNested));
+      res.send(generateIndexHTML(numLevelsNested));
     });
 
     // eslint-disable-next-line no-unused-vars
