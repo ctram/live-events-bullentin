@@ -32,7 +32,7 @@ export class Navbar extends React.Component {
     const { loggedIn, currentUser } = this.props;
 
     return (
-      <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-lg-center">
         {currentUser && (
           <div className="navbar-brand align-middle ml-5">
             <span className="email">{currentUser.get('email')}</span>
@@ -54,7 +54,7 @@ export class Navbar extends React.Component {
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
+          <ul class="navbar-nav pl-5 pl-lg-0">
             {!loggedIn && <LinkWrapper to="/register">Register</LinkWrapper>}
 
             {!loggedIn && <LinkWrapper to="/login">Login</LinkWrapper>}

@@ -38,7 +38,7 @@ export class PageWebsiteShow extends React.Component {
       domList = error;
     } else if (_.isEmpty(events)) {
       domList = (
-        <p>There are no events on the page or the page is preventing scraping.</p>
+        <p>No events found.</p>
       );
     } else {
       domList = (

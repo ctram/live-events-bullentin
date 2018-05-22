@@ -52,7 +52,7 @@ Website.prototype.getEvents = function() {
       if (data && data.events) {
         return data.events;
       }
-      throw `Unknown error scrapping events`;
+      throw `Error finding events`;
     });
 };
 
