@@ -95,7 +95,7 @@ export class FormWebsite extends React.Component {
   pasteDemoData(e) {
     e.preventDefault();
     const { name, selector, url } = this.demoData;
-    debugger
+
     this.setState({ name, selector, url });
   }
 
@@ -174,7 +174,11 @@ export class FormWebsite extends React.Component {
                 </button>
               )}
               {
-                <button className="btn btn-warning" onClick={this.pasteDemoData} disabled={!editMode}>
+                <button
+                  className="btn btn-warning"
+                  onClick={this.pasteDemoData}
+                  disabled={!editMode}
+                >
                   Use Demo Data
                 </button>
               }
