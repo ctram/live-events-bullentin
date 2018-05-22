@@ -14,12 +14,18 @@ export class FormWebsite extends React.Component {
       url: website.get('url') || '',
       editMode: isNew || false
     };
+    this.demoData = {
+      name: 'Hacker News',
+      selector: '.athing',
+      url: 'https://news.ycombinator.com/'
+    };
     this.addWebsite = this.addWebsite.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.delete = this.delete.bind(this);
     this.edit = this.edit.bind(this);
     this.save = this.save.bind(this);
     this.cancel = this.cancel.bind(this);
+    this.pasteDemoData = this.pasteDemoData.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -84,6 +90,13 @@ export class FormWebsite extends React.Component {
     const state = {};
     state[name] = value;
     this.setState(state);
+  }
+
+  pasteDemoData(e) {
+    e.preventDefault();
+    const { name, selector, url } = this.demoData;
+    debugger
+    this.setState({ name, selector, url });
   }
 
   render() {
@@ -160,6 +173,11 @@ export class FormWebsite extends React.Component {
                   Delete
                 </button>
               )}
+              {
+                <button className="btn btn-warning" onClick={this.pasteDemoData} disabled={!editMode}>
+                  Use Demo Data
+                </button>
+              }
             </div>
           </form>
         </div>
