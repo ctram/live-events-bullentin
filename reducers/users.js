@@ -16,6 +16,7 @@ function storeUsers(state = intialState, action) {
     case actionTypes.CHECK_AUTHENTICATION_SUCCESS:
     case actionTypes.LOGIN_USER_SUCCESS:
       currentUser = new User(action.user);
+      state.users.tagCurrentUser(currentUser);
       return Object.assign({}, state, { loggedIn: true, currentUser });
     case actionTypes.CHECK_AUTHENTICATION_FAILURE:
     case actionTypes.LOGOUT_USER_SUCCESS:
