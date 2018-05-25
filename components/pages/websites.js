@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actionsWebsites from '../../actions/websites';
 
-export class WebsitesList extends React.Component {
+// eslint-disable-next-line no-unused-vars
+class WebsitesList extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -41,7 +42,7 @@ export class WebsitesList extends React.Component {
   }
 }
 
-export class Websites extends React.Component {
+class Websites extends React.Component {
   constructor() {
     super();
   }
