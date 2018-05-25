@@ -62,12 +62,10 @@ function load(app) {
 
     return User.create(req.body)
       .then(data => {
-        console.log('user', data);
         let { status = 200 } = data;
         return res.status(status).json(data);
       })
       .catch(e => {
-        console.log('error', e);
         return res.status(e.statusCode || 500).json({ msg: parseErrorMessages(e) });
       });
   });

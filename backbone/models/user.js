@@ -9,4 +9,8 @@ export default class User extends Backbone.Model {
   isAdmin() {
     return this.get('role') === 'admin';
   }
+
+  isCurrentUser() {
+    return !!this.get('isCurrentUser');
+  }
 }
