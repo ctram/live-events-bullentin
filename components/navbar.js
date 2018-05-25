@@ -17,7 +17,7 @@ function LinkWrapper({ to, children, onClick, type = 'navlink' }) {
   );
 }
 
-export class Navbar extends React.Component {
+class Navbar extends React.Component {
   constructor() {
     super();
     this.logout = this.logout.bind(this);
