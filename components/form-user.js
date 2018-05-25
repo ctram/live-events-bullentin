@@ -79,6 +79,8 @@ class FormUser extends React.Component {
                       e.preventDefault();
                       this.toggleRole('admin');
                     }}
+                    title="Admin user sees websites created by all users."
+                    data-toggle="tooltip"
                   >
                     Admin
                   </radio>
@@ -89,6 +91,8 @@ class FormUser extends React.Component {
                       e.preventDefault();
                       this.toggleRole('standard');
                     }}
+                    title="Standard user sees only websites created by themself."
+                    data-toggle="tooltip"
                   >
                     Standard
                   </radio>
