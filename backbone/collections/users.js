@@ -14,19 +14,4 @@ export default class Users extends Backbone.Collection {
   parse(res) {
     return res.users;
   }
-
-  /**
-   * @method tagCurrentUser
-   * @param {User} currentUser
-   * Goes through collection of users and sets their isCurrentUser property for
-   * convenience elsewhere.
-   */
-  tagCurrentUser(currentUser) {
-    if (currentUser) {
-      this.models.forEach(user => {
-        user.set('isCurrentUser', currentUser.id === user.id);
-      });
-    }
-    throw new Error('current user must be passed as an argument');
-  }
 }
