@@ -3,7 +3,7 @@ import toastr from 'toastr';
 import { connect } from 'react-redux';
 import actionsWebsites from '../actions/websites';
 
-export class FormWebsite extends React.Component {
+class FormWebsite extends React.Component {
   constructor(props) {
     super(props);
     const { website, isNew } = props;

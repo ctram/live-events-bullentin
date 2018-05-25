@@ -1,8 +1,9 @@
 import actionTypes from '../actions/action-types';
 import User from '../backbone/models/user';
+import Users from '../backbone/collections/users';
 
 const intialState = {
-  users: [],
+  users: new Users(),
   loggedIn: false,
   currentUser: null
 };

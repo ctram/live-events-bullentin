@@ -1,24 +1,10 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import actionsUsers from '../actions/users';
-
+import actionsModalData from '../actions/modal-data';
 // eslint-disable-next-line no-unused-vars
-function UserItem({ user, deleteUserRequest }) {
-  const onClick = () => {
-    deleteUserRequest(user);
-  };
-
-  return (
-    <li className="row justify-content-center">
-      <span className="col-6">{user.get('email')}</span>
-      <span className="col-1" onClick={onClick}>
-        <i className="fas fa-trash" />
-      </span>
-    </li>
-  );
-}
-
-export class Users extends React.Component {
+import UserItem from './user-item';
+class Users extends React.Component {
   constructor() {
     super();
   }
@@ -29,16 +15,28 @@ export class Users extends React.Component {
   }
 
   render() {
-    let { users, deleteUserRequest } = this.props;
+    let { users, deleteUserRequest, currentUser, modalClose, modalDeleteConfirmation } = this.props;
     return (
-      <div className="row justify-content-center">
-        <div className="col-6">
-          <h1>Users</h1>
-          <ul>
-            {users.map((user, idx) => {
-              return <UserItem user={user} key={idx} deleteUserRequest={deleteUserRequest} />;
-            })}
-          </ul>
+      <div>
+        <div className="row justify-content-center">
+          <div className="col-6">
+            <h1>Users</h1>
+            <ul>
+              {users.map((user, idx) => {
+                const isCurrentUser = user.id === currentUser.id;
+                return (
+                  <UserItem
+                    user={user}
+                    deletable={isCurrentUser || !user.isAdmin()}
+                    key={idx}
+                    deleteUserRequest={deleteUserRequest}
+                    modalClose={modalClose}
+                    modalDeleteConfirmation={modalDeleteConfirmation}
+                  />
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </div>
     );
@@ -56,6 +54,12 @@ const mapDispatchToProps = dispatch => {
     },
     deleteUserRequest: user => {
       dispatch(actionsUsers.deleteUserRequest(user));
+    },
+    modalClose: () => {
+      dispatch(actionsModalData.modalClose());
+    },
+    modalDeleteConfirmation: data => {
+      dispatch(actionsModalData.modalShow(data));
     }
   };
 };

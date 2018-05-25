@@ -24,6 +24,10 @@ import PageWebsiteNew from './pages/website-new';
 // eslint-disable-next-line no-unused-vars
 import PageWebsiteShow from './pages/website-show';
 import Page404 from './pages/404';
+// eslint-disable-next-line no-unused-vars
+import Modal from './modal';
+import jquery from 'jquery';
+const TOOLTIP_SELECTOR = '[data-toggle="tooltip"]';
 
 // eslint-disable-next-line no-unused-vars
 function SwitchLoggedIn({ isAdmin, loaded }) {
@@ -50,9 +54,22 @@ function SwitchLoggedOut({ loaded }) {
   );
 }
 
-export class Root extends React.Component {
+class Root extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    // When app is refreshed, we need to check whether user is already authenticated
+    this.props.checkAuthenticationRequest();
+    this.initializeTooltip();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.initializeTooltip();
+    if (this.props.modalData.visible !== nextProps.modalData.visible) {
+      nextProps.modalData.visible ? jquery('#myModal').modal('show') : jquery('#myModal').modal('hide');
+    }
   }
 
   componentWillMount() {
@@ -60,13 +77,19 @@ export class Root extends React.Component {
     window.LEB.reactRouterHistory = history;
   }
 
-  componentDidMount() {
-    // When app is refreshed, we need to check whether user is already authenticated
-    this.props.checkAuthenticationRequest();
+  componentWillUnmount() {
+    jquery(() => {
+      jquery(TOOLTIP_SELECTOR).tooltip('dispose');
+    });
+    jquery('#myModal').modal('dispose');
+  }
+
+  initializeTooltip() {
+    jquery(() => jquery(TOOLTIP_SELECTOR).tooltip());
   }
 
   render() {
-    const { loggedIn, currentUser, loaded } = this.props;
+    const { loggedIn, currentUser, loaded, modalData } = this.props;
     const pathname = window.LEB.reactRouterHistory.location.pathname;
 
     const Routes = loggedIn ? (
@@ -84,6 +107,7 @@ export class Root extends React.Component {
             <div className="row justify-content-center">
               <div className="col-10">{Routes}</div>
             </div>
+            <Modal title={modalData.title} content={modalData.content} footer={modalData.footer} />
           </ErrorBoundary>
         </main>
       </div>
@@ -92,7 +116,7 @@ export class Root extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return Object.assign({}, state.loader, state.root, state.storeUsers);
+  return Object.assign({}, state.loader, state.root, state.storeUsers, state.storeModalData);
 };
 
 const mapDispatchToProps = dispatch => {
