@@ -12,12 +12,10 @@ import React from 'react';
 // eslint-disable-next-line no-unused-vars
 import { BrowserRouter } from 'react-router-dom';
 
-// eslint-disable-next-line no-unused-vars
-import _toastr from './node_modules/toastr/build/toastr.css';
-// eslint-disable-next-line no-unused-vars
+import './node_modules/toastr/build/toastr.css';
 import toastr from 'toastr';
-import 'bootstrap';
-import 'bootstrap/scss/bootstrap.scss';
+import './node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
+import './node_modules/bootstrap/scss/bootstrap.scss';
 import './styles/minty-theme.scss';
 import './styles/application.scss';
 
