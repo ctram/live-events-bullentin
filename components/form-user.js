@@ -71,7 +71,7 @@ class FormUser extends React.Component {
             {this.pathname === 'register' && (
               <div className="form-group">
                 <label for="radio-role">User Role</label>
-                <radiogroup id="radio-role" className="btn-group">
+                <radiogroup id="radio-role" className="btn-group d-block">
                   <radio
                     className={`${btnRoleAdminClass}`}
                     selected={activeRole === 'admin'}
