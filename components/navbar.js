@@ -33,14 +33,7 @@ class Navbar extends React.Component {
 
     return (
       <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-lg-center">
-        {currentUser && (
-          <div className="navbar-brand align-middle ml-5">
-            <span className="username">{currentUser.get('username')}</span>
-            {currentUser.isAdmin() && (
-              <span class="role badge badge-pull badge-dark ml-3">admin</span>
-            )}
-          </div>
-        )}
+        <div className="navbar-brand ml-5">Live Events Bulletin</div>
         <button
           class="navbar-toggler"
           type="button"
@@ -53,8 +46,16 @@ class Navbar extends React.Component {
           <span class="navbar-toggler-icon" />
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav pl-5 pl-lg-0">
+        <div class="collapse navbar-collapse ml-lg-1" id="navbarSupportedContent">
+          {currentUser && (
+            <div className="mr-3">
+              <span className="username">{currentUser.get('username')}</span>
+              {currentUser.isAdmin() && (
+                <span class="role badge badge-pull badge-dark ml-1">admin</span>
+              )}
+            </div>
+          )}
+          <ul class="navbar-nav">
             {!loggedIn && <LinkWrapper to="/register">Register</LinkWrapper>}
 
             {!loggedIn && <LinkWrapper to="/login">Login</LinkWrapper>}
