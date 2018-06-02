@@ -85,11 +85,11 @@ function checkAuthenticationRequest() {
 
     return appFetch(req)
       .then(data => {
-        if (data.user) {
-          toastr.success('Authenticated');
-          window.LEB.reactRouterHistory.push('/websites');
-          return dispatch(checkAuthenticationSuccess(data.user));
-        }
+        toastr.success('Authenticated');
+        window.LEB.reactRouterHistory.push('/websites');
+        return dispatch(checkAuthenticationSuccess(data.user));
+      })
+      .catch(() => {
         window.LEB.reactRouterHistory.push('/login');
         dispatch(checkAuthenticationFailure());
       })
