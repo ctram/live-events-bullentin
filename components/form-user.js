@@ -117,7 +117,7 @@ class FormUser extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return Object.assign({}, state, ownProps, quickLogIn);
+  return Object.assign({}, state, ownProps);
 };
 
 const mapDispatchToProps = dispatch => {
