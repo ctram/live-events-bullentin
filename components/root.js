@@ -9,8 +9,6 @@ import PageWebsiteNew from './pages/website-new';
 import PageWebsiteShow from './pages/website-show';
 import Page404 from './pages/404';
 import jquery from 'jquery';
-import appConfig from '../app-config';
-import actionsLoader from '../actions/loader';
 
 // FIXME: eslint triggering react element rendering as UNUSED
 /* eslint-disable */
@@ -56,8 +54,8 @@ class Root extends React.Component {
 
   componentDidMount() {
     // When app is refreshed, we need to check whether user is already authenticated
+    this.props.checkAuthenticationRequest();
     this.initializeTooltip();
-    this.props.endLoading();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -120,9 +118,6 @@ const mapDispatchToProps = dispatch => {
   return {
     checkAuthenticationRequest: () => {
       dispatch(actionsUsers.checkAuthenticationRequest());
-    },
-    endLoading: () => {
-      dispatch(actionsLoader.endLoading());
     }
   };
 };
