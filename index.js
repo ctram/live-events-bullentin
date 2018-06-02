@@ -16,7 +16,7 @@ import './node_modules/toastr/build/toastr.css';
 import toastr from 'toastr';
 import './node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
 import './node_modules/bootstrap/scss/bootstrap.scss';
-import './styles/slate-theme.scss';
+import './styles/simplex-theme.scss';
 import './styles/application.scss';
 import { setDispatchForAppFetch } from './helpers/app-fetch';
 
