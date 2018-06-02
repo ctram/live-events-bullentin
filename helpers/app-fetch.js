@@ -3,6 +3,12 @@ import loader from '../actions/loader';
 
 let _dispatch = () => {};
 
+/**
+ * @function parseResponse
+ * @param {Response Object} res
+ * @return {Promise}
+ * Attempts to parse the response as JSON, otherwise returns the status message.
+ */
 function parseResponse(res) {
   return res
     .json()
@@ -15,10 +21,22 @@ function parseResponse(res) {
     });
 }
 
+/**
+ * @function setDispatchForAppFetch
+ * @param {function} dispatch
+ * Sets a reference to the dispatch, so that appFetch may utilize the loader utility.
+ */
 export function setDispatchForAppFetch(dispatch) {
   _dispatch = dispatch;
 }
 
+/**
+ * @function appFetch
+ * @param {Request object} req 
+ * @return {Promise}
+ * Extends the native fetch function to toast success and failure messages within
+ * the response; also triggers the loading utility while the fetch is in progress.
+ */
 export default function appFetch(req) {
   _dispatch(loader.startLoading());
   let res;
