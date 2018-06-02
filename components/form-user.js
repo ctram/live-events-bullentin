@@ -1,3 +1,5 @@
+import { connect } from 'react-redux';
+import actionUsers from '../actions/users';
 import React from 'react';
 
 class FormUser extends React.Component {
@@ -114,4 +116,22 @@ class FormUser extends React.Component {
   }
 }
 
-export default FormUser;
+const mapStateToProps = (state, ownProps) => {
+  return Object.assign({}, state, ownProps, quickLogIn);
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    createUser: data => {
+      dispatch(actionUsers.createUserRequest(data));
+    },
+    loginUser: data => {
+      dispatch(actionUsers.loginUserRequest(data));
+    },
+    quickLogIn: () => {
+      dispatch(actionUsers.quickLogIn());
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormUser);
