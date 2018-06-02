@@ -1,32 +1,27 @@
-// FIXME: eslint triggering react element rendering as UNUSED
-// var error
-
 import React from 'react';
-import FormUser from '../containers/form-user';
-// eslint-disable-next-line no-unused-vars
-import Navbar from './navbar';
-// eslint-disable-next-line no-unused-vars
-import { Route, Switch, Redirect } from 'react-router-dom';
-// eslint-disable-next-line no-unused-vars
-import Loader from 'react-loader';
-// eslint-disable-next-line no-unused-vars
-import UserProfile from './user-profile';
-// eslint-disable-next-line no-unused-vars
+import FormUser from './form-user';
 import Users from './users';
 import { connect } from 'react-redux';
 import actionsUsers from '../actions/users';
 import { withRouter } from 'react-router-dom';
 import PageWebsites from './pages/websites';
-// eslint-disable-next-line no-unused-vars
-import ErrorBoundary from './error-boundary';
-// eslint-disable-next-line no-unused-vars
 import PageWebsiteNew from './pages/website-new';
-// eslint-disable-next-line no-unused-vars
 import PageWebsiteShow from './pages/website-show';
 import Page404 from './pages/404';
-// eslint-disable-next-line no-unused-vars
-import Modal from './modal';
 import jquery from 'jquery';
+import appConfig from '../app-config';
+import actionsLoader from '../actions/loader';
+
+// FIXME: eslint triggering react element rendering as UNUSED
+/* eslint-disable */
+import Navbar from './navbar';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import Loader from 'react-loader';
+import UserProfile from './user-profile';
+import ErrorBoundary from './error-boundary';
+import Modal from './modal';
+/* eslint-enable */
+
 const TOOLTIP_SELECTOR = '[data-toggle="tooltip"]';
 
 // eslint-disable-next-line no-unused-vars
@@ -38,7 +33,7 @@ function SwitchLoggedIn({ isAdmin, loaded }) {
       <Route exact path="/websites/new" component={PageWebsiteNew} />
       <Route exact path="/websites/:id" component={PageWebsiteShow} />
       <Route path="/websites" component={PageWebsites} />
-      <Route component={loaded && Page404} />
+      {loaded && <Route component={Page404} />}
     </Switch>
   );
 }
@@ -49,7 +44,7 @@ function SwitchLoggedOut({ loaded }) {
     <Switch>
       <Route exact path="/register" component={FormUser} />
       <Route path="/login" component={FormUser} />
-      <Route component={loaded && Page404} />
+      {loaded && <Route component={Page404} />}
     </Switch>
   );
 }
@@ -61,14 +56,16 @@ class Root extends React.Component {
 
   componentDidMount() {
     // When app is refreshed, we need to check whether user is already authenticated
-    this.props.checkAuthenticationRequest();
     this.initializeTooltip();
+    this.props.endLoading();
   }
 
   componentWillReceiveProps(nextProps) {
     this.initializeTooltip();
     if (this.props.modalData.visible !== nextProps.modalData.visible) {
-      nextProps.modalData.visible ? jquery('#myModal').modal('show') : jquery('#myModal').modal('hide');
+      nextProps.modalData.visible
+        ? jquery('#myModal').modal('show')
+        : jquery('#myModal').modal('hide');
     }
   }
 
@@ -123,6 +120,9 @@ const mapDispatchToProps = dispatch => {
   return {
     checkAuthenticationRequest: () => {
       dispatch(actionsUsers.checkAuthenticationRequest());
+    },
+    endLoading: () => {
+      dispatch(actionsLoader.endLoading());
     }
   };
 };
