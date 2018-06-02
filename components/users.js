@@ -27,6 +27,7 @@ class Users extends React.Component {
                 return (
                   <UserItem
                     user={user}
+                    currentUser={currentUser}
                     deletable={isCurrentUser || !user.isAdmin()}
                     key={idx}
                     deleteUserRequest={deleteUserRequest}

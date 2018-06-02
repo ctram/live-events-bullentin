@@ -1,7 +1,4 @@
 import React from 'react';
-import actionsModalData from '../actions/modal-data';
-
-// eslint-disable-next-line no-unused-vars
 
 export default class UserItem extends React.Component {
   constructor() {
@@ -20,21 +17,29 @@ export default class UserItem extends React.Component {
     this.props.modalClose();
   }
 
-  modalAreYouSure(userRelationship) {
+  modalAreYouSure() {
+    const { user, currentUser } = this.props;
+    const userRelationship = currentUser.id === user.id ? 'self' : 'other';
     const { modalDeleteConfirmation } = this.props;
-    let pronoun = 'the User';
-    const title = `Are You Sure You Want to Delete ${pronoun}?`;
-
+    let title = `Are You Sure?`;
+    let btnText = 'Yes, Delete User';
     let content = 'This cannot be undone.';
+    
     if (userRelationship === 'self') {
-      pronoun = 'Yourself';
-      content += ' You will be immediately logged off.';
+      title = 'Are You Sure You Want To Delete Yourself?';
+      btnText = 'Yes, Delete Myself';
+      content += 'You will immediately log off.';
     }
 
     const footer = (
       <div className="btn-group">
-        <button className="btn btn-danger" onClick={this.deleteUser}>
-          Yes, Delete
+        <button
+          className="btn btn-danger"
+          onClick={() => {
+            this.deleteUser(user);
+          }}
+        >
+          {btnText}
         </button>
         <button className="btn btn-secondary" onClick={this.cancel}>
           Cancel
