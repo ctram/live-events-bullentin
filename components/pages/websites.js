@@ -1,46 +1,13 @@
 import React from 'react';
-// eslint-disable-next-line no-unused-vars
+
+/* eslint-disable */
 import { Link } from 'react-router-dom';
+import WebsitesList from '../websites-list';
+/* eslint-enable */
+
 import { connect } from 'react-redux';
 import actionsWebsites from '../../actions/websites';
-
-// eslint-disable-next-line no-unused-vars
-class WebsitesList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const { websites } = this.props;
-
-    return (
-      <section>
-        <h1>Websites</h1>
-        <ul>
-          {websites.map((website, idx) => {
-            return (
-              <li key={idx} className="row">
-                <Link to={`/websites/${website.id}`} className="col-6">
-                  {website.get('name')}
-                </Link>
-                <div className="col-1 offset-3">
-                  <span
-                    onClick={e => {
-                      e.preventDefault();
-                      this.props.onClickRemove(website);
-                    }}
-                  >
-                    <i className="fas fa-trash" />
-                  </span>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </section>
-    );
-  }
-}
+import actionsModal from '../../actions/modal-data';
 
 class Websites extends React.Component {
   constructor() {
@@ -52,14 +19,19 @@ class Websites extends React.Component {
   }
 
   render() {
-    const { websites = [] } = this.props;
+    const { websites = [], confirmDelete, modalClose, deleteWebsiteRequest } = this.props;
     let domWebsites = <div className="text-center">No websites saved yet.</div>;
 
     if (websites.length > 0) {
       domWebsites = (
         <div>
           <hr />
-          <WebsitesList websites={websites} onClickRemove={this.props.deleteWebsiteRequest} />
+          <WebsitesList
+            websites={websites}
+            confirmDelete={confirmDelete}
+            modalClose={modalClose}
+            handleDelete={deleteWebsiteRequest}
+          />
         </div>
       );
     }
@@ -90,6 +62,12 @@ const mapDispatchToProps = dispatch => {
     },
     deleteWebsiteRequest: website => {
       dispatch(actionsWebsites.deleteWebsiteRequest(website));
+    },
+    confirmDelete: data => {
+      dispatch(actionsModal.modalShow(data));
+    },
+    modalClose: () => {
+      dispatch(actionsModal.modalClose());
     }
   };
 };

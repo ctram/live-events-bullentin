@@ -2,6 +2,7 @@ import React from 'react';
 import toastr from 'toastr';
 import { connect } from 'react-redux';
 import actionsWebsites from '../actions/websites';
+import actionsModal from '../actions/modal-data';
 
 class FormWebsite extends React.Component {
   constructor(props) {
@@ -26,6 +27,8 @@ class FormWebsite extends React.Component {
     this.save = this.save.bind(this);
     this.cancel = this.cancel.bind(this);
     this.pasteDemoData = this.pasteDemoData.bind(this);
+    this.confirmDelete = this.confirmDelete.bind(this);
+    this.modalClose = this.modalClose.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -64,7 +67,8 @@ class FormWebsite extends React.Component {
 
   delete(e) {
     e.preventDefault();
-    const { deleteWebsiteRequest, website } = this.props;
+    const { deleteWebsiteRequest, modalClose, website } = this.props;
+    modalClose();
     deleteWebsiteRequest(website);
   }
 
@@ -169,7 +173,7 @@ class FormWebsite extends React.Component {
                   </button>
                 )}
               {!isNew && (
-                <button className="btn btn-danger" onClick={this.delete} disabled={editMode}>
+                <button className="btn btn-danger" onClick={this.confirmDelete} disabled={editMode}>
                   Delete
                 </button>
               )}
@@ -210,6 +214,12 @@ const mapDispatchToProps = dispatch => {
     },
     saveWebsiteRequest: website => {
       dispatch(actionsWebsites.saveWebsiteRequest(website));
+    },
+    modalConfirmDelete: data => {
+      dispatch(actionsModal.modalShow(data));
+    },
+    modalClose: () => {
+      dispatch(actionsModal.modalClose());
     }
   };
 };

@@ -16,5 +16,5 @@ export default {
   port,
   host,
   serverUrl,
-  authenticate: process.env.NODE_ENV === 'development' && false
+  authenticate: process.env.NODE_ENV === 'development' && true
 };
