@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=production DEBUG=express:* node dist/app.bundle.js",
+    "start": "ENVIRONMENT=production DEBUG=express:* node dist/app.bundle.js",
     "prestart": "./node_modules/sequelize-cli/lib/sequelize db:migrate && ./node_modules/webpack-cli/bin/webpack.js",
-    "debug": "NODE_ENV=development DEBUG=express:* nodemon dist/app.bundle.js",
+    "debug": "ENVIRONMENT=development DEBUG=express:* nodemon dist/app.bundle.js",
     "nodemon": "nodemon dist/app.bundle.js"
   },
   "dependencies": {
