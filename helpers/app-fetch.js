@@ -25,7 +25,6 @@ export default function appFetch(req) {
 
   return fetch(req)
     .then(_res => {
-      console.log('response', _res);
       res = _res;
       return parseResponse(res);
     })

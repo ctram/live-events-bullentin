@@ -45,12 +45,12 @@ passport.deserializeUser((id, done) => {
   User.findById(id)
     .then(user => {
       if (!user) {
-        return done('user not found', false);
+        return done('User not found', false);
       }
       return done(null, user);
     })
     .catch(e => {
-      console.error('error finding user', e);
+      console.error('Error finding user', e);
       done(e);
     });
 });

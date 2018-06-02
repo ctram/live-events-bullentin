@@ -61,7 +61,7 @@ function fetchWebsiteEventsRequest(website) {
         dispatch(fetchWebsiteEventsSuccess(website));
       })
       .catch(e => {
-        toastr.error(e);
+        toastr.error(parseError(e));
         dispatch(fetchWebsiteEventsFailure(website, e));
       })
       .finally(() => dispatch(loader.endLoading()));
@@ -81,7 +81,7 @@ function fetchWebsitesRequest(websites = new Websites()) {
         dispatch(fetchWebsitesSuccess(websites));
       })
       .catch(e => {
-        toastr.error(e);
+        toastr.error(parseError(e));
       })
       .always(() => dispatch(loader.endLoading()));
   };
@@ -131,7 +131,7 @@ function deleteWebsiteRequest(website) {
       .then(() => {
         dispatch(deleteWebsiteSuccess());
       })
-      .catch(e => toastr.error(e))
+      .catch(e => toastr.error(parseError(e)))
       .always(() => dispatch(loader.endLoading()));
   };
 }
