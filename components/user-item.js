@@ -24,7 +24,7 @@ export default class UserItem extends React.Component {
     let title = `Are You Sure?`;
     let btnText = 'Yes, Delete User';
     let content = 'This cannot be undone.';
-    
+
     if (userRelationship === 'self') {
       title = 'Are You Sure You Want To Delete Yourself?';
       btnText = 'Yes, Delete Myself';
@@ -52,13 +52,13 @@ export default class UserItem extends React.Component {
   render() {
     const { user, deletable } = this.props;
     return (
-      <li className="row justify-content-center">
+      <li className="row justify-content-center mb-1">
         <div className="col-6">{user.get('username')}</div>
         <div className="col-1">
           <button
             onClick={this.modalAreYouSure}
             disabled={!deletable}
-            className="btn btn-danger py-1"
+            className="btn btn-danger py-0 px-1"
           >
             Delete
           </button>
