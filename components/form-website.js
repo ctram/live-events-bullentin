@@ -103,6 +103,34 @@ class FormWebsite extends React.Component {
     this.setState({ name, selector, url });
   }
 
+  confirmDelete(e) {
+    e.preventDefault();
+
+    let title = `Are You Sure?`;
+    let btnText = 'Delete';
+    let content = 'This cannot be undone.';
+
+    const footer = (
+      <div className="btn-group">
+        <button
+          className="btn btn-danger"
+          onClick={this.delete}
+        >
+          {btnText}
+        </button>
+        <button className="btn btn-secondary" onClick={this.modalClose}>
+          Cancel
+        </button>
+      </div>
+    );
+    this.props.modalConfirmDelete({ title, content, footer });
+  }
+
+  modalClose(e) {
+    e.preventDefault();
+    this.props.modalClose();
+  }
+
   render() {
     const { name, selector, url } = this.state;
     const { isNew } = this.props;
