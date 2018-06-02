@@ -88,20 +88,30 @@ function load(app) {
 
   app.delete('/api/users/:id', (req, res) => {
     let currentUser;
+    let targetUser;
     return authenticateUser(req)
       .then(_user => {
         currentUser = _user;
-        return User.findById(req.params.id);
-      })
-      .then(targetUser => {
-        if (!targetUser) {
-          throw { msg: 'User to delete not found', statusCode: 400 };
-        }
         if (currentUser.role !== 'admin') {
           throw { msg: 'Current User must be of type admin to delete users', statusCode: 400 };
         }
+        return User.findById(req.params.id);
+      })
+      .then(_targetUser => {
+        if (!_targetUser) {
+          throw { msg: 'User to delete not found', statusCode: 400 };
+        }
+        targetUser = _targetUser;
         if (currentUser.id === targetUser.id) {
           throw { msg: 'User cannot delete themself', statusCode: 400 };
+        }
+      })
+      .then(() => {
+        return User.findAll({ role: 'admin' });
+      })
+      .then(admins => {
+        if (targetUser.get('role') === 'admin' && admins.length === 1) {
+          throw { msg: 'Must be at least one admin user', statusCode: 400 };
         }
         return User.destroy({ where: { id: req.params.id } });
       })
