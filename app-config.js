@@ -3,9 +3,6 @@ let host;
 let serverUrl;
 let authenticate;
 
-console.log('environment', process.env.ENVIRONMENT);
-console.log('process env', process.env);
-
 if (process.env.ENVIRONMENT === 'production') {
   port = process.env.PORT;
   host = process.env.HOST;
