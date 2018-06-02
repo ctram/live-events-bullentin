@@ -17,7 +17,7 @@ function fetchUsersRequest(users = new Users()) {
         dispatch(fetchUsersSuccess(users));
       })
       .catch(e => {
-        toastr.error(e);
+        toastr.error(parseError(e));
       })
       .always(() => {
         dispatch(loader.endLoading());
