@@ -49,18 +49,23 @@ function createUserRequest(data) {
 
 function loginUserRequest(data) {
   return dispatch => {
+    dispatch(loader.startLoading());
     requestParams;
     const req = new Request(
       appConfig.serverUrl + `/api/login`,
       Object.assign(requestParams, { method: 'POST', body: JSON.stringify(data) })
     );
 
-    return appFetch(req).then(data => {
-      if (data.user) {
-        return dispatch(loginUserSuccess(data.user));
-      }
-      toastr.error('Login Failed');
-    });
+    return appFetch(req)
+      .then(data => {
+        if (data.user) {
+          return dispatch(loginUserSuccess(data.user));
+        }
+        toastr.error('Login Failed');
+      })
+      .finally(() => {
+        dispatch(loader.endLoading());
+      });
   };
 }
 
@@ -72,19 +77,24 @@ function loginUserSuccess(user) {
 
 function checkAuthenticationRequest() {
   return dispatch => {
+    dispatch(loader.startLoading());
     const req = new Request(
       appConfig.serverUrl + `/api/authentication`,
       Object.assign(requestParams, { method: 'GET' })
     );
 
-    return appFetch(req).then(data => {
-      if (data.user) {
-        toastr.success('Authenticated');
-        return dispatch(checkAuthenticationSuccess(data.user));
-      }
-      window.LEB.reactRouterHistory.push('/login');
-      dispatch(checkAuthenticationFailure());
-    });
+    return appFetch(req)
+      .then(data => {
+        if (data.user) {
+          toastr.success('Authenticated');
+          return dispatch(checkAuthenticationSuccess(data.user));
+        }
+        window.LEB.reactRouterHistory.push('/login');
+        dispatch(checkAuthenticationFailure());
+      })
+      .finally(() => {
+        dispatch(loader.endLoading());
+      });
   };
 }
 
@@ -98,16 +108,21 @@ function checkAuthenticationFailure() {
 
 function logoutUserRequest() {
   return dispatch => {
+    dispatch(loader.startLoading());
     const req = new Request(
       appConfig.serverUrl + `/api/logout`,
       Object.assign(requestParams, { method: 'GET', body: null })
     );
 
-    return appFetch(req).then(() => {
-      dispatch(logoutUserSuccess());
-      toastr.success('Logged Out Successfully');
-      window.LEB.reactRouterHistory.push('/login');
-    });
+    return appFetch(req)
+      .then(() => {
+        dispatch(logoutUserSuccess());
+        toastr.success('Logged Out Successfully');
+        window.LEB.reactRouterHistory.push('/login');
+      })
+      .finally(() => {
+        dispatch(loader.endLoading());
+      });
   };
 }
 
@@ -119,7 +134,7 @@ function deleteUserRequest(user) {
   return dispatch => {
     dispatch(loader.startLoading());
     return user
-      .destroy({ wait: true})
+      .destroy({ wait: true })
       .then(() => {
         toastr.success('User deleted successfully');
       })
