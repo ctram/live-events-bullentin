@@ -11,11 +11,8 @@ class UserProfile extends React.Component {
     return (
       <div>
         <h1>Profile</h1>
-        <div className="row justify-content-center">
-          <div className="col-3">
-            <div><span>Username:</span> {currentUser.get('username')}</div>
-            <div><span>Websites Added:</span> {currentUser.get('num_websites_owned')}</div>
-          </div>
+        <div className="row justify-content-center user-profile">
+          <div className="user-profile__username">{currentUser.get('username')}</div>
         </div>
       </div>
     );
