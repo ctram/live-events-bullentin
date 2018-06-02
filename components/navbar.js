@@ -32,10 +32,10 @@ class Navbar extends React.Component {
     const { loggedIn, currentUser } = this.props;
 
     return (
-      <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-lg-center">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light justify-content-lg-center">
         <div className="navbar-brand ml-5">Live Events Bulletin</div>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           type="button"
           data-toggle="collapse"
           data-target="#navbarSupportedContent"
@@ -43,19 +43,19 @@ class Navbar extends React.Component {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon" />
+          <span className="navbar-toggler-icon" />
         </button>
 
-        <div class="collapse navbar-collapse ml-lg-1" id="navbarSupportedContent">
+        <div className="collapse navbar-collapse ml-lg-1" id="navbarSupportedContent">
           {currentUser && (
             <div className="mr-3">
               <span className="username">{currentUser.get('username')}</span>
               {currentUser.isAdmin() && (
-                <span class="role badge badge-pull badge-dark ml-1">admin</span>
+                <span className="role badge badge-pull badge-dark ml-1">admin</span>
               )}
             </div>
           )}
-          <ul class="navbar-nav">
+          <ul className="navbar-nav">
             {!loggedIn && <LinkWrapper to="/register">Register</LinkWrapper>}
 
             {!loggedIn && <LinkWrapper to="/login">Login</LinkWrapper>}
