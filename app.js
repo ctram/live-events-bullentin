@@ -7,6 +7,8 @@ import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import db from './models/index';
 import appConfig from './app-config';
+import ejs from 'ejs';
+
 const { User } = db;
 
 const app = express();
@@ -15,11 +17,11 @@ app.use(express.static('styles'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-
 app.use(session({ secret: 'cat' }));
-
 app.use(passport.initialize());
 app.use(passport.session());
+app.engine('ejs', ejs.__express); //express can't find ejs, so manually set the engine here.
+app.set('view engine', 'ejs');
 
 passport.use(
   new LocalStrategy({ usernameField: 'username' }, (username, password, done) => {
