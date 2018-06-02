@@ -19,7 +19,7 @@ class Websites extends React.Component {
   }
 
   render() {
-    const { websites = [], confirmDelete, modalClose, deleteWebsiteRequest } = this.props;
+    const { websites = [], modalShow, modalClose, deleteWebsiteRequest } = this.props;
     let domWebsites = <div className="text-center">No websites saved yet.</div>;
 
     if (websites.length > 0) {
@@ -28,7 +28,7 @@ class Websites extends React.Component {
           <hr />
           <WebsitesList
             websites={websites}
-            confirmDelete={confirmDelete}
+            modalShow={modalShow}
             modalClose={modalClose}
             handleDelete={deleteWebsiteRequest}
           />
@@ -63,7 +63,7 @@ const mapDispatchToProps = dispatch => {
     deleteWebsiteRequest: website => {
       dispatch(actionsWebsites.deleteWebsiteRequest(website));
     },
-    confirmDelete: data => {
+    modalShow: data => {
       dispatch(actionsModal.modalShow(data));
     },
     modalClose: () => {

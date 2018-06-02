@@ -3,6 +3,7 @@ import toastr from 'toastr';
 import { connect } from 'react-redux';
 import actionsWebsites from '../actions/websites';
 import actionsModal from '../actions/modal-data';
+import getModalData from './modal-templates/modal-confirm-delete-website';
 
 class FormWebsite extends React.Component {
   constructor(props) {
@@ -105,25 +106,9 @@ class FormWebsite extends React.Component {
 
   confirmDelete(e) {
     e.preventDefault();
-
-    let title = `Are You Sure?`;
-    let btnText = 'Delete';
-    let content = 'This cannot be undone.';
-
-    const footer = (
-      <div className="btn-group">
-        <button
-          className="btn btn-danger"
-          onClick={this.delete}
-        >
-          {btnText}
-        </button>
-        <button className="btn btn-secondary" onClick={this.modalClose}>
-          Cancel
-        </button>
-      </div>
+    this.props.modalShow(
+      getModalData({ handleDelete: this.delete, handleModalClose: this.modalClose })
     );
-    this.props.modalConfirmDelete({ title, content, footer });
   }
 
   modalClose(e) {
@@ -243,7 +228,7 @@ const mapDispatchToProps = dispatch => {
     saveWebsiteRequest: website => {
       dispatch(actionsWebsites.saveWebsiteRequest(website));
     },
-    modalConfirmDelete: data => {
+    modalShow: data => {
       dispatch(actionsModal.modalShow(data));
     },
     modalClose: () => {

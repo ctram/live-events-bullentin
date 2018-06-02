@@ -1,4 +1,5 @@
 import React from 'react';
+import getModalData from './modal-templates/modal-confirm-delete-user';
 
 export default class UserItem extends React.Component {
   constructor() {
@@ -18,35 +19,15 @@ export default class UserItem extends React.Component {
   }
 
   modalAreYouSure() {
-    const { user, currentUser } = this.props;
-    const userRelationship = currentUser.id === user.id ? 'self' : 'other';
-    const { modalDeleteConfirmation } = this.props;
-    let title = `Are You Sure?`;
-    let btnText = 'Yes, Delete User';
-    let content = 'This cannot be undone.';
-
-    if (userRelationship === 'self') {
-      title = 'Are You Sure You Want To Delete Yourself?';
-      btnText = 'Yes, Delete Myself';
-      content += 'You will immediately log off.';
-    }
-
-    const footer = (
-      <div className="btn-group">
-        <button
-          className="btn btn-danger"
-          onClick={() => {
-            this.deleteUser(user);
-          }}
-        >
-          {btnText}
-        </button>
-        <button className="btn btn-secondary" onClick={this.cancel}>
-          Cancel
-        </button>
-      </div>
+    const { user, currentUser, modalShow } = this.props;
+    modalShow(
+      getModalData({
+        user,
+        currentUser,
+        handleDelete: this.deleteUser,
+        handleModalClose: this.cancel
+      })
     );
-    modalDeleteConfirmation({ title, content, footer });
   }
 
   render() {

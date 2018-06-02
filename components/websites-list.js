@@ -2,6 +2,7 @@ import React from 'react';
 /* eslint-disable */
 import { Link } from 'react-router-dom';
 /* eslint-enable */
+import getModalData from './modal-templates/modal-confirm-delete-website';
 
 // eslint-disable-next-line no-unused-vars
 class WebsiteItem extends React.Component {
@@ -27,20 +28,9 @@ class WebsiteItem extends React.Component {
 
   confirmDelete(e) {
     e.preventDefault();
-    this.props.confirmDelete({
-      title: 'Are You Sure?',
-      content: 'This cannot be undone.',
-      footer: (
-        <div className="btn-group">
-          <button className="btn btn-danger" onClick={this.delete}>
-            Delete
-          </button>
-          <button className="btn btn-secondary" onClick={this.modalClose}>
-            Cancel
-          </button>
-        </div>
-      )
-    });
+    this.props.modalShow(
+      getModalData({ handleDelete: this.delete, handleModalClose: this.modalClose })
+    );
   }
 
   render() {
@@ -67,7 +57,7 @@ export default class WebsitesList extends React.Component {
   }
 
   render() {
-    const { websites, confirmDelete, modalClose, handleDelete } = this.props;
+    const { websites, modalShow, modalClose, handleDelete } = this.props;
 
     return (
       <section>
@@ -78,7 +68,7 @@ export default class WebsitesList extends React.Component {
               <li key={idx}>
                 <WebsiteItem
                   website={website}
-                  confirmDelete={confirmDelete}
+                  modalShow={modalShow}
                   handleDelete={handleDelete}
                   modalClose={modalClose}
                 />

@@ -15,7 +15,7 @@ class Users extends React.Component {
   }
 
   render() {
-    let { users, deleteUserRequest, currentUser, modalClose, modalDeleteConfirmation } = this.props;
+    let { users, deleteUserRequest, currentUser, modalClose, modalShow } = this.props;
     return (
       <div>
         <div className="row justify-content-center">
@@ -32,7 +32,7 @@ class Users extends React.Component {
                     key={idx}
                     deleteUserRequest={deleteUserRequest}
                     modalClose={modalClose}
-                    modalDeleteConfirmation={modalDeleteConfirmation}
+                    modalShow={modalShow}
                   />
                 );
               })}
@@ -59,7 +59,7 @@ const mapDispatchToProps = dispatch => {
     modalClose: () => {
       dispatch(actionsModalData.modalClose());
     },
-    modalDeleteConfirmation: data => {
+    modalShow: data => {
       dispatch(actionsModalData.modalShow(data));
     }
   };
