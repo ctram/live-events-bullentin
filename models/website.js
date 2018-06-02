@@ -3,7 +3,6 @@ import sequelize from './sequelize';
 import Sequelize from 'sequelize';
 import scrapeIt from 'scrape-it';
 import validator from 'validator';
-import User from './user';
 
 const Website = sequelize.define(
   'website',

@@ -1,5 +1,4 @@
 import Backbone from 'backbone';
-import appConfig from '../../app-config';
 import Website from '../models/website';
 
 export default class Websites extends Backbone.Collection {
@@ -8,7 +7,7 @@ export default class Websites extends Backbone.Collection {
   }
 
   url() {
-    return `${appConfig.serverUrl}/api/websites`;
+    return `api/websites`;
   }
 
   parse(res) {

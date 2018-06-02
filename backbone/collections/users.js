@@ -1,6 +1,5 @@
 import Backbone from 'backbone';
 import User from '../models/user';
-import appConfig from '../../app-config';
 
 export default class Users extends Backbone.Collection {
   get model() {
@@ -8,7 +7,7 @@ export default class Users extends Backbone.Collection {
   }
 
   url() {
-    return `${appConfig.serverUrl}/api/users`;
+    return `api/users`;
   }
 
   parse(res) {

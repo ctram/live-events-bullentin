@@ -1,12 +1,11 @@
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { createStore, applyMiddleware } from 'redux';
-// eslint-disable-next-line no-unused-vars
-import { Provider } from 'react-redux';
 import reducers from './reducers/index';
 import ReactDOM from 'react-dom';
 
 /* eslint-disable */
+import { Provider } from 'react-redux';
 import Root from './components/root';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';

@@ -81,7 +81,7 @@ class FormUser extends React.Component {
                       e.preventDefault();
                       this.toggleRole('admin');
                     }}
-                    title="Admin user sees websites created by all users."
+                    title="Admin user sees websites created by all users and manage other users."
                     data-toggle="tooltip"
                   >
                     Admin
@@ -127,9 +127,6 @@ const mapDispatchToProps = dispatch => {
     },
     loginUser: data => {
       dispatch(actionUsers.loginUserRequest(data));
-    },
-    quickLogIn: () => {
-      dispatch(actionUsers.quickLogIn());
     }
   };
 };
