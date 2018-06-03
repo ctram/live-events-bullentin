@@ -1,14 +1,20 @@
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable */
 import React from 'react';
+import { Link } from 'react-router-dom';
+/* eslint-enable */
+import imgSources from '../../assets/img-sources';
 
 export default () => {
   return (
-    <div className="row justify-content-center page-about">
-      <p className="col-10 col-sm-8 col-md-6 col-lg-4">
-        Are you a live music fan who finds themself returning to the same events page repeatedly to
-        check for the latest times and details? Instead, view all those details from this single
-        app.
-      </p>
+    <div className="page-about">
+      <div className="d-flex flex-column align-items-center">
+        <p className="col-sm-9 col-md-7 col-lg-6 col-xl-5 mb-5">
+          Aggregate information from frequently visited web pages and view them on this single app.
+          Say you're a live music fan who visits <em>multiple</em> event calendars routinely -- instead,
+          submit the web pages where the calender exists and let the app gather the information here. <Link to="/register">Try it</Link>!
+        </p>
+        <img src={imgSources.previewWebsite} />
+      </div>
     </div>
   );
 };
