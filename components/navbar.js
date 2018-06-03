@@ -33,7 +33,7 @@ class Navbar extends React.Component {
 
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light justify-content-lg-center">
-        <div className="navbar-brand ml-5">Live Events Bulletin</div>
+        <div className="navbar-brand mx-0 mx-sm-5">Live Events Bulletin</div>
         <button
           className="navbar-toggler"
           type="button"
