@@ -37,14 +37,16 @@ class PageWebsites extends React.Component {
     }
 
     return (
-      <div className="row justify-content-center">
-        <div className="col-10 col-sm-9 col-md-8 col-lg-5">
-          <Link to="/websites/new">
-            <div className="row justify-content-center">
-              <button className="btn btn-primary">Add Website</button>
-            </div>
-          </Link>
-          <div className="websites">{domWebsites}</div>
+      <div className="page-websites">
+        <div className="row justify-content-center">
+          <div className="col-10 col-sm-9 col-md-8 col-lg-5">
+            <Link to="/websites/new">
+              <div className="row justify-content-center">
+                <button className="btn btn-primary">Add Website</button>
+              </div>
+            </Link>
+            <div className="websites">{domWebsites}</div>
+          </div>
         </div>
       </div>
     );

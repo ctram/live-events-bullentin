@@ -12,10 +12,12 @@ export class PageWebsiteNew extends React.Component {
 
   render() {
     return (
-      <section className="website-new">
-        <h1>Add New Website</h1>
-        <FormWebsite className="row" website={this.website} isNew={true} />
-      </section>
+      <div className="page-website">
+        <section className="website-new">
+          <h1>Add New Website</h1>
+          <FormWebsite className="row" website={this.website} isNew={true} />
+        </section>
+      </div>
     );
   }
 }

@@ -1,11 +1,12 @@
 @import 'globals';
 @import 'navbar';
 @import 'utilities';
-@import 'website';
-@import 'websites';
+@import 'page-website';
+@import 'page-websites';
+@import 'page-user-profile';
+@import 'page-about';
 @import 'toastr';
 @import 'variables';
-@import 'user-profile';
 
 // Misc
 .fa-trash {

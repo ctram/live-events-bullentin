@@ -57,7 +57,7 @@ export class PageWebsiteShow extends React.Component {
     }
 
     return (
-      <div>
+      <div className="page-website">
         <section>
           <h1>{website.get('name')}</h1>
           <FormWebsite website={website} isNew={!website.id} />

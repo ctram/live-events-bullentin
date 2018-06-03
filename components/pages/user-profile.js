@@ -9,7 +9,7 @@ class PageUserProfile extends React.Component {
   render() {
     const { currentUser } = this.props;
     return (
-      <div>
+      <div className="page-user-profile">
         <h1>Profile</h1>
         <div className="row justify-content-center user-profile">
           <div className="user-profile__username">{currentUser.get('username')}</div>
