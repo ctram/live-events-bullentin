@@ -5,12 +5,16 @@ export default ({ user, currentUser, handleDelete, handleModalClose }) => {
   const userRelationship = currentUser.id === user.id ? 'self' : 'other';
   let title = `Are You Sure?`;
   let btnText = 'Delete User';
-  let content = 'This cannot be undone.';
+  let content = (
+    <span>
+      Deleting user <strong>{user.get('username')}</strong>. This cannot be undone.
+    </span>
+  );
 
   if (userRelationship === 'self') {
     title = 'Are You Sure You Want To Delete Yourself?';
     btnText = 'Delete Myself';
-    content += 'You will immediately log off.';
+    content += ' You will immediately log off.';
   }
 
   return {

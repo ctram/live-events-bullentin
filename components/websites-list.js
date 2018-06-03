@@ -29,7 +29,11 @@ class WebsiteItem extends React.Component {
   confirmDelete(e) {
     e.preventDefault();
     this.props.modalShow(
-      getModalData({ handleDelete: this.delete, handleModalClose: this.modalClose })
+      getModalData({
+        handleDelete: this.delete,
+        handleModalClose: this.modalClose,
+        website: this.props.website
+      })
     );
   }
 
