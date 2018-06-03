@@ -15,7 +15,11 @@ export default {
     loadApi(app);
 
     app.get(/.*/, (req, res) => {
-      res.render('index', { serverUrl: appConfig.serverUrl, pathPrefix: getPathPrefix(req.path) });
+      res.render('index', {
+        serverUrl: appConfig.serverUrl,
+        pathPrefix: getPathPrefix(req.path),
+        environment: process.env.ENVIRONMENT
+      });
     });
 
     // eslint-disable-next-line no-unused-vars

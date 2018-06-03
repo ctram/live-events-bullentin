@@ -12,7 +12,7 @@ if (process.env.ENVIRONMENT === 'production') {
   port = 3000;
   host = 'http://localhost';
   serverUrl = `${host}:${port}`;
-  authenticate = false;
+  authenticate = true;
 }
 
 export default {
