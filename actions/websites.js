@@ -2,7 +2,7 @@ import toastr from 'toastr';
 import actionTypes from './action-types';
 import Website from '../backbone/models/website';
 import Websites from '../backbone/collections/websites';
-import parseError from '../helpers/error-parser';
+import { clientParseError as parseError } from '../helpers/error-parser';
 import loader from './loader';
 import appConfig from '../app-config';
 

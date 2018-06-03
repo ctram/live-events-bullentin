@@ -4,7 +4,7 @@ import requestParams from '../helpers/request-params';
 import toastr from 'toastr';
 import Users from '../backbone/collections/users';
 import User from '../backbone/models/user';
-import parseError from '../helpers/error-parser';
+import {clientParseError as parseError} from '../helpers/error-parser';
 import loader from './loader';
 import appConfig from '../app-config';
 

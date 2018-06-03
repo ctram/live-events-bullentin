@@ -1,6 +1,6 @@
 import db from '../models/index';
 const { Website } = db;
-import { parseErrorMessages } from './helpers/error-handler';
+import { serverParseError as parseError } from '../helpers/error-parser';
 import { authenticateUser } from '../helpers/authentication-helper';
 
 function load(app) {
@@ -22,7 +22,7 @@ function load(app) {
         return res.status(status).json(data);
       })
       .catch(e => {
-        return res.status(500).json({ msg: parseErrorMessages(e) });
+        return res.status(500).json({ msg: parseError(e) });
       });
   });
 
@@ -47,7 +47,7 @@ function load(app) {
         return res.json({ websites });
       })
       .catch(e => {
-        return res.status(500).json({ msg: parseErrorMessages(e) });
+        return res.status(500).json({ msg: parseError(e) });
       });
   });
 
@@ -67,7 +67,7 @@ function load(app) {
         throw 'Website not found';
       })
       .catch(e => {
-        return res.status(500).json({ msg: parseErrorMessages(e) });
+        return res.status(500).json({ msg: parseError(e) });
       });
   });
 
@@ -89,7 +89,7 @@ function load(app) {
         return res.json({ website: dataValues });
       })
       .catch(e => {
-        return res.status(500).json({ msg: parseErrorMessages(e) });
+        return res.status(500).json({ msg: parseError(e) });
       });
   });
 
@@ -104,7 +104,7 @@ function load(app) {
       })
       .catch(e => {
         console.error('error in catch', e);
-        return res.status(400).json({ msg: parseErrorMessages(e) });
+        return res.status(400).json({ msg: parseError(e) });
       });
   });
 
@@ -125,7 +125,7 @@ function load(app) {
         return res.json({ events, websiteId: website.id });
       })
       .catch(e => {
-        return res.status(e.statusCode || 500).json({ msg: parseErrorMessages(e) });
+        return res.status(e.statusCode || 500).json({ msg: parseError(e) });
       });
   });
 }

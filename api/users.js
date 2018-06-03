@@ -1,7 +1,7 @@
 import passport from 'passport';
 import db from '../models/index';
 import { authenticateUser } from '../helpers/authentication-helper';
-import { parseErrorMessages } from './helpers/error-handler';
+import { serverParseError as parseError } from '../helpers/error-parser';
 
 const { User } = db;
 
@@ -12,7 +12,7 @@ function load(app) {
         return res.json({ user });
       })
       .catch(e => {
-        return res.status(e.statusCode).json({ msg: parseErrorMessages(e) });
+        return res.status(e.statusCode).json({ msg: parseError(e) });
       });
   });
 
@@ -20,14 +20,14 @@ function load(app) {
   app.post('/api/login', (req, res) => {
     passport.authenticate('local', (err, user, info) => {
       if (err) {
-        return res.status(500).json({ msg: parseErrorMessages(err) });
+        return res.status(500).json({ msg: parseError(err) });
       }
       if (!user) {
-        return res.status(401).json({ msg: parseErrorMessages(info.message) });
+        return res.status(401).json({ msg: parseError(info.message) });
       }
       return req.login(user, err => {
         if (err) {
-          return res.status(500).json({ msg: parseErrorMessages(err) });
+          return res.status(500).json({ msg: parseError(err) });
         }
         return res.json({ user });
       });
@@ -49,7 +49,7 @@ function load(app) {
         return res.json({ users });
       })
       .catch(e => {
-        return res.status(500).json({ msg: parseErrorMessages(e) });
+        return res.status(500).json({ msg: parseError(e) });
       });
   });
 
@@ -66,7 +66,7 @@ function load(app) {
         return res.status(status).json(data);
       })
       .catch(e => {
-        return res.status(e.statusCode || 500).json({ msg: parseErrorMessages(e) });
+        return res.status(e.statusCode || 500).json({ msg: parseError(e) });
       });
   });
 
@@ -82,7 +82,7 @@ function load(app) {
         return res.json({ user });
       })
       .catch(e => {
-        return res.status(500).json({ msg: parseErrorMessages(e) });
+        return res.status(500).json({ msg: parseError(e) });
       });
   });
 
@@ -116,7 +116,7 @@ function load(app) {
         return res.json({});
       })
       .catch(e => {
-        return res.status(e.statusCode || 500).json({ msg: parseErrorMessages(e) });
+        return res.status(e.statusCode || 500).json({ msg: parseError(e) });
       });
   });
 }
