@@ -3,11 +3,10 @@ import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import actionsUsers from '../actions/users';
 
-// eslint-disable-next-line no-unused-vars
-function LinkWrapper({ to, children, onClick, type = 'navlink' }) {
-  // eslint-disable-next-line no-unused-vars
+/* eslint-disable */
+export function LinkWrapper({ to, children, onClick, type = 'navlink' }) {
   const DomLink = type === 'navlink' ? NavLink : Link;
-
+  /* eslint-enable */
   return (
     <li>
       <DomLink to={to} className="nav-link nav-item" onClick={onClick}>
