@@ -29,4 +29,14 @@ User.prototype.isAdmin = function() {
 
 User.hasMany(Website);
 Website.belongsTo(User);
+
+// Create guest user
+User.findOne({ where: { username: 'Guest' } })
+  .then(user => {
+    return user ? user.destroy() : null;
+  })
+  .then(() => {
+    return User.findOrCreate({ where: { role: 'admin', username: 'Guest', password: 'a' } });
+  });
+  
 export default User;
