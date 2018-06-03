@@ -5,15 +5,10 @@ import React from 'react';
 class FormUser extends React.Component {
   constructor(props) {
     super(props);
-    this.pathname = props.location.pathname.substring(1);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.btnSubmitDisabled = this.btnSubmitDisabled.bind(this);
     this.toggleRole = this.toggleRole.bind(this);
     this.state = { username: '', password: '', role: 'standard' };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.pathname = nextProps.location.pathname.substring(1);
   }
 
   toggleRole(role) {
@@ -24,7 +19,7 @@ class FormUser extends React.Component {
     e.preventDefault();
     const { createUser, loginUser } = this.props;
     const { username, password, role } = this.state;
-    this.pathname === 'register'
+    this.props.formFunction === 'registerUser'
       ? createUser({ username, password, role })
       : loginUser({ username, password });
   }
@@ -35,7 +30,7 @@ class FormUser extends React.Component {
   }
 
   render() {
-    const labelSubmitBtn = this.pathname === 'register' ? 'Register' : 'Login';
+    const labelSubmitBtn = this.props.formFunction === 'registerUser' ? 'Register' : 'Login';
     const btnRoleBaseClass = 'btn btn-secondary';
     const { role: activeRole } = this.state;
     const btnRoleStandardClass =
@@ -70,7 +65,7 @@ class FormUser extends React.Component {
               />
             </div>
 
-            {this.pathname === 'register' && (
+            {this.props.formFunction === 'registerUser' && (
               <div className="form-group">
                 <label for="radio-role">User Role</label>
                 <radiogroup id="radio-role" className="btn-group d-block">
