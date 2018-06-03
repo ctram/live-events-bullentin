@@ -86,7 +86,6 @@ function checkAuthenticationRequest() {
     return appFetch(req)
       .then(data => {
         toastr.success('Authenticated');
-        appConfig.reactRouterHistory.push('/websites');
         return dispatch(checkAuthenticationSuccess(data.user));
       })
       .catch(() => {
