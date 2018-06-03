@@ -8,6 +8,7 @@ class FormUser extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.btnSubmitDisabled = this.btnSubmitDisabled.bind(this);
     this.toggleRole = this.toggleRole.bind(this);
+    this.handleLoginGuest = this.handleLoginGuest.bind(this);
     this.state = { username: '', password: '', role: 'standard' };
   }
 
@@ -27,6 +28,11 @@ class FormUser extends React.Component {
   btnSubmitDisabled() {
     const { password, username } = this.state;
     return !password || !username;
+  }
+
+  handleLoginGuest(e) {
+    e.preventDefault();
+    this.props.loginGuest();
   }
 
   render() {
@@ -104,6 +110,11 @@ class FormUser extends React.Component {
             >
               {labelSubmitBtn}
             </button>
+            {this.props.formFunction === 'loginUser' && (
+              <button className="btn btn-info" onClick={this.handleLoginGuest}>
+              Guest Login
+              </button>  
+            )}
           </form>
         </div>
       </div>
@@ -122,6 +133,9 @@ const mapDispatchToProps = dispatch => {
     },
     loginUser: data => {
       dispatch(actionUsers.loginUserRequest(data));
+    },
+    loginGuest: () => {
+      dispatch(actionUsers.loginGuestRequest());
     }
   };
 };

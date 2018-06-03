@@ -4,7 +4,7 @@ import requestParams from '../helpers/request-params';
 import toastr from 'toastr';
 import Users from '../backbone/collections/users';
 import User from '../backbone/models/user';
-import {clientParseError as parseError} from '../helpers/error-parser';
+import { clientParseError as parseError } from '../helpers/error-parser';
 import loader from './loader';
 import appConfig from '../app-config';
 
@@ -147,11 +147,16 @@ function deleteUserRequest(user) {
   };
 }
 
+function loginGuestRequest() {
+  return this.loginUserRequest({ username: 'Guest', password: 'a' });
+}
+
 export default {
   createUserRequest,
   deleteUserRequest,
   loginUserRequest,
   logoutUserRequest,
   fetchUsersRequest,
-  checkAuthenticationRequest
+  checkAuthenticationRequest,
+  loginGuestRequest
 };
