@@ -9,6 +9,7 @@ class FormWebsite extends React.Component {
   constructor(props) {
     super(props);
     const { website, isNew } = props;
+    this.originalWebsite = website.clone();
 
     this.state = {
       name: website.get('name') || '',
@@ -30,10 +31,13 @@ class FormWebsite extends React.Component {
     this.pasteDemoData = this.pasteDemoData.bind(this);
     this.confirmDelete = this.confirmDelete.bind(this);
     this.modalClose = this.modalClose.bind(this);
+    this.resetFormData = this.resetFormData.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     const { website, isNew } = nextProps;
+    this.originalWebsite = website.clone();
+    
     this.setState({
       selector: website.get('selector'),
       name: website.get('name'),
@@ -63,7 +67,24 @@ class FormWebsite extends React.Component {
     if (website.isValid()) {
       return this.props.saveWebsiteRequest(website);
     }
+    this.resetFormData();
     return toastr.error(website.validationError);
+  }
+
+  resetFormData() {
+    const { website } = this.props;
+
+    website.set({
+      url: this.originalWebsite.get('url'),
+      selector: this.originalWebsite.get('selector'),
+      name: this.originalWebsite.get('name')
+    });
+
+    this.setState({
+      url: website.get('url'),
+      name: website.get('name'),
+      selector: website.get('selector')
+    });
   }
 
   delete(e) {
@@ -79,12 +100,9 @@ class FormWebsite extends React.Component {
   }
 
   cancel(e) {
-    e.preventDefault();
-    const { website } = this.props;
+    e && e.preventDefault();
+    this.resetFormData();
     this.setState({
-      url: website.get('url'),
-      name: website.get('name'),
-      selector: website.get('selector'),
       editMode: false
     });
   }
@@ -238,5 +256,3 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormWebsite);
-
-
