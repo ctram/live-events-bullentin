@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import actionsWebsites from '../../actions/websites';
 import actionsModal from '../../actions/modal-data';
 
-class Websites extends React.Component {
+class PageWebsites extends React.Component {
   constructor() {
     super();
   }
@@ -72,4 +72,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Websites);
+export default connect(mapStateToProps, mapDispatchToProps)(PageWebsites);

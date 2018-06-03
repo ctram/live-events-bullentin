@@ -56,6 +56,8 @@ class Navbar extends React.Component {
             </div>
           )}
           <ul className="navbar-nav text-right">
+            <LinkWrapper to="/about">About</LinkWrapper>
+
             {!loggedIn && <LinkWrapper to="/register">Register</LinkWrapper>}
 
             {!loggedIn && <LinkWrapper to="/login">Login</LinkWrapper>}

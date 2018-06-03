@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 import React from 'react';
-import actionsUsers from '../actions/users';
-import actionsModalData from '../actions/modal-data';
+import actionsUsers from '../../actions/users';
+import actionsModalData from '../../actions/modal-data';
 // eslint-disable-next-line no-unused-vars
-import UserItem from './user-item';
-class Users extends React.Component {
+import UserItem from '../user-item';
+
+class PageUsers extends React.Component {
   constructor() {
     super();
   }
@@ -65,4 +66,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users);
+export default connect(mapStateToProps, mapDispatchToProps)(PageUsers);

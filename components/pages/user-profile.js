@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-class UserProfile extends React.Component {
+class PageUserProfile extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -27,4 +27,4 @@ const mapDispatchToProps = () => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(PageUserProfile);

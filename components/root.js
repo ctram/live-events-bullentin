@@ -1,12 +1,15 @@
 import React from 'react';
-import FormUser from './form-user';
-import Users from './users';
 import { connect } from 'react-redux';
 import actionsUsers from '../actions/users';
 import { withRouter } from 'react-router-dom';
 import PageWebsites from './pages/websites';
 import PageWebsiteNew from './pages/website-new';
 import PageWebsiteShow from './pages/website-show';
+import PageAbout from './pages/about';
+import PageLogin from './pages/login';
+import PageRegister from './pages/register';
+import PageUsers from './pages/users';
+import PageUserProfile from './pages/user-profile';
 import Page404 from './pages/404';
 import jquery from 'jquery';
 
@@ -15,7 +18,6 @@ import jquery from 'jquery';
 import Navbar from './navbar';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Loader from 'react-loader';
-import UserProfile from './user-profile';
 import ErrorBoundary from './error-boundary';
 import Modal from './modal';
 /* eslint-enable */
@@ -27,8 +29,9 @@ const TOOLTIP_SELECTOR = '[data-toggle="tooltip"]';
 function SwitchLoggedIn({ isAdmin, loaded }) {
   return (
     <Switch>
-      {isAdmin && <Route exact path="/users" component={Users} />}
-      <Route exact path="/profile" component={UserProfile} />
+      {isAdmin && <Route exact path="/users" component={PageUsers} />}
+      <Route exact path="/about" component={PageAbout} />
+      <Route exact path="/profile" component={PageUserProfile} />
       <Route exact path="/websites/new" component={PageWebsiteNew} />
       <Route exact path="/websites/:id" component={PageWebsiteShow} />
       <Route path="/websites" component={PageWebsites} />
@@ -41,8 +44,9 @@ function SwitchLoggedIn({ isAdmin, loaded }) {
 function SwitchLoggedOut({ loaded }) {
   return (
     <Switch>
-      <Route exact path="/register" component={FormUser} />
-      <Route path="/login" component={FormUser} />
+      <Route exact path="/about" component={PageAbout} />
+      <Route exact path="/register" component={PageRegister} />
+      <Route path="/login" component={PageLogin} />
       {loaded && <Route component={Page404} />}
     </Switch>
   );
