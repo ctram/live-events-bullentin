@@ -1,10 +1,11 @@
 import Backbone from 'backbone';
 import requestParams from '../../helpers/request-params';
 import _ from 'underscore';
+import appConfig from '../../app-config';
 
 export default class Website extends Backbone.Model {
   urlRoot() {
-    return `${window.LEB.appConfig.serverUrl}/api/websites`;
+    return `${appConfig.serverUrl}/api/websites`;
   }
 
   parse(res) {
@@ -22,7 +23,7 @@ export default class Website extends Backbone.Model {
 
   fetchEvents() {
     const req = new Request(
-      window.LEB.appConfig.serverUrl + `/api/websites/${this.id}/events`,
+      appConfig.serverUrl + `/api/websites/${this.id}/events`,
       Object.assign(requestParams, { method: 'GET', body: null })
     );
 

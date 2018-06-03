@@ -19,6 +19,7 @@ import UserProfile from './user-profile';
 import ErrorBoundary from './error-boundary';
 import Modal from './modal';
 /* eslint-enable */
+import appConfig from '../app-config';
 
 const TOOLTIP_SELECTOR = '[data-toggle="tooltip"]';
 
@@ -53,7 +54,7 @@ class Root extends React.Component {
   }
 
   componentDidMount() {
-    // When app is refreshed, we need to check whether user is already authenticated
+    // If user refreshes page, check whether user is already authenticated
     this.props.checkAuthenticationRequest();
     this.initializeTooltip();
   }
@@ -69,7 +70,10 @@ class Root extends React.Component {
 
   componentWillMount() {
     const { history } = this.props;
-    window.LEB.reactRouterHistory = history;
+    Object.assign(appConfig, {
+      reactRouterHistory: history,
+      serverUrl: window.LEB.appConfig.serverUrl
+    });
   }
 
   componentWillUnmount() {
@@ -85,7 +89,7 @@ class Root extends React.Component {
 
   render() {
     const { loggedIn, currentUser, loaded, modalData } = this.props;
-    const pathname = window.LEB.reactRouterHistory.location.pathname;
+    const pathname = appConfig.reactRouterHistory.location.pathname;
 
     const Routes = loggedIn ? (
       <SwitchLoggedIn isAdmin={currentUser && currentUser.isAdmin()} loaded={loaded} />

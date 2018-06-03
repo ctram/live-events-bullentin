@@ -5,6 +5,7 @@ import actionsWebsites from '../../actions/websites';
 import FormWebsite from '../form-website';
 import Website from '../../backbone/models/website';
 import _ from 'underscore';
+import appConfig from '../../app-config';
 
 // eslint-disable-next-line no-unused-vars
 function Event({ event }) {
@@ -19,7 +20,7 @@ export class PageWebsiteShow extends React.Component {
   componentDidMount() {
     const { fetchWebsiteRequest, fetchWebsiteEventsRequest } = this.props;
     let { website } = this.props;
-    const { location } = window.LEB.reactRouterHistory;
+    const { location } = appConfig.reactRouterHistory;
     const websiteId = location.pathname.split('/')[2];
 
     return fetchWebsiteRequest(websiteId).then(() => {
@@ -37,9 +38,7 @@ export class PageWebsiteShow extends React.Component {
     if (error) {
       domList = error;
     } else if (_.isEmpty(events)) {
-      domList = (
-        <p>No events found.</p>
-      );
+      domList = <p>No events found.</p>;
     } else {
       domList = (
         <div className="row justify-content-center">
@@ -75,7 +74,7 @@ export class PageWebsiteShow extends React.Component {
 
 const mapStateToProps = state => {
   const { websites } = state.storeWebsites;
-  const websiteId = window.LEB.reactRouterHistory.location.pathname.split('/')[2];
+  const websiteId = appConfig.reactRouterHistory.location.pathname.split('/')[2];
   const website = websites.get(websiteId) || new Website();
   return Object.assign({}, { website });
 };

@@ -4,6 +4,7 @@ import Website from '../backbone/models/website';
 import Websites from '../backbone/collections/websites';
 import parseError from '../helpers/error-parser';
 import loader from './loader';
+import appConfig from '../app-config';
 
 function createWebsiteRequest(website) {
   return dispatch => {
@@ -12,7 +13,7 @@ function createWebsiteRequest(website) {
       .save()
       .then(() => {
         toastr.success('Website created');
-        window.LEB.reactRouterHistory.push('/websites');
+        appConfig.reactRouterHistory.push('/websites');
         dispatch(createWebsiteSuccess());
       })
       .catch(e => {
@@ -139,7 +140,7 @@ function deleteWebsiteRequest(website) {
 function deleteWebsiteSuccess() {
   return dispatch => {
     toastr.success('Website deleted');
-    window.LEB.reactRouterHistory.push('/websites');
+    appConfig.reactRouterHistory.push('/websites');
     dispatch(fetchWebsitesRequest());
   };
 }

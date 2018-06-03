@@ -6,7 +6,7 @@ import Users from '../backbone/collections/users';
 import User from '../backbone/models/user';
 import parseError from '../helpers/error-parser';
 import loader from './loader';
-const appConfig = window.LEB.appConfig;
+import appConfig from '../app-config';
 
 function fetchUsersRequest(users = new Users()) {
   return dispatch => {
@@ -36,7 +36,7 @@ function createUserRequest(data) {
       .save()
       .then(() => {
         toastr.success('Registration complete, please login');
-        window.LEB.reactRouterHistory.push('/login');
+        appConfig.reactRouterHistory.push('/login');
       })
       .catch(e => {
         toastr.error(parseError(e));
@@ -71,7 +71,7 @@ function loginUserRequest(data) {
 
 function loginUserSuccess(user) {
   toastr.success('Login Successful');
-  window.LEB.reactRouterHistory.push('/websites');
+  appConfig.reactRouterHistory.push('/websites');
   return { type: actionTypes.LOGIN_USER_SUCCESS, user };
 }
 
@@ -86,11 +86,11 @@ function checkAuthenticationRequest() {
     return appFetch(req)
       .then(data => {
         toastr.success('Authenticated');
-        window.LEB.reactRouterHistory.push('/websites');
+        appConfig.reactRouterHistory.push('/websites');
         return dispatch(checkAuthenticationSuccess(data.user));
       })
       .catch(() => {
-        window.LEB.reactRouterHistory.push('/login');
+        appConfig.reactRouterHistory.push('/login');
         dispatch(checkAuthenticationFailure());
       })
       .finally(() => {
@@ -119,7 +119,7 @@ function logoutUserRequest() {
       .then(() => {
         dispatch(logoutUserSuccess());
         toastr.success('Logged Out Successfully');
-        window.LEB.reactRouterHistory.push('/login');
+        appConfig.reactRouterHistory.push('/login');
       })
       .finally(() => {
         dispatch(loader.endLoading());
