@@ -150,7 +150,7 @@ class FormWebsite extends React.Component {
               />
             </fieldset>
             <fieldset className="form-group">
-              <label htmlFor="selector">Selector</label>
+              <label htmlFor="selector">CSS Selector</label>
               <input
                 name="selector"
                 className="form-control"
