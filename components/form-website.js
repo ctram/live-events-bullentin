@@ -123,7 +123,7 @@ class FormWebsite extends React.Component {
 
     return (
       <div className="row justify-content-center">
-        <div className="col-4">
+        <div className="col-10 col-sm-8 col-md-6 col-lg-5">
           <form>
             <fieldset className="form-group">
               <label htmlFor="name">Name</label>

@@ -37,15 +37,11 @@ class WebsiteItem extends React.Component {
     const { website } = this.props;
 
     return (
-      <div className="row">
-        <Link to={`/websites/${website.id}`} className="col-6">
-          {website.get('name')}
-        </Link>
-        <div className="col-1 offset-3">
-          <span onClick={this.confirmDelete}>
-            <i className="fas fa-trash" />
-          </span>
-        </div>
+      <div className="d-flex justify-content-between">
+        <Link to={`/websites/${website.id}`}>{website.get('name')}</Link>
+        <span onClick={this.confirmDelete}>
+          <i className="fas fa-trash" />
+        </span>
       </div>
     );
   }

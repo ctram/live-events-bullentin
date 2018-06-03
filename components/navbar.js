@@ -48,14 +48,14 @@ class Navbar extends React.Component {
 
         <div className="collapse navbar-collapse ml-lg-1" id="navbarSupportedContent">
           {currentUser && (
-            <div className="mr-3">
+            <div className="mr-lg-3 text-right">
               <span className="username">{currentUser.get('username')}</span>
               {currentUser.isAdmin() && (
                 <span className="role badge badge-pull badge-dark ml-1">admin</span>
               )}
             </div>
           )}
-          <ul className="navbar-nav">
+          <ul className="navbar-nav text-right">
             {!loggedIn && <LinkWrapper to="/register">Register</LinkWrapper>}
 
             {!loggedIn && <LinkWrapper to="/login">Login</LinkWrapper>}

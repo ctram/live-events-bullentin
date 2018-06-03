@@ -103,9 +103,7 @@ class Root extends React.Component {
         <Navbar pathname={pathname} />
         <main>
           <ErrorBoundary>
-            <div className="row justify-content-center">
-              <div className="col-10">{Routes}</div>
-            </div>
+            <div className="">{Routes}</div>
             <Modal title={modalData.title} content={modalData.content} footer={modalData.footer} />
           </ErrorBoundary>
         </main>

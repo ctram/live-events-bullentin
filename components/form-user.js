@@ -45,7 +45,7 @@ class FormUser extends React.Component {
 
     return (
       <div className="row justify-content-center">
-        <div className="col-2">
+        <div className="col-9 col-sm-7 col-md-5 col-lg-3 col-xl-2">
           <form>
             <div className="form-group">
               <label htmlFor="username">Username</label>
