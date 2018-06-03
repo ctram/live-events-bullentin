@@ -110,6 +110,9 @@ function load(app) {
         if (targetUser.get('role') === 'admin' && admins.length === 1) {
           throw { msg: 'There must be at least one admin user', statusCode: 400 };
         }
+        if (targetUser.get('username') === 'Guest') {
+          throw { msg: 'This user cannot be deleted', statusCode: 400 };
+        }
         return User.destroy({ where: { id: req.params.id } });
       })
       .then(() => {
