@@ -31,18 +31,22 @@ export class PageWebsiteShow extends React.Component {
   }
 
   render() {
-    const { website } = this.props;
+    const {
+      website,
+      loader: { loaded }
+    } = this.props;
     const events = website.get('events');
     const error = website.get('error');
     let domList;
+
     if (error) {
       domList = error;
-    } else if (_.isEmpty(events)) {
-      domList = <p>No events found.</p>;
+    } else if (loaded && _.isEmpty(events)) {
+      domList = <h3 className="mt-5">No events found.</h3>;
     } else {
       domList = (
-        <div className="row justify-content-center">
-          <ul className="col-sm-10 col-md-9  col-lg-8 col-xl-7 mx-5">
+        <div className="row justify-content-center mt-3">
+          <ul className="col-sm-10 col-md-9 col-lg-8 col-xl-7 mx-5">
             {events &&
               events.map((event, idx) => {
                 return (
@@ -65,6 +69,7 @@ export class PageWebsiteShow extends React.Component {
         <hr />
         <section className="text-center">
           <h1>Events</h1>
+          <span>Information is gathered each time this page is loaded.</span>
           {domList}
         </section>
       </div>
@@ -76,7 +81,8 @@ const mapStateToProps = state => {
   const { websites } = state.storeWebsites;
   const websiteId = appConfig.reactRouterHistory.location.pathname.split('/')[2];
   const website = websites.get(websiteId) || new Website();
-  return Object.assign({}, { website });
+  debugger;
+  return Object.assign({}, { website, loader: state.loader });
 };
 
 const mapDispatchToProps = dispatch => {

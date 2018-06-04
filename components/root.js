@@ -103,7 +103,7 @@ class Root extends React.Component {
 
     return (
       <div>
-        <Loader loaded={this.props.loaded} options={{ color: 'white' }} />
+        <Loader loaded={loaded} options={{ color: 'white' }} />
         <Navbar pathname={pathname} />
         <main>
           <ErrorBoundary>
