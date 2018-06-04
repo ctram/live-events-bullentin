@@ -12,7 +12,7 @@ function createWebsiteRequest(website) {
     return website
       .save()
       .then(() => {
-        toastr.success('Website created');
+        toastr.success('Website added');
         appConfig.reactRouterHistory.push('/websites');
         dispatch(createWebsiteSuccess());
       })
