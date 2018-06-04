@@ -42,7 +42,7 @@ export class PageWebsiteShow extends React.Component {
     } else {
       domList = (
         <div className="row justify-content-center">
-          <ul className="col-6">
+          <ul className="col-11 col-sm-10 col-md-9  col-lg-8 col-xl-7 mx-5">
             {events &&
               events.map((event, idx) => {
                 return (
