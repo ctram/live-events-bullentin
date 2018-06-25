@@ -14,7 +14,10 @@ export default () => {
           instead, submit the web pages where the calender exists and let the app gather the
           information here. <Link to="/login">Try it</Link>!
         </p>
-        <img src={imgSources.previewWebsite} className="img-fluid col-11 col-md-10 col-lg-9 col-xl-8" />
+        <img
+          src={imgSources.previewWebsite}
+          className="img-fluid col-11 col-md-10 col-lg-9 col-xl-8"
+        />
       </div>
     </div>
   );
