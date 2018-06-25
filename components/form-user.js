@@ -55,7 +55,6 @@ class FormUser extends React.Component {
                 className="form-control"
                 id="username"
                 ref="username"
-                placeholder="Enter username"
                 onChange={e => this.setState({ username: e.target.value })}
               />
             </div>
@@ -66,7 +65,6 @@ class FormUser extends React.Component {
                 ref="password"
                 className="form-control"
                 id="password"
-                placeholder="Password"
                 onChange={e => this.setState({ password: e.target.value })}
               />
             </div>
