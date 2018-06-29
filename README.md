@@ -12,6 +12,7 @@
 - Postgres
 - Sequelize.js
 - Bootstrap
+- scrape-it.js
 
 ## Setup
 
