@@ -1,6 +1,6 @@
 module.exports = {
   development: {
-    username: 'chris',
+    username: process.env.PG_USER,
     password: null,
     database: 'live_events_bulletin',
     dialect: 'postgres'
