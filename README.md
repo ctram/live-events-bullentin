@@ -2,7 +2,7 @@
 
 [Live link][live_events_bulletin]
 
-[live_events_bulletin]: https://live-events-bulletin.herokuapp.com/login
+[live_events_bulletin]: https://live-events-bulletin.herokuapp.com
 
 **Technologies used:**
 - React.js
