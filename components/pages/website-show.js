@@ -81,7 +81,6 @@ const mapStateToProps = state => {
   const { websites } = state.storeWebsites;
   const websiteId = appConfig.reactRouterHistory.location.pathname.split('/')[2];
   const website = websites.get(websiteId) || new Website();
-  debugger;
   return Object.assign({}, { website, loader: state.loader });
 };
 
